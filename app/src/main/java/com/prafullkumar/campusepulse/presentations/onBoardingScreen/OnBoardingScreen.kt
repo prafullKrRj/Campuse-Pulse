@@ -1,4 +1,4 @@
-package com.prafullkumar.campusepulse.presentations
+package com.prafullkumar.campusepulse.presentations.onBoardingScreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,9 +12,10 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.prafullkumar.campusepulse.presentations.navigationGraph.Screen
 
 @Composable
-fun MainScreen(navController: NavController) {
+fun OnBoardingScreen(navController: NavController) {
     Column(
         Modifier.fillMaxSize().padding(32.dp),
         horizontalAlignment = CenterHorizontally,
@@ -22,21 +23,16 @@ fun MainScreen(navController: NavController) {
     ) {
         Button(
             onClick = {
-                navController.navigate("admin")
+                navController.navigate(Screen.ADMIN_SIGNING.route)
             },
             modifier = Modifier.fillMaxWidth(),
         ) {
             Text("Admin")
         }
 
-       /* TextButton(onClick = {
-            navController.navigate("teacher")
-        }) {
-            Text("Teacher")
-        }*/
         Button(
             onClick = {
-                navController.navigate("student")
+                navController.navigate(Screen.STUDENT_SIGNING.route)
             },
             modifier = Modifier.fillMaxWidth(),
         ) {
