@@ -15,5 +15,4 @@ class AdminRepositoryImpl (
         }
         return "Hello World"
     }
-    
 }
