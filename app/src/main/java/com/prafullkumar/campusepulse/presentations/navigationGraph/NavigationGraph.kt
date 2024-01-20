@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.prafullkumar.campusepulse.adminApp.AdminNavGraph
 import com.prafullkumar.campusepulse.adminApp.AdminScreen
 import com.prafullkumar.campusepulse.managers.ViewModelProvider
 import com.prafullkumar.campusepulse.presentations.onBoardingScreen.OnBoardViewModel
@@ -49,7 +50,7 @@ fun NavigationGraph(
             Text(text = "teacher")
         }
         composable(Screen.ADMIN.route) {
-            AdminScreen(adminViewModel = viewModel(
+            AdminNavGraph(adminViewModel = viewModel(
                 factory = ViewModelProvider.getAdminViewModel()
             ))
         }

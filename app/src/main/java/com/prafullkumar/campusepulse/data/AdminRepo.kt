@@ -4,13 +4,14 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.prafullkumar.campusepulse.adminApp.Branch
+import com.prafullkumar.campusepulse.adminApp.Student
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 interface AdminRepository {
     suspend fun getUserData(): String
-    fun addStudent()
+    fun addStudent(student: Student)
     suspend fun getClasses(): Flow<Result<MutableList<Branch>>>
 }
 
@@ -24,15 +25,15 @@ class AdminRepositoryImpl (
         }
         return "Hello World"
     }
-    override fun addStudent() {
+    override fun addStudent(student: Student) {
         val user = hashMapOf(
-            "fName" to "Vashu",
-            "lName" to "Solanki",
-            "dob" to "09/11/2004",
-            "rollNo" to 1233,
-            "admissionNo" to 22999,
-            "branch" to listOf("se", "entc", "a"),
-            "phoneNo" to 1234567890,
+            "fName" to student.fName,
+            "lName" to student.lName,
+            "dob" to student.dob,
+            "rollNo" to student.rollNo,
+            "admissionNo" to student.admissionNo,
+            "branch" to listOf(student.branch),
+            "phoneNo" to student.phone,
         )
         firebaseFirestore.collection("students")
             .add(user)

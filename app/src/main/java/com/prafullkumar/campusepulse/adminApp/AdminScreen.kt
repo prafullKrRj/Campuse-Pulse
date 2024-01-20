@@ -1,53 +1,57 @@
 package com.prafullkumar.campusepulse.adminApp
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.navigation.NavController
 import com.prafullkumar.campusepulse.R
+import com.prafullkumar.campusepulse.adminApp.uiComponents.AddButton
+import com.prafullkumar.campusepulse.commons.TopAppBar
 
 @Composable
 fun AdminScreen(
-    adminViewModel: AdminViewModel
+    adminViewModel: AdminViewModel,
+    navController: NavController
 ) {
     val state by adminViewModel.state.collectAsState()
     Scaffold (
         topBar = {
-            TopBar()
+            TopAppBar(
+                label = R.string.admin
+            )
         },
         floatingActionButton = {
-            AddStudentButton {
-                adminViewModel.addStudent()
-            }
+            AddButton(
+                addClass = {
+                    navController.navigate(AdminScreens.ADD_BRANCH.name)
+                },
+                addStudent = {
+                    navController.navigate(AdminScreens.ADD_STUDENT.name)
+                }
+            )
         }
     ){ paddingValues ->
         Column(
             modifier = Modifier
                 .padding(paddingValues)
-                .fillMaxSize()
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             when (state) {
                 is AdminState.Initial -> {
-                    Text(text = "Initial")
+                    Text(text = stringResource(R.string.initial))
                 }
                 is AdminState.Success -> {
                     AdminMainUI((state as AdminState.Success).branches)
@@ -65,47 +69,11 @@ fun AdminScreen(
 
 @Composable
 fun AdminMainUI(branches: MutableList<Branch>) {
-    LazyColumn {
+    LazyColumn(
+        Modifier.fillMaxSize()
+    ) {
         items(branches.size) { index ->
             Text(text = branches[index].name)
         }
     }
-}
-@Composable
-fun AddStudentButton(onAdd: () -> Unit = {}) {
-    FloatingActionButton(onClick = {
-        onAdd()
-    }) {
-        Icon(imageVector = Icons.Default.Add, contentDescription = null)
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TopBar() {
-    CenterAlignedTopAppBar(
-        title = {
-            Text(
-                text = stringResource(id = R.string.admin),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-        },
-        navigationIcon = {
-            IconButton(onClick = { /* doSomething() */ }) {
-                Icon(
-                    imageVector = Icons.Filled.Menu,
-                    contentDescription = "Menu"
-                )
-            }
-        },
-        actions = {
-            IconButton(onClick = { /* doSomething() */ }) {
-                Icon(
-                    imageVector = Icons.Filled.Favorite,
-                    contentDescription = "Favorite"
-                )
-            }
-        }
-    )
 }

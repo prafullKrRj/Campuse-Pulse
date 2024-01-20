@@ -18,9 +18,9 @@ class AdminViewModel(
 
     private val _state = MutableStateFlow<AdminState>(AdminState.Initial)
     val state = _state.asStateFlow()
-    fun addStudent() {
+    fun addStudent(student: Student) {
         viewModelScope.launch {
-            repository.addStudent()
+            repository.addStudent(student)
         }
     }
     init {
@@ -63,4 +63,13 @@ data class Branch(
     val name: String = "",
     val total: Int = 0,
     val tt: String = ""
+)
+data class Student(
+    val fName: String = "",
+    val lName: String = "",
+    val phone: Int = 0,
+    val branch: String = "",
+    val rollNo: Int = 0,
+    val admissionNo: Int = 0,
+    val dob: String = "",
 )
