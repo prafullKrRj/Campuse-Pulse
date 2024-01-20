@@ -2,6 +2,7 @@ package com.prafullkumar.campusepulse.di
 
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.prafullkumar.campusepulse.data.AdminRepository
 import com.prafullkumar.campusepulse.data.AdminRepositoryImpl
 import com.prafullkumar.campusepulse.data.OnBoardingRepository
@@ -25,7 +26,10 @@ class AppModuleImpl(
     override val onBoardingRepository: OnBoardingRepository by lazy {
         OnBoardingRepositoryImpl(firebaseAuth, sharedPrefManager)
     }
+    private val firebaseFirestore: FirebaseFirestore by lazy {
+        FirebaseFirestore.getInstance()
+    }
     override val adminRepository: AdminRepository by lazy {
-        AdminRepositoryImpl(firebaseAuth)
+        AdminRepositoryImpl(firebaseAuth, firebaseFirestore)
     }
 }

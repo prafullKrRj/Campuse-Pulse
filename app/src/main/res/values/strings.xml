@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Campuse Pulse</string>
+    <string name="admin">Admin</string>
 </resources>

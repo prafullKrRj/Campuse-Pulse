@@ -49,7 +49,7 @@ fun NavigationGraph(
             Text(text = "teacher")
         }
         composable(Screen.ADMIN.route) {
-            AdminScreen(viewModel = viewModel(
+            AdminScreen(adminViewModel = viewModel(
                 factory = ViewModelProvider.getAdminViewModel()
             ))
         }
