@@ -1,7 +1,8 @@
 package com.prafullkumar.campusepulse.adminApp
 
-import android.util.Log
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prafullkumar.campusepulse.data.AdminRepository
@@ -17,31 +18,26 @@ class AdminViewModel(
 
     private val _state = MutableStateFlow<AdminState>(AdminState.Initial)
     val state = _state.asStateFlow()
+
+    init {
+        _state.value = AdminState.Loading
+        getBranches()
+    }
     fun addStudent(student: Student) {
         viewModelScope.launch {
             repository.addStudent(student)
         }
     }
-    init {
-        _state.value = AdminState.Loading
-        getClasses()
-    }
-    private val userData = mutableStateOf("")
-    fun getUserData() {
+
+    private fun getBranches() {
         viewModelScope.launch {
-            userData.value = repository.getUserData()
-        }
-    }
-    private fun getClasses() {
-        viewModelScope.launch {
-            repository.getClasses().collect { result ->
+            repository.getBranches().collect { result ->
                 when(result) {
                     is Result.Loading -> {
                         _state.value = AdminState.Loading
                     }
                     is Result.Success -> {
                         _state.value = AdminState.Success(result.data)
-                        Log.d("vashu", "getClasses: ${result.data}")
                     }
                     is Result.Error -> {
                         _state.value = AdminState.Error(result.exception.message.toString())

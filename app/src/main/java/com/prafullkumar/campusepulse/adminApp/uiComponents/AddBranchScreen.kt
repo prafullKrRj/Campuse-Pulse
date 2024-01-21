@@ -1,8 +1,8 @@
-package com.prafullkumar.campusepulse.adminApp
+package com.prafullkumar.campusepulse.adminApp.uiComponents
 
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
+import com.prafullkumar.campusepulse.adminApp.AdminViewModel
 
 @Composable
 fun AddBranchScreen(adminViewModel: AdminViewModel, navController: NavController) {

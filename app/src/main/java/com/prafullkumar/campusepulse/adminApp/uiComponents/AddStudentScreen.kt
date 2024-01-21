@@ -1,7 +1,5 @@
-package com.prafullkumar.campusepulse.adminApp
+package com.prafullkumar.campusepulse.adminApp.uiComponents
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,11 +25,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.prafullkumar.campusepulse.adminApp.uiComponents.DateSelectorField
-import com.prafullkumar.campusepulse.adminApp.uiComponents.InputFieldNumber
-import com.prafullkumar.campusepulse.adminApp.uiComponents.InputFieldText
+import com.prafullkumar.campusepulse.adminApp.AdminViewModel
+import com.prafullkumar.campusepulse.adminApp.Student
 
-@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddStudentScreen(adminViewModel: AdminViewModel, navController: NavController) {
@@ -53,15 +49,13 @@ fun AddStudentScreen(adminViewModel: AdminViewModel, navController: NavControlle
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-                StudentForm {
+                StudentForm() {
                     adminViewModel.addStudent(it)
                 }
             }
         }
     }
 }
-
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun StudentForm(onSaveClick: (Student) -> Unit = {}) {
     var firstName by rememberSaveable { mutableStateOf("") }
@@ -72,7 +66,9 @@ fun StudentForm(onSaveClick: (Student) -> Unit = {}) {
     var dob by rememberSaveable { mutableStateOf("") }
     var phoneNumber by rememberSaveable { mutableStateOf("") }
     var batch by rememberSaveable { mutableStateOf("") }
-    Column(modifier = Modifier.padding(16.dp).fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = Modifier
+        .padding(16.dp)
+        .fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
         InputFieldText(label = "First Name", value = firstName, onValueChange = { firstName = it })
         InputFieldText(label = "Last Name", value = lastName, onValueChange = { lastName = it })
         InputFieldNumber(label = "Roll No", value = rollNo, onValueChange = { rollNo = it })
@@ -83,7 +79,9 @@ fun StudentForm(onSaveClick: (Student) -> Unit = {}) {
         InputFieldNumber(label = "Phone Number", value = phoneNumber, onValueChange = { phoneNumber = it })
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
             onClick = {
                 onSaveClick(
                     Student(
