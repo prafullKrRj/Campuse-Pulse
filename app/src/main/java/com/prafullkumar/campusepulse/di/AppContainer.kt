@@ -30,6 +30,6 @@ class AppModuleImpl(
         FirebaseFirestore.getInstance()
     }
     override val adminRepository: AdminRepository by lazy {
-        AdminRepositoryImpl(firebaseAuth, firebaseFirestore)
+        AdminRepositoryImpl(firebaseAuth, firebaseFirestore, context)
     }
 }

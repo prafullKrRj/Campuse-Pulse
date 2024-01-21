@@ -1,6 +1,8 @@
 package com.prafullkumar.campusepulse.data
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.prafullkumar.campusepulse.adminApp.Branch
@@ -11,13 +13,14 @@ import kotlinx.coroutines.flow.callbackFlow
 
 interface AdminRepository {
     suspend fun getUserData(): String
-    fun addStudent(student: Student)
+    suspend fun addStudent(student: Student)
     suspend fun getClasses(): Flow<Result<MutableList<Branch>>>
 }
 
 class AdminRepositoryImpl (
     private val firebaseAuth: FirebaseAuth,
-    private val firebaseFirestore: FirebaseFirestore
+    private val firebaseFirestore: FirebaseFirestore,
+    private val context: Context
 ) : AdminRepository {
     override suspend fun getUserData(): String {
         firebaseAuth.currentUser?.let {
@@ -25,7 +28,16 @@ class AdminRepositoryImpl (
         }
         return "Hello World"
     }
-    override fun addStudent(student: Student) {
+    override suspend fun addStudent(student: Student) {
+        firebaseAuth.createUserWithEmailAndPassword("${student.admissionNo}@student.com", "password")
+            .addOnSuccessListener {
+                addToStudentDatabase(student)
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "${it.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+    private fun addToStudentDatabase(student: Student) {
         val user = hashMapOf(
             "fName" to student.fName,
             "lName" to student.lName,
@@ -34,14 +46,15 @@ class AdminRepositoryImpl (
             "admissionNo" to student.admissionNo,
             "branch" to listOf(student.branch),
             "phoneNo" to student.phone,
+            "batch" to student.batch
         )
         firebaseFirestore.collection("students")
             .add(user)
             .addOnSuccessListener { documentReference ->
-                Log.d("vashu", "DocumentSnapshot added with ID: ${documentReference.id}")
+                Toast.makeText(context, "Added Successfully", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
-                Log.w("vashu", "Error adding document", e)
+                Toast.makeText(context, "Error adding student", Toast.LENGTH_SHORT).show()
             }
     }
     override suspend fun getClasses(): Flow<Result<MutableList<Branch>>> {

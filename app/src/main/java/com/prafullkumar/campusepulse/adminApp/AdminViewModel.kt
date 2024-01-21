@@ -8,7 +8,6 @@ import com.prafullkumar.campusepulse.data.AdminRepository
 import com.prafullkumar.campusepulse.data.Result
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class AdminViewModel(
@@ -27,7 +26,7 @@ class AdminViewModel(
         _state.value = AdminState.Loading
         getClasses()
     }
-    val userData = mutableStateOf("")
+    private val userData = mutableStateOf("")
     fun getUserData() {
         viewModelScope.launch {
             userData.value = repository.getUserData()
@@ -67,9 +66,10 @@ data class Branch(
 data class Student(
     val fName: String = "",
     val lName: String = "",
-    val phone: Int = 0,
+    val phone: Long = 0,
     val branch: String = "",
-    val rollNo: Int = 0,
-    val admissionNo: Int = 0,
+    val rollNo: Long = 0,
+    val admissionNo: Long = 0,
     val dob: String = "",
+    val batch: String = ""
 )
