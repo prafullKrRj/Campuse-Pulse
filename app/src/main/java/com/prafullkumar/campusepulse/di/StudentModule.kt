@@ -46,7 +46,7 @@ class StudentModuleImpl(
         AssistantsRepositoryImpl()
     }
     override val noticesRepository: NoticesRepository by lazy {
-        NoticesRepositoryImpl()
+        NoticesRepositoryImpl(context)
     }
 
 }

@@ -22,13 +22,14 @@ class BranchDetailsRepositoryImpl(
      * */
     override suspend fun getBranchDetails(branchId: String): Flow<Result<Branch>> {
         return callbackFlow {
-            trySend(Result.Loading)
-            firestore.collection("branches")
-                .document(branchId)
-                .get()
-                .addOnSuccessListener { document ->
-                    val tt = document.data?.get("timeTable")
-                    trySend(Result.Success(
+            try {
+                trySend(Result.Loading)
+                firestore.collection("branches")
+                    .document(branchId)
+                    .get()
+                    .addOnSuccessListener { document ->
+                        val tt = document.data?.get("timeTable")
+                        trySend(Result.Success(
                             Branch(
                                 id = document.id,
                                 name = document.data?.get("name").toString(),
@@ -36,11 +37,15 @@ class BranchDetailsRepositoryImpl(
                                 tt = if (tt != null) tt as Map<String, List<String>> else null,
                             )
                         )
-                    )
-                }
-                .addOnFailureListener { error ->
-                    trySend(Result.Error(error))
-                }
+                        )
+                    }
+                    .addOnFailureListener { error ->
+                        trySend(Result.Error(error))
+                    }
+            } catch (e: Exception) {
+                trySend(Result.Error(e))
+            }
+
             awaitClose {  }
         }
     }
@@ -50,32 +55,36 @@ class BranchDetailsRepositoryImpl(
      * */
     override suspend fun getStudents(branchId: String): Flow<Result<List<Student>>> {
         return callbackFlow {
-            trySend(Result.Loading)
-            firestore.collection("branches").document(branchId)
-                .collection("students")
-                .get()
-                .addOnSuccessListener {
-                    val students = mutableListOf<Student>()
-                    for (document in it.documents) {
-                        students.add(
-                            Student(
-                                fName = document.data?.get("fname").toString(),
-                                lName = document.data?.get("lname").toString(),
-                                rollNo = document.data?.get("rollNo").toString().toLong(),
-                                admissionNo = document.data?.get("admNo").toString().toLong(),
-                                branch = document.data?.get("branch").toString(),
-                                batch = document.data?.get("batch").toString(),
-                                phone = document.data?.get("phoneNo").toString().toLong(),
-                                dob = document.data?.get("dob").toString(),
-                                attendance = document.data?.get("attendance") as Map<String, List<String>>
+            try {
+                trySend(Result.Loading)
+                firestore.collection("branches").document(branchId)
+                    .collection("students")
+                    .get()
+                    .addOnSuccessListener {
+                        val students = mutableListOf<Student>()
+                        for (document in it.documents) {
+                            students.add(
+                                Student(
+                                    fName = document.data?.get("fname").toString(),
+                                    lName = document.data?.get("lname").toString(),
+                                    rollNo = document.data?.get("rollNo").toString().toLong(),
+                                    admissionNo = document.data?.get("admNo").toString().toLong(),
+                                    branch = document.data?.get("branch").toString(),
+                                    batch = document.data?.get("batch").toString(),
+                                    phone = document.data?.get("phoneNo").toString().toLong(),
+                                    dob = document.data?.get("dob").toString(),
+                                    attendance = document.data?.get("attendance") as Map<String, List<String>>
+                                )
                             )
-                        )
+                        }
+                        trySend(Result.Success(students))
                     }
-                    trySend(Result.Success(students))
-                }
-                .addOnFailureListener {
-                    trySend(Result.Error(it))
-                }
+                    .addOnFailureListener {
+                        trySend(Result.Error(it))
+                    }
+            } catch (e: Exception) {
+                trySend(Result.Error(e))
+            }
             awaitClose {  }
         }
     }

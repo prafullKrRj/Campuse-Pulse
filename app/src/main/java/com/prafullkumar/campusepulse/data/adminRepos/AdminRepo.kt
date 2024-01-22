@@ -32,27 +32,31 @@ class AdminRepositoryImpl (
      * */
     override suspend fun getBranches(): Flow<Result<MutableList<Branch>>> {
         return callbackFlow {
-            trySend(Result.Loading).isSuccess
-            firebaseFirestore.collection("branches")
-                .get()
-                .addOnSuccessListener { result ->
-                    val branches = mutableListOf<Branch>()  // stores the branches
-                    result.forEach { document ->
-                        val tt = document.data["timeTable"]
-                        branches.add(
-                            Branch(
-                                id = document.id,
-                                name = document.data["name"].toString(),
-                                strength = document.data["strength"]?.toString()?.toInt(),
-                                tt = if (tt != null) tt as Map<String, List<String>> else null,
+            try {
+                trySend(Result.Loading).isSuccess
+                firebaseFirestore.collection("branches")
+                    .get()
+                    .addOnSuccessListener { result ->
+                        val branches = mutableListOf<Branch>()  // stores the branches
+                        result.forEach { document ->
+                            val tt = document.data["timeTable"]
+                            branches.add(
+                                Branch(
+                                    id = document.id,
+                                    name = document.data["name"].toString(),
+                                    strength = document.data["strength"]?.toString()?.toInt(),
+                                    tt = if (tt != null) tt as Map<String, List<String>> else null,
+                                )
                             )
-                        )
+                        }
+                        trySend(Result.Success(branches)).isSuccess // This is the line which send the data to the flow
                     }
-                    trySend(Result.Success(branches)).isSuccess // This is the line which send the data to the flow
-                }
-                .addOnFailureListener { exception ->
-                    trySend(Result.Error(exception)).isSuccess
-                }
+                    .addOnFailureListener { exception ->
+                        trySend(Result.Error(exception)).isSuccess
+                    }
+            } catch (e: Exception) {
+                trySend(Result.Error(e))
+            }
             awaitClose {  }
         }
     }
