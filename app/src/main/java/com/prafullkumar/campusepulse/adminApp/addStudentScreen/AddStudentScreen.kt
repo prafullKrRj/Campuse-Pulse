@@ -1,4 +1,4 @@
-package com.prafullkumar.campusepulse.adminApp.uiComponents
+package com.prafullkumar.campusepulse.adminApp.addStudentScreen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,8 +25,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.prafullkumar.campusepulse.adminApp.AdminViewModel
-import com.prafullkumar.campusepulse.adminApp.Student
+import com.prafullkumar.campusepulse.adminApp.homeScreen.AdminViewModel
+import com.prafullkumar.campusepulse.adminApp.homeScreen.Student
+import com.prafullkumar.campusepulse.adminApp.uiComponents.DateSelectorField
+import com.prafullkumar.campusepulse.adminApp.uiComponents.InputFieldNumber
+import com.prafullkumar.campusepulse.adminApp.uiComponents.InputFieldText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,6 +59,7 @@ fun AddStudentScreen(adminViewModel: AdminViewModel, navController: NavControlle
         }
     }
 }
+
 @Composable
 fun StudentForm(onSaveClick: (Student) -> Unit = {}) {
     var firstName by rememberSaveable { mutableStateOf("") }

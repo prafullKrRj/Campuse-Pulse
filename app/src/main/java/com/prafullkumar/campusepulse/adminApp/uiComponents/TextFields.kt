@@ -36,14 +36,15 @@ import java.time.format.DateTimeFormatter
 fun InputFieldText(
     label: String,
     value: String,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
 
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
         label = { Text(label) },
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp, horizontal = 16.dp),
         shape = RoundedCornerShape(40),

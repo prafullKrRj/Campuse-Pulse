@@ -7,7 +7,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.prafullkumar.campusepulse.adminApp.AdminNavGraph
-import com.prafullkumar.campusepulse.adminApp.AdminScreen
 import com.prafullkumar.campusepulse.managers.ViewModelProvider
 import com.prafullkumar.campusepulse.presentations.onBoardingScreen.OnBoardViewModel
 import com.prafullkumar.campusepulse.presentations.onBoardingScreen.OnBoardingAdminScreen

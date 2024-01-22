@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,7 +37,7 @@ fun AddButton(addClass: () -> Unit = {}, addStudent: () -> Unit = {}) {
         horizontalAlignment = Alignment.End
     ) {
         AnimatedVisibility(visible = isExpanded) {
-            FloatingActionButton(onClick = addStudent) {
+            FloatingActionButton(onClick = addStudent, containerColor = MaterialTheme.colorScheme.secondaryContainer) {
                 Icon(
                     painter = painterResource(id = R.drawable.student),
                     contentDescription = stringResource(R.string.add_student),
@@ -46,7 +47,7 @@ fun AddButton(addClass: () -> Unit = {}, addStudent: () -> Unit = {}) {
         }
         Spacer(modifier = Modifier.padding(8.dp))
         AnimatedVisibility(visible = isExpanded) {
-            FloatingActionButton(onClick = addClass) {
+            FloatingActionButton(onClick = addClass, containerColor = MaterialTheme.colorScheme.secondaryContainer) {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_school_24),
                     contentDescription = stringResource(
@@ -60,7 +61,7 @@ fun AddButton(addClass: () -> Unit = {}, addStudent: () -> Unit = {}) {
         Spacer(modifier = Modifier.padding(8.dp))
         FloatingActionButton(onClick = {
             isExpanded = !isExpanded
-        }) {
+        }, containerColor = MaterialTheme.colorScheme.primary) {
             Icon(imageVector = Icons.Default.Add, contentDescription = null)
         }
     }

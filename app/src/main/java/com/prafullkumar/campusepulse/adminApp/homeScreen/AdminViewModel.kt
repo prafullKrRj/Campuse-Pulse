@@ -1,12 +1,11 @@
-package com.prafullkumar.campusepulse.adminApp
+package com.prafullkumar.campusepulse.adminApp.homeScreen
 
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.prafullkumar.campusepulse.data.AdminRepository
-import com.prafullkumar.campusepulse.data.Result
+import com.prafullkumar.campusepulse.data.adminRepos.AdminRepository
+import com.prafullkumar.campusepulse.data.adminRepos.Result
+import com.prafullkumar.campusepulse.model.NewBranch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -28,7 +27,6 @@ class AdminViewModel(
             repository.addStudent(student)
         }
     }
-
     private fun getBranches() {
         viewModelScope.launch {
             repository.getBranches().collect { result ->
@@ -46,26 +44,36 @@ class AdminViewModel(
             }
         }
     }
+    val branchName = mutableStateOf("")
+    val year = mutableStateOf("")
+    private val _newBranch = MutableStateFlow(NewBranch())
+    val newBranch = _newBranch.asStateFlow()
+    fun updateBranch(newBranch: NewBranch) {
+        _newBranch.value = newBranch
+    }
 }
 sealed class AdminState {
     data object Initial: AdminState()
-    data class Success(val branches: MutableList<Branch>): AdminState()
-    data class Error(val error: String): AdminState()
+    data class Success(val branches: MutableList<Branch>?): AdminState()
+    data class Error(val error: String?): AdminState()
     data object Loading: AdminState()
 }
 
 data class Branch(
-    val name: String = "",
-    val total: Int = 0,
-    val tt: String = ""
+    val id: String? = "",
+    val name: String? = "",
+    val strength: Int? = 0,
+    val tt: Map<String, List<String>>? = mapOf(),
 )
+
 data class Student(
-    val fName: String = "",
-    val lName: String = "",
-    val phone: Long = 0,
-    val branch: String = "",
-    val rollNo: Long = 0,
-    val admissionNo: Long = 0,
-    val dob: String = "",
-    val batch: String = ""
+    val fName: String? = "",
+    val lName: String? = "",
+    val phone: Long? = 0,
+    val branch: String? = "",
+    val rollNo: Long? = 0,
+    val admissionNo: Long? = 0,
+    val dob: String? = "",
+    val batch: String? = "",
+    val attendance: Map<String, Long>? = mapOf()
 )
