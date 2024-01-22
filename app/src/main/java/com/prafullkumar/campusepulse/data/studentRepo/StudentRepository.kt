@@ -18,6 +18,10 @@ class StudentRepositoryImpl (
     private val firestore: FirebaseFirestore,
     private val firebaseAuth: FirebaseAuth
 ) : StudentRepository {
+
+    /**
+     *      This function is used to get the student details from the firestore (Branches -> Branch -> Students -> Student)
+     * */
     override suspend fun getStudentDetails(): Flow<Result<Student>>  {
         return callbackFlow {
             trySend(Result.Loading)
@@ -41,9 +45,13 @@ class StudentRepositoryImpl (
                 .addOnFailureListener { error ->
                     trySend(Result.Error(error))
                 }
-            awaitClose {  }
+            awaitClose { docRef.isSuccessful }
         }
     }
+
+    /**
+     *       This function is used to get the student details from the document snapshot
+     * */
     private fun getStudentFromDoc(students: DocumentSnapshot): Student {
         return Student(
             fName = students.data?.get("fname").toString(),
