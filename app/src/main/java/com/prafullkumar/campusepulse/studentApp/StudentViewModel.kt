@@ -37,6 +37,7 @@ class StudentViewModel(
         }
     }
 }
+
 sealed class StudentScreenState {
     data object Initial: StudentScreenState()
     data object Loading: StudentScreenState()
