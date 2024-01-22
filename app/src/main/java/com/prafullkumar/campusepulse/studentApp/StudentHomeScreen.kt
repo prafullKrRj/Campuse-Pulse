@@ -23,7 +23,7 @@ fun StudentHomeScreen(viewModel: StudentViewModel) {
             }
         }
         is StudentScreenState.Success -> {
-            (state as StudentScreenState.Success).studentList.fName?.let { Text(text = it) }
+            Text(text = (state as StudentScreenState.Success).studentData.toString())
         }
         is StudentScreenState.Error -> {
             (state as StudentScreenState.Error).error?.let { Text(text = it) }

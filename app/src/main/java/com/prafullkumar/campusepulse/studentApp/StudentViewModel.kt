@@ -40,6 +40,6 @@ class StudentViewModel(
 sealed class StudentScreenState {
     data object Initial: StudentScreenState()
     data object Loading: StudentScreenState()
-    data class Success(val studentList: Student) : StudentScreenState()
+    data class Success(val studentData: Pair<Student, Map<String, List<String>>>) : StudentScreenState()
     data class Error(val error: String?): StudentScreenState()
 }

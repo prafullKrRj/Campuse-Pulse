@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 interface StudentRepository {
-    suspend fun getStudentDetails(): Flow<Result<Student>>
+    suspend fun getStudentDetails(): Flow<Result<Pair<Student, Map<String, List<String>>>>>
 }
 
 @Suppress("UNCHECKED_CAST", "LABEL_NAME_CLASH")
@@ -22,7 +22,7 @@ class StudentRepositoryImpl (
     /**
      *      This function is used to get the student details from the firestore (Branches -> Branch -> Students -> Student)
      * */
-    override suspend fun getStudentDetails(): Flow<Result<Student>>  {
+    override suspend fun getStudentDetails(): Flow<Result<Pair<Student, Map<String, List<String>>>>> {
         return callbackFlow {
             trySend(Result.Loading)
             val id = firebaseAuth.currentUser?.email?.substringBefore('@')
@@ -33,12 +33,9 @@ class StudentRepositoryImpl (
                         val docRef = firestore.collection("branches").document(branch).collection("students").document(id!!)
                         docRef.get()
                             .addOnSuccessListener { students ->
-                                if (docs != null) {
-                                    trySend(Result.Success(
-                                        getStudentFromDoc(students)
-                                    ))
-                                    return@addOnSuccessListener
-                                }
+                                val res = Pair(getStudentFromDoc(students), docs.data["timeTable"] as Map<String, List<String>>)
+                                trySend(Result.Success(res))
+                                return@addOnSuccessListener
                             }
                     }
                 }
