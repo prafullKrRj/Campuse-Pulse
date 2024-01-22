@@ -27,6 +27,6 @@ class AdminModuleImpl(
         AdminRepositoryImpl(firebaseAuth, firebaseFirestore, context)
     }
     override val branchDetailsRepository: BranchDetailsRepository by lazy {
-        BranchDetailsRepositoryImpl()
+        BranchDetailsRepositoryImpl(context = context, firestore = firebaseFirestore)
     }
 }

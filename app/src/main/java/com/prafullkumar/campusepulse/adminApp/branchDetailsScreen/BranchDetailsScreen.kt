@@ -5,6 +5,5 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun BranchDetailsScreen(viewModel: BranchDetailsViewModel) {
-
     Text(text = viewModel.getId())
 }

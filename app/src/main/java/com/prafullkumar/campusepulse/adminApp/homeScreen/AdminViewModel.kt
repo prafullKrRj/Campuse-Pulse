@@ -3,6 +3,8 @@ package com.prafullkumar.campusepulse.adminApp.homeScreen
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.prafullkumar.campusepulse.adminApp.models.Branch
+import com.prafullkumar.campusepulse.adminApp.models.Student
 import com.prafullkumar.campusepulse.data.adminRepos.AdminRepository
 import com.prafullkumar.campusepulse.data.adminRepos.Result
 import com.prafullkumar.campusepulse.model.NewBranch
@@ -59,21 +61,3 @@ sealed class AdminState {
     data object Loading: AdminState()
 }
 
-data class Branch(
-    val id: String? = "",
-    val name: String? = "",
-    val strength: Int? = 0,
-    val tt: Map<String, List<String>>? = mapOf(),
-)
-
-data class Student(
-    val fName: String? = "",
-    val lName: String? = "",
-    val phone: Long? = 0,
-    val branch: String? = "",
-    val rollNo: Long? = 0,
-    val admissionNo: Long? = 0,
-    val dob: String? = "",
-    val batch: String? = "",
-    val attendance: Map<String, Long>? = mapOf()
-)

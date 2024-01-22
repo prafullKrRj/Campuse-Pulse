@@ -3,8 +3,8 @@ package com.prafullkumar.campusepulse.data.adminRepos
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.prafullkumar.campusepulse.adminApp.homeScreen.Branch
-import com.prafullkumar.campusepulse.adminApp.homeScreen.Student
+import com.prafullkumar.campusepulse.adminApp.models.Branch
+import com.prafullkumar.campusepulse.adminApp.models.Student
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
