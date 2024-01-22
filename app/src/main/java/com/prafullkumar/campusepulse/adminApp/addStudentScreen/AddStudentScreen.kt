@@ -26,7 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.prafullkumar.campusepulse.adminApp.homeScreen.AdminViewModel
-import com.prafullkumar.campusepulse.adminApp.homeScreen.Student
+import com.prafullkumar.campusepulse.adminApp.models.Student
 import com.prafullkumar.campusepulse.adminApp.uiComponents.DateSelectorField
 import com.prafullkumar.campusepulse.adminApp.uiComponents.InputFieldNumber
 import com.prafullkumar.campusepulse.adminApp.uiComponents.InputFieldText

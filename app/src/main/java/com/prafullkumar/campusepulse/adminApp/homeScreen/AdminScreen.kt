@@ -1,8 +1,6 @@
 package com.prafullkumar.campusepulse.adminApp.homeScreen
 
 import androidx.compose.foundation.clickable
-import androidx.compose.ui.unit.dp
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -21,13 +20,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.prafullkumar.campusepulse.R
 import com.prafullkumar.campusepulse.adminApp.AdminScreens
+import com.prafullkumar.campusepulse.adminApp.models.Branch
 import com.prafullkumar.campusepulse.adminApp.uiComponents.AddButton
 import com.prafullkumar.campusepulse.commons.TopAppBar
-import com.prafullkumar.campusepulse.presentations.navigationGraph.Screen
 
 @Composable
 fun AdminScreen(
