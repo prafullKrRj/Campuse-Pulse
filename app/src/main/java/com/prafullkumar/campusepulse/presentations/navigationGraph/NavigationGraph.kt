@@ -12,6 +12,7 @@ import com.prafullkumar.campusepulse.presentations.onBoardingScreen.OnBoardViewM
 import com.prafullkumar.campusepulse.presentations.onBoardingScreen.OnBoardingAdminScreen
 import com.prafullkumar.campusepulse.presentations.onBoardingScreen.OnBoardingScreen
 import com.prafullkumar.campusepulse.presentations.onBoardingScreen.OnBoardingStudentScreen
+import com.prafullkumar.campusepulse.studentApp.StudentHomeScreen
 
 @Composable
 fun NavigationGraph(
@@ -54,7 +55,7 @@ fun NavigationGraph(
             ))
         }
         composable(Screen.STUDENT.route) {
-            Text(text = "student")
+            StudentHomeScreen(viewModel = viewModel(factory = ViewModelProvider.getStudentViewModel()))
         }
     }
 

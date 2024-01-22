@@ -7,6 +7,7 @@ import com.prafullkumar.campusepulse.CampusePulseApp
 import com.prafullkumar.campusepulse.adminApp.homeScreen.AdminViewModel
 import com.prafullkumar.campusepulse.adminApp.branchDetailsScreen.BranchDetailsViewModel
 import com.prafullkumar.campusepulse.presentations.onBoardingScreen.OnBoardViewModel
+import com.prafullkumar.campusepulse.studentApp.StudentViewModel
 
 object ViewModelProvider {
 
@@ -29,6 +30,13 @@ object ViewModelProvider {
             val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CampusePulseApp)
             val branchDetailsRepository = application.adminModule.branchDetailsRepository
             BranchDetailsViewModel(branchDetailsRepository, id)
+        }
+    }
+    fun getStudentViewModel() = viewModelFactory {
+        initializer {
+            val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CampusePulseApp)
+            val studentRepository = application.studentModule.studentRepository
+            StudentViewModel(studentRepository)
         }
     }
 }

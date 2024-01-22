@@ -22,7 +22,9 @@ class OnBoardingRepositoryImpl (
         return flow {
             emit(Resource.Loading)
             try {
-                val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+                val result = firebaseAuth
+                    .signInWithEmailAndPassword(email, password)
+                    .await()
                 emit(Resource.Success(result.user != null))
             } catch (e: Exception) {
                 emit(Resource.Error(e.message.toString()))
