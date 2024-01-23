@@ -1,4 +1,4 @@
-package com.prafullkumar.campusepulse.studentApp
+package com.prafullkumar.campusepulse.studentApp.homeScreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,7 +19,7 @@ class StudentViewModel(
     init {
         getStudentDetails()
     }
-    private fun getStudentDetails() {
+    fun getStudentDetails() {
         viewModelScope.launch {
             repository.getStudentDetails().collect { repo ->
                 when(repo) {

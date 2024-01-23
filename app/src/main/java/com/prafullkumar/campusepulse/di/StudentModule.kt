@@ -9,15 +9,12 @@ import com.prafullkumar.campusepulse.data.studentRepo.NotesRepository
 import com.prafullkumar.campusepulse.data.studentRepo.NotesRepositoryImpl
 import com.prafullkumar.campusepulse.data.studentRepo.NoticesRepository
 import com.prafullkumar.campusepulse.data.studentRepo.NoticesRepositoryImpl
-import com.prafullkumar.campusepulse.data.studentRepo.ProfileRepository
-import com.prafullkumar.campusepulse.data.studentRepo.ProfileRepositoryImpl
 import com.prafullkumar.campusepulse.data.studentRepo.StudentRepository
 import com.prafullkumar.campusepulse.data.studentRepo.StudentRepositoryImpl
 
 interface StudentModule {
     val studentRepository: StudentRepository
     val notesRepository: NotesRepository
-    val profileRepository: ProfileRepository
     val assistantRepository: AssistantsRepository
     val noticesRepository: NoticesRepository
 }
@@ -38,9 +35,6 @@ class StudentModuleImpl(
     }
     override val notesRepository: NotesRepository by lazy {
         NotesRepositoryImpl()
-    }
-    override val profileRepository: ProfileRepository by lazy {
-        ProfileRepositoryImpl()
     }
     override val assistantRepository: AssistantsRepository by lazy {
         AssistantsRepositoryImpl()

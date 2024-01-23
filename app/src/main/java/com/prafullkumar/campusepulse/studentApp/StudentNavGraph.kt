@@ -27,13 +27,12 @@ import com.prafullkumar.campusepulse.R
 import com.prafullkumar.campusepulse.managers.ViewModelProvider
 import com.prafullkumar.campusepulse.studentApp.assistant.AssistantScreen
 import com.prafullkumar.campusepulse.studentApp.assistant.AssistantsViewModel
-import com.prafullkumar.campusepulse.studentApp.homeScreen.StudentHomeScreen
+import com.prafullkumar.campusepulse.studentApp.homeScreen.StudentHomeScreenNavGraph
+import com.prafullkumar.campusepulse.studentApp.homeScreen.StudentViewModel
 import com.prafullkumar.campusepulse.studentApp.notes.NotesScreen
 import com.prafullkumar.campusepulse.studentApp.notes.NotesViewModel
 import com.prafullkumar.campusepulse.studentApp.noticeScreen.NoticeScreen
 import com.prafullkumar.campusepulse.studentApp.noticeScreen.NoticeViewModel
-import com.prafullkumar.campusepulse.studentApp.profileScreen.ProfileScreen
-import com.prafullkumar.campusepulse.studentApp.profileScreen.ProfileViewModel
 
 @Composable
 fun StudentNavGraph() {
@@ -41,7 +40,6 @@ fun StudentNavGraph() {
     val viewModels = listOf(
         viewModel<StudentViewModel>(factory = ViewModelProvider.getStudentViewModel()),
         viewModel<NotesViewModel>(factory = ViewModelProvider.getNotesViewModel()),
-        viewModel<ProfileViewModel>(factory = ViewModelProvider.getStudentProfileViewModel()),
         viewModel<AssistantsViewModel>(factory = ViewModelProvider.getStudentAssistantViewModel()),
         viewModel<NoticeViewModel>(factory = ViewModelProvider.getStudentNoticeViewModel()),
     )
@@ -55,19 +53,16 @@ fun StudentNavGraph() {
             .padding(innerPadding)) {
             NavHost(navController = sNavController, startDestination = StudentScreens.HOME.name) {
                 composable(StudentScreens.HOME.name) {
-                    StudentHomeScreen(viewModel = viewModels[0] as StudentViewModel)
+                    StudentHomeScreenNavGraph(viewModel = viewModels[0] as StudentViewModel)
                 }
                 composable(StudentScreens.NOTES.name) {
                     NotesScreen(viewModel = viewModels[1] as NotesViewModel)
                 }
-                composable(StudentScreens.PROFILE.name) {
-                    ProfileScreen(viewModel = viewModels[2] as ProfileViewModel)
-                }
                 composable(StudentScreens.ASSISTANT.name) {
-                    AssistantScreen(viewModel = viewModels[3] as AssistantsViewModel)
+                    AssistantScreen(viewModel = viewModels[2] as AssistantsViewModel)
                 }
                 composable(StudentScreens.NOTICE.name) {
-                    NoticeScreen(viewModel = viewModels[4] as NoticeViewModel)
+                    NoticeScreen(viewModel = viewModels[3] as NoticeViewModel)
                 }
             }
         }
@@ -106,6 +101,5 @@ object StudentConst {
         "Assistant" to StudentScreens.ASSISTANT.name to R.drawable.microchip,
         "Notices" to StudentScreens.NOTICE.name to R.drawable.baseline_dashboard_24,
         "Notes" to StudentScreens.NOTES.name to R.drawable.baseline_edit_note_24,
-        "Profile" to StudentScreens.PROFILE.name to R.drawable.baseline_face_24,
     )
 }

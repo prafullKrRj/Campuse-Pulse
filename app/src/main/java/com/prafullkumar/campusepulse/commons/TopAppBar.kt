@@ -18,6 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBar(
+    heading: String? = null,
     navIcon: ImageVector? = null,
     navIconClicked: () -> Unit = {},
     actionIcon: ImageVector? = null,
@@ -34,8 +35,15 @@ fun TopAppBar(
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(),
                 )
-            } else {
+            } else if (heading == null) {
                 labelRow()
+            } else {
+                Text(
+                    text = heading,
+                    style = MaterialTheme.typography.headlineMedium,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth(),
+                )
             }
         },
         navigationIcon = {

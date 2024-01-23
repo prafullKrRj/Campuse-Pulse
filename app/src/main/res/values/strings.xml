@@ -5,4 +5,6 @@
     <string name="add_class">" Add class"</string>
     <string name="add_student">add student</string>
     <string name="notice">Notice</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile\n</string>
 </resources>

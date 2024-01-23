@@ -7,11 +7,10 @@ import com.prafullkumar.campusepulse.CampusePulseApp
 import com.prafullkumar.campusepulse.adminApp.homeScreen.AdminViewModel
 import com.prafullkumar.campusepulse.adminApp.branchDetailsScreen.BranchDetailsViewModel
 import com.prafullkumar.campusepulse.presentations.onBoardingScreen.OnBoardViewModel
-import com.prafullkumar.campusepulse.studentApp.StudentViewModel
+import com.prafullkumar.campusepulse.studentApp.homeScreen.StudentViewModel
 import com.prafullkumar.campusepulse.studentApp.assistant.AssistantsViewModel
 import com.prafullkumar.campusepulse.studentApp.notes.NotesViewModel
 import com.prafullkumar.campusepulse.studentApp.noticeScreen.NoticeViewModel
-import com.prafullkumar.campusepulse.studentApp.profileScreen.ProfileViewModel
 
 object ViewModelProvider {
 
@@ -50,13 +49,7 @@ object ViewModelProvider {
             NotesViewModel(studentRepository)
         }
     }
-    fun getStudentProfileViewModel() = viewModelFactory {
-        initializer {
-            val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CampusePulseApp)
-            val repository = application.studentModule.profileRepository
-            ProfileViewModel(repository)
-        }
-    }
+
     fun getStudentAssistantViewModel() = viewModelFactory {
         initializer {
             val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CampusePulseApp)
