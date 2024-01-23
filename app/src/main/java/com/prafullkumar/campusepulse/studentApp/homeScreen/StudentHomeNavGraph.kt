@@ -14,7 +14,7 @@ fun StudentHomeScreenNavGraph(viewModel: StudentViewModel) {
     Column(
         Modifier.fillMaxSize()
     ) {
-        NavHost(navController = navController, startDestination = StudentHomeScreens.PROFILE.name) {
+        NavHost(navController = navController, startDestination = StudentHomeScreens.MAIN.name) {
             composable(StudentHomeScreens.MAIN.name) {
                 StudentHomeScreen(navController = navController, viewModel = viewModel)
             }

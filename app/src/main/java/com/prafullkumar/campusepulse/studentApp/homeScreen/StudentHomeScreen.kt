@@ -14,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.prafullkumar.campusepulse.R
 import com.prafullkumar.campusepulse.commons.TopAppBar
@@ -37,7 +38,7 @@ fun StudentHomeScreen(navController: NavController, viewModel: StudentViewModel)
             .padding(paddingValues)) {
             when(state) {
                 is StudentScreenState.Initial -> {
-                    Text("Initial")
+                    Text(stringResource(R.string.initial))
                 }
                 is StudentScreenState.Loading -> {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -45,7 +46,7 @@ fun StudentHomeScreen(navController: NavController, viewModel: StudentViewModel)
                     }
                 }
                 is StudentScreenState.Success -> {
-                    Text(text = (state as StudentScreenState.Success).studentData.toString())
+                    StudentUI((state as StudentScreenState.Success).studentData)
                 }
                 is StudentScreenState.Error -> {
                     (state as StudentScreenState.Error).error?.let { Text(text = it) }
