@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -28,6 +27,7 @@ import com.prafullkumar.campusepulse.R
 import com.prafullkumar.campusepulse.managers.ViewModelProvider
 import com.prafullkumar.campusepulse.studentApp.assistant.AssistantScreen
 import com.prafullkumar.campusepulse.studentApp.assistant.AssistantsViewModel
+import com.prafullkumar.campusepulse.studentApp.attendanceScreen.AttendanceScreen
 import com.prafullkumar.campusepulse.studentApp.homeScreen.StudentHomeScreenNavGraph
 import com.prafullkumar.campusepulse.studentApp.homeScreen.StudentViewModel
 import com.prafullkumar.campusepulse.studentApp.notes.NotesScreen
@@ -52,9 +52,12 @@ fun StudentNavGraph() {
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(innerPadding)) {
-            NavHost(navController = sNavController, startDestination = StudentScreens.ASSISTANT.name) {
+            NavHost(navController = sNavController, startDestination = StudentScreens.HOME.name) {
                 composable(StudentScreens.HOME.name) {
                     StudentHomeScreenNavGraph(viewModel = viewModels[0] as StudentViewModel)
+                }
+                composable(StudentScreens.ATTENDANCE.name) {
+                    AttendanceScreen(viewModel = viewModels[0] as StudentViewModel)
                 }
                 composable(StudentScreens.NOTES.name) {
                     NotesScreen(viewModel = viewModels[1] as NotesViewModel)
@@ -93,12 +96,13 @@ fun BottomNavigationBar(sNavController: NavController, selected: Int) {
     }
 }
 enum class StudentScreens {
-    HOME, NOTICE, PROFILE, NOTES, ASSISTANT
+    HOME, NOTICE, ATTENDANCE, NOTES, ASSISTANT
 }
 @Immutable
 object StudentConst {
     val items = listOf(
         "Home" to StudentScreens.HOME.name to R.drawable.baseline_school_24,
+        "Attend" to StudentScreens.ATTENDANCE.name to R.drawable.baseline_data_saver_off_24,
         "Assistant" to StudentScreens.ASSISTANT.name to R.drawable.microchip,
         "Notices" to StudentScreens.NOTICE.name to R.drawable.baseline_dashboard_24,
         "Notes" to StudentScreens.NOTES.name to R.drawable.baseline_edit_note_24,

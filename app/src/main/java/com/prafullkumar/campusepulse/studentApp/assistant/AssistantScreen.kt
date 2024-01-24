@@ -91,7 +91,7 @@ fun AssistantsMainUI(paddingValues: PaddingValues, viewModel: AssistantsViewMode
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = "Syllabus",
+                            text = "Syllabus coming soon",
                             style = MaterialTheme.typography.headlineLarge,
                             textAlign = TextAlign.Center
                         )
