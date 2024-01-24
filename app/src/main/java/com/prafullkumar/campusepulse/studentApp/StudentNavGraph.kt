@@ -14,6 +14,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -45,13 +46,13 @@ fun StudentNavGraph() {
     )
     Scaffold(
         bottomBar = {
-            BottomNavigationBar(sNavController = sNavController)
+            BottomNavigationBar(sNavController = sNavController, selected = 0)
         }
     ) { innerPadding ->
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(innerPadding)) {
-            NavHost(navController = sNavController, startDestination = StudentScreens.HOME.name) {
+            NavHost(navController = sNavController, startDestination = StudentScreens.ASSISTANT.name) {
                 composable(StudentScreens.HOME.name) {
                     StudentHomeScreenNavGraph(viewModel = viewModels[0] as StudentViewModel)
                 }
@@ -70,8 +71,8 @@ fun StudentNavGraph() {
 }
 
 @Composable
-fun BottomNavigationBar(sNavController: NavController) {
-    var selectedItem by remember { mutableIntStateOf(0) }
+fun BottomNavigationBar(sNavController: NavController, selected: Int) {
+    var selectedItem by rememberSaveable { mutableIntStateOf(selected) }
     val items = StudentConst.items
     NavigationBar {
         items.forEachIndexed { index, item ->

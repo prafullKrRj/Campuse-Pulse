@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerDefaults
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -24,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.prafullkumar.campusepulse.adminApp.models.Student
+import com.prafullkumar.campusepulse.studentApp.homeScreen.components.TimeTableUI
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.Calendar
@@ -31,14 +33,16 @@ import java.util.Calendar
 @Composable
 fun StudentUI(studentData: Pair<Student, Map<String, List<String>>>) {
     CurrentDate()
-    WeekTabRow()
+    WeekTabRow(studentData.second)
 }
 
 @Composable
 fun CurrentDate(date: LocalDate = getCurrentDate()) {
     // Column for the date
     Column(
-        Modifier.fillMaxWidth().padding(10.dp),
+        Modifier
+            .fillMaxWidth()
+            .padding(10.dp),
         verticalArrangement = Arrangement.Center
     ) {
         Text(text = date.dayOfWeek.name, fontWeight = FontWeight.SemiBold, fontSize = 22.sp)
@@ -49,8 +53,9 @@ fun CurrentDate(date: LocalDate = getCurrentDate()) {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun WeekTabRow() {
+fun WeekTabRow(timeTable: Map<String, List<String>>) {
     val daysOfWeek = remember { listOf("Mon", "Tue", "Wed", "Thur", "Fri") }
+    val fullNameDay = remember { listOf("monday", "tuesday", "wednesday", "thursday", "friday") }
     val selectedTabIndex = remember { mutableIntStateOf(getCurrentDayIndex()) }
     val state = rememberLazyListState()
     val scope = rememberCoroutineScope()
@@ -77,15 +82,13 @@ fun WeekTabRow() {
         }
     }
     HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize(), userScrollEnabled = true) { page ->
-        Text(text = "Content for ${daysOfWeek[page]}", modifier = Modifier.fillMaxWidth())
+       TimeTableUI(timeTable = timeTable[fullNameDay[page]] ?: listOf())
     }
     LaunchedEffect(pagerState.currentPage) {
         selectedTabIndex.intValue = pagerState.currentPage
         state.animateScrollToItem(selectedTabIndex.intValue)
     }
 }
-
-
 fun getCurrentDate(): LocalDate {
     return LocalDate.now()
 }
@@ -104,6 +107,7 @@ fun getCurrentDayIndex(): Int {
     }
     return daysOfWeek.indexOf(currentDay)
 }
+
 fun getShortMonthName(month: Int): String {
     return when (month) {
         1 -> "Jan"

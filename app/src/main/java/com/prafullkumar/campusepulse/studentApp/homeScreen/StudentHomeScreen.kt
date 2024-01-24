@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.CircularProgressIndicator
@@ -22,6 +24,7 @@ import com.prafullkumar.campusepulse.commons.TopAppBar
 @Composable
 fun StudentHomeScreen(navController: NavController, viewModel: StudentViewModel) {
     val state by viewModel.studentScreenState.collectAsState()
+    val scrollState = rememberScrollState()
     Scaffold(
         topBar = {
             TopAppBar(
@@ -35,7 +38,8 @@ fun StudentHomeScreen(navController: NavController, viewModel: StudentViewModel)
     ) { paddingValues ->
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(paddingValues)) {
+            .padding(paddingValues)
+            .verticalScroll(scrollState)) {
             when(state) {
                 is StudentScreenState.Initial -> {
                     Text(stringResource(R.string.initial))

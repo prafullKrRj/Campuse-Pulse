@@ -21,8 +21,11 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        buildConfigField(type = "String", name = "API_KEY", value = project.findProperty("API_KEY").toString())
     }
-
+    buildFeatures {
+        buildConfig = true
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -91,4 +94,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.10.1")
     ksp("androidx.room:room-compiler:${rootProject.extra["room_version"]}")
     implementation("androidx.room:room-ktx:${rootProject.extra["room_version"]}")
+
+    // Generative AI
+    implementation("com.google.ai.client.generativeai:generativeai:0.1.2")
 }
