@@ -8,4 +8,6 @@
     <string name="home">Home</string>
     <string name="profile">Profile\n</string>
     <string name="assistants">Assistants</string>
+    <string name="attendance">Attendance</string>
+    <string name="overall_attendance">"Attendance "</string>
 </resources>

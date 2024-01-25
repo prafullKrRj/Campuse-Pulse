@@ -17,5 +17,5 @@ data class Student(
     val admissionNo: Long? = 0,
     val dob: String? = "",
     val batch: String? = "",
-    val attendance: Map<String, List<String>>? = mapOf()
+    val attendance: Map<String, List<Long>>? = mapOf()
 )

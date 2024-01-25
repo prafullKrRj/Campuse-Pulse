@@ -59,7 +59,7 @@ class StudentRepositoryImpl (
             batch = students.data?.get("batch").toString(),
             phone = students.data?.get("phoneNo").toString().toLong(),
             dob = students.data?.get("dob").toString(),
-            attendance = students.data?.get("attendance") as Map<String, List<String>>
+            attendance = students.data?.get("attendance") as Map<String, List<Long>>
         )
     }
 }

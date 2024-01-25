@@ -73,7 +73,7 @@ class BranchDetailsRepositoryImpl(
                                     batch = document.data?.get("batch").toString(),
                                     phone = document.data?.get("phoneNo").toString().toLong(),
                                     dob = document.data?.get("dob").toString(),
-                                    attendance = document.data?.get("attendance") as Map<String, List<String>>
+                                    attendance = document.data?.get("attendance") as Map<String, List<Long>>
                                 )
                             )
                         }

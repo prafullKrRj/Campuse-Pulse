@@ -46,13 +46,13 @@ fun StudentNavGraph() {
     )
     Scaffold(
         bottomBar = {
-            BottomNavigationBar(sNavController = sNavController, selected = 0)
+            BottomNavigationBar(sNavController = sNavController, selected = 1)
         }
     ) { innerPadding ->
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(innerPadding)) {
-            NavHost(navController = sNavController, startDestination = StudentScreens.HOME.name) {
+            NavHost(navController = sNavController, startDestination = StudentScreens.ATTENDANCE.name) {
                 composable(StudentScreens.HOME.name) {
                     StudentHomeScreenNavGraph(viewModel = viewModels[0] as StudentViewModel)
                 }

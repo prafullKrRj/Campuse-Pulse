@@ -97,4 +97,6 @@ dependencies {
 
     // Generative AI
     implementation("com.google.ai.client.generativeai:generativeai:0.1.2")
+
+    implementation("co.yml:ycharts:2.1.0")
 }
