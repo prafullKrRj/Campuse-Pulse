@@ -1,0 +1,93 @@
+package com.prafullkumar.campusepulse.teacherApp
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberStandardBottomSheetState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.prafullkumar.campusepulse.R
+import com.prafullkumar.campusepulse.commons.TopAppBar
+import com.prafullkumar.campusepulse.managers.ViewModelProvider
+import com.prafullkumar.campusepulse.studentApp.BottomNavigationBar
+import com.prafullkumar.campusepulse.teacherApp.homeScreen.TeacherHomeScreen
+import com.prafullkumar.campusepulse.teacherApp.homeScreen.TeacherProfileScreen
+import com.prafullkumar.campusepulse.teacherApp.homeScreen.TeacherViewModel
+import com.prafullkumar.campusepulse.teacherApp.takeAttendanceScreen.TakeAttendance
+import com.prafullkumar.campusepulse.teacherApp.takeAttendanceScreen.TakeAttendanceViewModel
+
+@Composable
+fun TeacherNavGraph() {
+    val teacherNavController = rememberNavController()
+    val viewModels = listOf(
+        viewModel<TeacherViewModel>(factory = ViewModelProvider.getTeacherViewModel()),
+        viewModel<TakeAttendanceViewModel>(factory = ViewModelProvider.getTakeAttendanceViewModel()),
+    )
+    var selected by rememberSaveable {
+        mutableIntStateOf(0)
+    }
+    Scaffold (
+        bottomBar = {
+            BottomNavigationBar(sNavController = teacherNavController, selected = 0, items = TeacherConsts.items, onSelectedChange = {
+                selected = it
+            })
+        },
+        topBar = {
+            TopAppBar(
+                heading = when(selected) {
+                    0 -> "Home"
+                    1 -> "Attendance"
+                    2 -> "Profile"
+                    else -> "Home"
+                },
+            )
+        }
+    ){ paddingValues ->
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)) {
+            NavHost(
+                navController = teacherNavController,
+                startDestination = TeacherScreens.HOME.name
+            ) {
+                composable(TeacherScreens.HOME.name) {
+                    TeacherHomeScreen(viewModel = viewModels[0] as TeacherViewModel)
+                }
+                composable(TeacherScreens.ATTENDANCE.name) {
+                    TakeAttendance(viewModel = viewModels[1] as TakeAttendanceViewModel)
+                }
+                composable(TeacherScreens.PROFILE.name) {
+                    TeacherProfileScreen(viewModel = viewModels[0] as TeacherViewModel)
+                }
+            }
+        }
+    }
+}
+
+
+
+enum class TeacherScreens {
+    HOME,
+    PROFILE,
+    ATTENDANCE,
+}
+@Immutable
+object TeacherConsts {
+    val items = listOf(
+        "Home" to TeacherScreens.HOME.name to R.drawable.baseline_school_24,
+        "Attendance" to TeacherScreens.ATTENDANCE.name to R.drawable.baseline_data_saver_off_24,
+        "Profile" to TeacherScreens.PROFILE.name to R.drawable.baseline_person_24,
+    )
+}

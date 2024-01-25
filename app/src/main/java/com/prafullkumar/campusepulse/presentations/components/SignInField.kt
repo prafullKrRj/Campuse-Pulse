@@ -45,7 +45,7 @@ fun SignInField(
                 when (type) {
                     USER.ADMIN.name -> "Admin ID"
                     USER.STUDENT.name -> "Student ID"
-                    else -> "ID"
+                    else -> "Teacher ID"
                 }
             ) }
         )
@@ -58,8 +58,10 @@ fun SignInField(
             onClick = {
                 if (type == USER.ADMIN.name) {
                     onSignIn(User("${identifier}@admin.com", pass))
-                } else {
+                } else if (type == USER.STUDENT.name) {
                     onSignIn(User("${identifier}@student.com", pass))
+                } else {
+                    onSignIn(User("${identifier}@teacher.com", pass))
                 }
             },
             enabled = identifier.isNotBlank() && pass.isNotBlank()

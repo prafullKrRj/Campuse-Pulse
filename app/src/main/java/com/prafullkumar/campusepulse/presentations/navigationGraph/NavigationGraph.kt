@@ -8,11 +8,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.prafullkumar.campusepulse.adminApp.AdminNavGraph
 import com.prafullkumar.campusepulse.managers.ViewModelProvider
+import com.prafullkumar.campusepulse.presentations.onBoardingScreen.OnBoardTeacher
 import com.prafullkumar.campusepulse.presentations.onBoardingScreen.OnBoardViewModel
 import com.prafullkumar.campusepulse.presentations.onBoardingScreen.OnBoardingAdminScreen
 import com.prafullkumar.campusepulse.presentations.onBoardingScreen.OnBoardingScreen
 import com.prafullkumar.campusepulse.presentations.onBoardingScreen.OnBoardingStudentScreen
 import com.prafullkumar.campusepulse.studentApp.StudentNavGraph
+import com.prafullkumar.campusepulse.teacherApp.TeacherNavGraph
 
 @Composable
 fun NavigationGraph(
@@ -47,7 +49,10 @@ fun NavigationGraph(
             )
         }
         composable(Screen.TEACHER_SIGNING.route) {
-            Text(text = "teacher")
+            OnBoardTeacher(
+                navController = mainNavController,
+                onBoardViewModel = onBoardViewModel
+            )
         }
         composable(Screen.ADMIN.route) {
             AdminNavGraph(adminViewModel = viewModel(
@@ -57,13 +62,16 @@ fun NavigationGraph(
         composable(Screen.STUDENT.route) {
             StudentNavGraph()
         }
+        composable(Screen.TEACHER.route) {
+            TeacherNavGraph()
+        }
     }
 
 }
 enum class Screen(val route: String) {
     ADMIN_SIGNING("admin_signing"),
     STUDENT_SIGNING("student_signing"),
-    TEACHER_SIGNING("teacher"),
+    TEACHER_SIGNING("teacher_signing"),
     MAIN("main"),
     ADMIN("admin"),
     STUDENT("student"),

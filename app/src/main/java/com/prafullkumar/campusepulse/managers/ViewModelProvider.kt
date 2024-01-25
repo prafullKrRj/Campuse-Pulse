@@ -11,6 +11,8 @@ import com.prafullkumar.campusepulse.studentApp.homeScreen.StudentViewModel
 import com.prafullkumar.campusepulse.studentApp.assistant.AssistantsViewModel
 import com.prafullkumar.campusepulse.studentApp.notes.NotesViewModel
 import com.prafullkumar.campusepulse.studentApp.noticeScreen.NoticeViewModel
+import com.prafullkumar.campusepulse.teacherApp.homeScreen.TeacherViewModel
+import com.prafullkumar.campusepulse.teacherApp.takeAttendanceScreen.TakeAttendanceViewModel
 
 object ViewModelProvider {
 
@@ -35,6 +37,10 @@ object ViewModelProvider {
             BranchDetailsViewModel(branchDetailsRepository, id)
         }
     }
+
+    /**
+     *  Student app View Models
+     * */
     fun getStudentViewModel() = viewModelFactory {
         initializer {
             val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CampusePulseApp)
@@ -62,6 +68,26 @@ object ViewModelProvider {
             val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CampusePulseApp)
             val repository = application.studentModule.noticesRepository
             NoticeViewModel(repository)
+        }
+    }
+
+    /**
+     *
+     *         Teacher app View Models
+     * */
+
+    fun getTeacherViewModel() = viewModelFactory {
+        initializer {
+            val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CampusePulseApp)
+            val teacherRepository = application.teacherModule.teacherRepository
+            TeacherViewModel(teacherRepository)
+        }
+    }
+    fun getTakeAttendanceViewModel() = viewModelFactory {
+        initializer {
+            val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CampusePulseApp)
+            val takeAttendanceRepository = application.teacherModule.takeAttendanceRepository
+            TakeAttendanceViewModel(takeAttendanceRepository)
         }
     }
 }

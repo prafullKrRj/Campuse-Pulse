@@ -29,7 +29,14 @@ fun OnBoardingScreen(navController: NavController) {
         ) {
             Text("Admin")
         }
-
+        Button(
+            onClick = {
+                navController.navigate(Screen.TEACHER_SIGNING.route)
+            },
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Text("Teacher")
+        }
         Button(
             onClick = {
                 navController.navigate(Screen.STUDENT_SIGNING.route)

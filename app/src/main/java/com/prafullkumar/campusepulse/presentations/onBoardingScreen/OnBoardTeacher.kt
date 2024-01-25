@@ -11,20 +11,16 @@ import com.prafullkumar.campusepulse.presentations.components.SignInField
 import com.prafullkumar.campusepulse.presentations.navigationGraph.Screen
 import com.prafullkumar.campusepulse.presentations.navigationGraph.USER
 
-/**
- *  OnBoardingAdminScreen is a composable function which is used to display the admin login screen.
- *
- * */
 @Composable
-fun OnBoardingAdminScreen(
-    onBoardViewModel: OnBoardViewModel,
-    navController: NavController
+fun OnBoardTeacher(
+    navController: NavController,
+    onBoardViewModel: OnBoardViewModel
 ) {
     val state by onBoardViewModel.state.collectAsState()
     val context = LocalContext.current
-    SignInField(type = USER.ADMIN.name) {
+    SignInField(type = USER.TEACHER.name) {
         onBoardViewModel.signInUser(
-            userType = USER.ADMIN.name,
+            userType = USER.TEACHER.name,
             email = it.id,
             password = it.pass
         )
@@ -34,7 +30,7 @@ fun OnBoardingAdminScreen(
             // do nothing
         }
         is OnboardingState.Success -> {
-            navController.navigate(Screen.ADMIN.route)
+            navController.navigate(Screen.TEACHER.route)
         }
         is OnboardingState.Error -> {
             Toast.makeText(

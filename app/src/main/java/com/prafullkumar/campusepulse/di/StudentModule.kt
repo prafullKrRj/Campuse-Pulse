@@ -21,6 +21,7 @@ interface StudentModule {
 class StudentModuleImpl(
     private val context: Context
 ) : StudentModule {
+
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }

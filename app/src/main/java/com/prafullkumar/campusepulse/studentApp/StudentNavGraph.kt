@@ -46,7 +46,7 @@ fun StudentNavGraph() {
     )
     Scaffold(
         bottomBar = {
-            BottomNavigationBar(sNavController = sNavController, selected = 4)
+            BottomNavigationBar(sNavController = sNavController, selected = 0, items = StudentConst.items)
         }
     ) { innerPadding ->
         Column(modifier = Modifier
@@ -74,9 +74,8 @@ fun StudentNavGraph() {
 }
 
 @Composable
-fun BottomNavigationBar(sNavController: NavController, selected: Int) {
+fun BottomNavigationBar(sNavController: NavController, selected: Int, items: List<Pair<Pair<String, String>, Int>>, onSelectedChange: (Int) -> Unit = {}) {
     var selectedItem by rememberSaveable { mutableIntStateOf(selected) }
-    val items = StudentConst.items
     NavigationBar {
         items.forEachIndexed { index, item ->
             NavigationBarItem(
@@ -89,6 +88,7 @@ fun BottomNavigationBar(sNavController: NavController, selected: Int) {
                 selected = selectedItem == index,
                 onClick = {
                     selectedItem = index
+                    onSelectedChange(index)
                     sNavController.navigate(item.first.second)
                 }
             )
