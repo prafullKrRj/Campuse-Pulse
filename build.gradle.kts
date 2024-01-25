@@ -5,6 +5,7 @@ buildscript {
     }
     dependencies {
         classpath("com.google.gms:google-services:4.4.0")
+
     }
     extra.apply {
         set("room_version", "2.5.2")

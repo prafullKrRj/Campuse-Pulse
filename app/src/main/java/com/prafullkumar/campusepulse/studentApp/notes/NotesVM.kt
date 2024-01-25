@@ -5,7 +5,12 @@ import com.prafullkumar.campusepulse.data.studentRepo.NotesRepository
 
 class NotesViewModel(
     private val notesRepository: NotesRepository,
+) : ViewModel() {
 
-    ) : ViewModel() {
 
+
+    fun isEmpty(): Boolean {
+
+        return true
+    }
 }

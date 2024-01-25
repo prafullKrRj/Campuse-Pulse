@@ -30,7 +30,7 @@ import com.prafullkumar.campusepulse.studentApp.assistant.AssistantsViewModel
 import com.prafullkumar.campusepulse.studentApp.attendanceScreen.AttendanceScreen
 import com.prafullkumar.campusepulse.studentApp.homeScreen.StudentHomeScreenNavGraph
 import com.prafullkumar.campusepulse.studentApp.homeScreen.StudentViewModel
-import com.prafullkumar.campusepulse.studentApp.notes.NotesScreen
+import com.prafullkumar.campusepulse.studentApp.notes.TasksScreen
 import com.prafullkumar.campusepulse.studentApp.notes.NotesViewModel
 import com.prafullkumar.campusepulse.studentApp.noticeScreen.NoticeScreen
 import com.prafullkumar.campusepulse.studentApp.noticeScreen.NoticeViewModel
@@ -46,21 +46,21 @@ fun StudentNavGraph() {
     )
     Scaffold(
         bottomBar = {
-            BottomNavigationBar(sNavController = sNavController, selected = 1)
+            BottomNavigationBar(sNavController = sNavController, selected = 4)
         }
     ) { innerPadding ->
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(innerPadding)) {
-            NavHost(navController = sNavController, startDestination = StudentScreens.ATTENDANCE.name) {
+            NavHost(navController = sNavController, startDestination = StudentScreens.TASKS.name) {
                 composable(StudentScreens.HOME.name) {
                     StudentHomeScreenNavGraph(viewModel = viewModels[0] as StudentViewModel)
                 }
                 composable(StudentScreens.ATTENDANCE.name) {
                     AttendanceScreen(viewModel = viewModels[0] as StudentViewModel)
                 }
-                composable(StudentScreens.NOTES.name) {
-                    NotesScreen(viewModel = viewModels[1] as NotesViewModel)
+                composable(StudentScreens.TASKS.name) {
+                    TasksScreen(viewModel = viewModels[1] as NotesViewModel)
                 }
                 composable(StudentScreens.ASSISTANT.name) {
                     AssistantScreen(viewModel = viewModels[2] as AssistantsViewModel)
@@ -96,7 +96,7 @@ fun BottomNavigationBar(sNavController: NavController, selected: Int) {
     }
 }
 enum class StudentScreens {
-    HOME, NOTICE, ATTENDANCE, NOTES, ASSISTANT
+    HOME, NOTICE, ATTENDANCE, TASKS, ASSISTANT
 }
 @Immutable
 object StudentConst {
@@ -105,6 +105,6 @@ object StudentConst {
         "Attend" to StudentScreens.ATTENDANCE.name to R.drawable.baseline_data_saver_off_24,
         "Assistant" to StudentScreens.ASSISTANT.name to R.drawable.microchip,
         "Notices" to StudentScreens.NOTICE.name to R.drawable.baseline_dashboard_24,
-        "Notes" to StudentScreens.NOTES.name to R.drawable.baseline_edit_note_24,
+        "Tasks" to StudentScreens.TASKS.name to R.drawable.baseline_edit_note_24,
     )
 }
