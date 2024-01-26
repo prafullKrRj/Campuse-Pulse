@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CardDefaults
@@ -32,19 +33,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.prafullkumar.campusepulse.adminApp.models.Student
 import com.prafullkumar.campusepulse.commons.ErrorScreen
 import com.prafullkumar.campusepulse.commons.LoadingScreen
 import com.prafullkumar.campusepulse.commons.TopAppBar
 
 @Composable
-fun TakeAttendance(viewModel: AttendanceViewModel) {
+fun TakeAttendance(viewModel: AttendanceViewModel, navController: NavController) {
     val state by viewModel.state.collectAsState()
     BackHandler {
 
     }
     Scaffold(topBar = {
-        TopAppBar(heading = "Take Attendance")
+        TopAppBar(heading = "Take Attendance",
+            navIcon = Icons.Default.ArrowBack,
+            navIconClicked = {
+                navController.popBackStack()
+            })
     }) { paddingValues ->
         LazyColumn(contentPadding = paddingValues) {
             item {
@@ -88,7 +94,6 @@ fun TakeAttendanceSuccess(students: List<Student>, viewModel: AttendanceViewMode
 @Composable
 fun StudentCard(student: Student,onChecked: () -> Unit, onUnchecked: () -> Unit = {}) {
     val context = LocalContext.current
-    Toast.makeText(context, "StudentCard", Toast.LENGTH_SHORT).show()
     var checked by remember { mutableStateOf(false) }
     Card(
         modifier = Modifier
@@ -107,7 +112,9 @@ fun StudentCard(student: Student,onChecked: () -> Unit, onUnchecked: () -> Unit 
         )
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {

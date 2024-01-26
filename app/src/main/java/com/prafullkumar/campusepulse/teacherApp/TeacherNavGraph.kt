@@ -1,6 +1,5 @@
 package com.prafullkumar.campusepulse.teacherApp
 
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -12,7 +11,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -57,7 +55,7 @@ fun TeacherNavGraph() {
                 composable(TeacherScreens.TAKE_ATTENDANCE.name + "/{branch}") { navBackStackEntry ->
                     isTakeAttendance = true
                     navBackStackEntry.arguments?.getString("branch")?.let { branch ->
-                        TakeAttendance(viewModel = viewModel(factory = ViewModelProvider.getAttendanceViewModel(branch)))
+                        TakeAttendance(viewModel = viewModel(factory = ViewModelProvider.getAttendanceViewModel(branch)), teacherNavController)
                     }
                 }
                 composable(TeacherScreens.PROFILE.name) {
