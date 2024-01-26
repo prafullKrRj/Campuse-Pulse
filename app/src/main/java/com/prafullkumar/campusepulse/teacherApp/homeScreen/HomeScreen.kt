@@ -1,5 +1,13 @@
 package com.prafullkumar.campusepulse.teacherApp.homeScreen
 
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material.icons.filled.Info
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +21,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,13 +37,22 @@ import com.prafullkumar.campusepulse.commons.LoadingScreen
 import com.prafullkumar.campusepulse.commons.TopAppBar
 import com.prafullkumar.campusepulse.data.teacherRepos.TeacherDetails
 import com.prafullkumar.campusepulse.teacherApp.TeacherScreens
+import com.prafullkumar.campusepulse.teacherApp.takeAttendanceScreen.TakeAttendanceViewModel
 
 @Composable
 fun TeacherHomeScreen(viewModel: TeacherViewModel, navController: NavController) {
+
+
     val teacherState by viewModel.teacherState.collectAsState()
     Scaffold(
         topBar = {
-            TopAppBar(heading = "Home")
+            TopAppBar(
+                heading = "Home",
+                navIcon = Icons.Default.ArrowBack,
+                navIconClicked = {
+
+                }
+            )
         }
     ) { paddingValues ->
         LazyColumn(contentPadding = paddingValues) {
@@ -71,6 +90,7 @@ fun TeacherHomeScreen(viewModel: TeacherViewModel, navController: NavController)
 
                 is TeacherState.Success -> {
                     (teacherState as TeacherState.Success).data.branches?.forEachIndexed { index, branch ->
+
                         item {
                             ClassDetails(
                                 branch = branch,
@@ -91,6 +111,7 @@ fun TeacherHomeScreen(viewModel: TeacherViewModel, navController: NavController)
         }
     }
 }
+
 @Composable
 fun ClassDetails(branch: String, index: Int, navController: NavController) {
     Card(
@@ -99,9 +120,7 @@ fun ClassDetails(branch: String, index: Int, navController: NavController) {
             .fillMaxWidth()
             .clickable {
                 navController.navigate(
-                    TeacherScreens.TAKE_ATTENDANCE.name + "/" + branch.substringBefore(
-                        ":"
-                    )
+                    TeacherScreens.TAKE_ATTENDANCE.name + "/" + branch
                 )
             },
     ) {

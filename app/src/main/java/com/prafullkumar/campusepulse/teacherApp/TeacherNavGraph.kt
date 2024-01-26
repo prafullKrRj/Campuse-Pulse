@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -34,12 +35,15 @@ import com.prafullkumar.campusepulse.teacherApp.takeAttendanceScreen.TakeAttenda
 @Composable
 fun TeacherNavGraph() {
     val teacherNavController = rememberNavController()
+    var isTakeAttendance by rememberSaveable { mutableStateOf(false) }
     val viewModels = listOf(
         viewModel<TeacherViewModel>(factory = ViewModelProvider.getTeacherViewModel()),
     )
     Scaffold (
         bottomBar = {
-            BottomNavigationBar(sNavController = teacherNavController, selected = 0, items = TeacherConsts.items)
+            if (!isTakeAttendance) {
+                BottomNavigationBar(sNavController = teacherNavController, selected = 0, items = TeacherConsts.items)
+            }
         }
     ){ paddingValues ->
         Column(modifier = Modifier
@@ -50,9 +54,11 @@ fun TeacherNavGraph() {
                 startDestination = TeacherScreens.HOME.name
             ) {
                 composable(TeacherScreens.HOME.name) {
+                    isTakeAttendance = false
                     TeacherHomeScreen(viewModel = viewModels[0], navController = teacherNavController)
                 }
                 composable(TeacherScreens.TAKE_ATTENDANCE.name + "/{branch}") { navBackStackEntry ->
+                    isTakeAttendance = true
                     navBackStackEntry.arguments?.getString("branch")?.let { branch ->
                         TakeAttendance(viewModel = viewModel(factory = ViewModelProvider.getTakeAttendanceViewModel(branch)))
                     }

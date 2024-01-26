@@ -8,7 +8,6 @@ data class Branch(
 )
 
 data class Student(
-
     val fName: String? = "",
     val lName: String? = "",
     val phone: Long? = 0,

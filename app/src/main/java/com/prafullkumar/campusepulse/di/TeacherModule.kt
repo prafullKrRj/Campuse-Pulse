@@ -29,7 +29,8 @@ class TeacherModuleImpl(
     override val takeAttendanceRepository: TakeAttendanceRepository by lazy {
         TakeAttendanceRepositoryImpl(
             firebaseFirestore = firebaseFirestore,
-            firebaseAuth = firebaseAuth
+            firebaseAuth = firebaseAuth,
+            context
         )
     }
 
