@@ -68,8 +68,6 @@ fun TeacherNavGraph() {
     }
 }
 
-
-
 enum class TeacherScreens {
     HOME,
     PROFILE,
