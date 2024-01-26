@@ -2,7 +2,6 @@ package com.prafullkumar.campusepulse.data.teacherRepos
 
 import android.content.Context
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.prafullkumar.campusepulse.adminApp.models.Student
@@ -11,17 +10,16 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
-interface TakeAttendanceRepository {
+interface AttendanceRepository {
     suspend fun getClassStudentList(branch: String): Flow<Result<List<Student>>>
     suspend fun subTractAttendance(branch: String, studentID: String, subject: String)
     suspend fun addAttendance(branch: String, studentID: String, subject: String)
 }
 
-class TakeAttendanceRepositoryImpl (
+class AttendanceRepositoryImpl(
     private val firebaseFirestore: FirebaseFirestore,
-    private val firebaseAuth: FirebaseAuth,
     private val context: Context
-) : TakeAttendanceRepository {
+) : AttendanceRepository {
 
     override suspend fun getClassStudentList(branch: String): Flow<Result<List<Student>>> {
          return callbackFlow {
@@ -58,6 +56,9 @@ class TakeAttendanceRepositoryImpl (
             }
         }
     }
+
+    /**
+     * */
     override suspend fun addAttendance(branch: String, studentID: String, subject: String) {
         val docRef = firebaseFirestore.collection("branches").document(branch).collection("students").document(studentID)
 

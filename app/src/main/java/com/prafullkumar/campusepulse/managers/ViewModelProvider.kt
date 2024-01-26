@@ -11,8 +11,10 @@ import com.prafullkumar.campusepulse.studentApp.homeScreen.StudentViewModel
 import com.prafullkumar.campusepulse.studentApp.assistant.AssistantsViewModel
 import com.prafullkumar.campusepulse.studentApp.notes.NotesViewModel
 import com.prafullkumar.campusepulse.studentApp.noticeScreen.NoticeViewModel
+import com.prafullkumar.campusepulse.teacherApp.attendanceScreen.DisplayAttendanceViewModel
+import com.prafullkumar.campusepulse.teacherApp.attendanceScreen.ShowAttendanceViewModel
 import com.prafullkumar.campusepulse.teacherApp.homeScreen.TeacherViewModel
-import com.prafullkumar.campusepulse.teacherApp.takeAttendanceScreen.TakeAttendanceViewModel
+import com.prafullkumar.campusepulse.teacherApp.takeAttendanceScreen.AttendanceViewModel
 
 object ViewModelProvider {
 
@@ -83,11 +85,26 @@ object ViewModelProvider {
             TeacherViewModel(teacherRepository)
         }
     }
-    fun getTakeAttendanceViewModel(branch: String) = viewModelFactory {
+    fun getAttendanceViewModel(branch: String) = viewModelFactory {
         initializer {
             val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CampusePulseApp)
             val takeAttendanceRepository = application.teacherModule.takeAttendanceRepository
-            TakeAttendanceViewModel(takeAttendanceRepository, branch)
+            AttendanceViewModel(takeAttendanceRepository, branch)
+        }
+    }
+    fun getDisplayAttendanceViewModel() = viewModelFactory {
+        initializer {
+            val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CampusePulseApp)
+            val displayAttendanceRepository = application.teacherModule.displayAttendRepository
+            DisplayAttendanceViewModel(displayAttendanceRepository)
+        }
+    }
+
+    fun getShowAttendanceViewModel(branch: String) = viewModelFactory {
+        initializer {
+            val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CampusePulseApp)
+            val displayAttendanceRepository = application.teacherModule.displayAttendRepository
+            ShowAttendanceViewModel(displayAttendanceRepository, branch)
         }
     }
 }

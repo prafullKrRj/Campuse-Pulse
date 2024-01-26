@@ -38,7 +38,7 @@ import com.prafullkumar.campusepulse.commons.LoadingScreen
 import com.prafullkumar.campusepulse.commons.TopAppBar
 
 @Composable
-fun TakeAttendance(viewModel: TakeAttendanceViewModel) {
+fun TakeAttendance(viewModel: AttendanceViewModel) {
     val state by viewModel.state.collectAsState()
     BackHandler {
 
@@ -70,7 +70,7 @@ fun TakeAttendance(viewModel: TakeAttendanceViewModel) {
 }
 
 @Composable
-fun TakeAttendanceSuccess(students: List<Student>, viewModel: TakeAttendanceViewModel) {
+fun TakeAttendanceSuccess(students: List<Student>, viewModel: AttendanceViewModel) {
     students.forEachIndexed { index, student ->
         StudentCard(
             student = student,
@@ -133,7 +133,7 @@ fun StudentCard(student: Student,onChecked: () -> Unit, onUnchecked: () -> Unit 
 
 @Composable
 fun SaveAlertDialog(
-    viewModel: TakeAttendanceViewModel
+    viewModel: AttendanceViewModel
 ) {
     var openDialog by remember { mutableStateOf(true) }
 

@@ -1,26 +1,14 @@
 package com.prafullkumar.campusepulse.teacherApp.homeScreen
 
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material.icons.filled.Info
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Card
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Scaffold
@@ -35,14 +23,10 @@ import androidx.navigation.NavController
 import com.prafullkumar.campusepulse.commons.ErrorScreen
 import com.prafullkumar.campusepulse.commons.LoadingScreen
 import com.prafullkumar.campusepulse.commons.TopAppBar
-import com.prafullkumar.campusepulse.data.teacherRepos.TeacherDetails
 import com.prafullkumar.campusepulse.teacherApp.TeacherScreens
-import com.prafullkumar.campusepulse.teacherApp.takeAttendanceScreen.TakeAttendanceViewModel
 
 @Composable
 fun TeacherHomeScreen(viewModel: TeacherViewModel, navController: NavController) {
-
-
     val teacherState by viewModel.teacherState.collectAsState()
     Scaffold(
         topBar = {
@@ -87,16 +71,18 @@ fun TeacherHomeScreen(viewModel: TeacherViewModel, navController: NavController)
                         LoadingScreen()
                     }
                 }
-
                 is TeacherState.Success -> {
                     (teacherState as TeacherState.Success).data.branches?.forEachIndexed { index, branch ->
 
                         item {
                             ClassDetails(
                                 branch = branch,
-                                index = index + 1,
-                                navController = navController
-                            )
+                                index = index + 1
+                            ) {
+                                navController.navigate(
+                                    TeacherScreens.TAKE_ATTENDANCE.name + "/" + branch
+                                )
+                            }
                         }
                     }
                 }
@@ -113,15 +99,13 @@ fun TeacherHomeScreen(viewModel: TeacherViewModel, navController: NavController)
 }
 
 @Composable
-fun ClassDetails(branch: String, index: Int, navController: NavController) {
+fun ClassDetails(branch: String, index: Int, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .padding(horizontal = 12.dp, vertical = 8.dp)
             .fillMaxWidth()
             .clickable {
-                navController.navigate(
-                    TeacherScreens.TAKE_ATTENDANCE.name + "/" + branch
-                )
+                onClick()
             },
     ) {
         Column(

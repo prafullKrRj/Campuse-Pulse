@@ -4,14 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prafullkumar.campusepulse.adminApp.models.Student
 import com.prafullkumar.campusepulse.data.adminRepos.Result
-import com.prafullkumar.campusepulse.data.teacherRepos.TakeAttendanceRepository
+import com.prafullkumar.campusepulse.data.teacherRepos.AttendanceRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class TakeAttendanceViewModel(
-    private val repository: TakeAttendanceRepository,
+class AttendanceViewModel(
+    private val repository: AttendanceRepository,
     private val branch: String,
 ) : ViewModel() {
 
