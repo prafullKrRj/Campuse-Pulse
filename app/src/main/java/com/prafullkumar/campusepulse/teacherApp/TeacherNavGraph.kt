@@ -3,9 +3,12 @@ package com.prafullkumar.campusepulse.teacherApp
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -33,26 +36,10 @@ fun TeacherNavGraph() {
     val teacherNavController = rememberNavController()
     val viewModels = listOf(
         viewModel<TeacherViewModel>(factory = ViewModelProvider.getTeacherViewModel()),
-        viewModel<TakeAttendanceViewModel>(factory = ViewModelProvider.getTakeAttendanceViewModel()),
     )
-    var selected by rememberSaveable {
-        mutableIntStateOf(0)
-    }
     Scaffold (
         bottomBar = {
-            BottomNavigationBar(sNavController = teacherNavController, selected = 0, items = TeacherConsts.items, onSelectedChange = {
-                selected = it
-            })
-        },
-        topBar = {
-            TopAppBar(
-                heading = when(selected) {
-                    0 -> "Home"
-                    1 -> "Attendance"
-                    2 -> "Profile"
-                    else -> "Home"
-                },
-            )
+            BottomNavigationBar(sNavController = teacherNavController, selected = 0, items = TeacherConsts.items)
         }
     ){ paddingValues ->
         Column(modifier = Modifier
@@ -63,13 +50,18 @@ fun TeacherNavGraph() {
                 startDestination = TeacherScreens.HOME.name
             ) {
                 composable(TeacherScreens.HOME.name) {
-                    TeacherHomeScreen(viewModel = viewModels[0] as TeacherViewModel)
+                    TeacherHomeScreen(viewModel = viewModels[0], navController = teacherNavController)
                 }
-                composable(TeacherScreens.ATTENDANCE.name) {
-                    TakeAttendance(viewModel = viewModels[1] as TakeAttendanceViewModel)
+                composable(TeacherScreens.TAKE_ATTENDANCE.name + "/{branch}") { navBackStackEntry ->
+                    navBackStackEntry.arguments?.getString("branch")?.let { branch ->
+                        TakeAttendance(viewModel = viewModel(factory = ViewModelProvider.getTakeAttendanceViewModel(branch)))
+                    }
                 }
                 composable(TeacherScreens.PROFILE.name) {
-                    TeacherProfileScreen(viewModel = viewModels[0] as TeacherViewModel)
+                    TeacherProfileScreen(viewModel = viewModels[0])
+                }
+                composable(TeacherScreens.ATTENDANCE.name) {
+                    Text(text = "Attendance")
                 }
             }
         }
@@ -82,6 +74,7 @@ enum class TeacherScreens {
     HOME,
     PROFILE,
     ATTENDANCE,
+    TAKE_ATTENDANCE,
 }
 @Immutable
 object TeacherConsts {

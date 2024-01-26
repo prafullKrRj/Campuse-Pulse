@@ -83,11 +83,11 @@ object ViewModelProvider {
             TeacherViewModel(teacherRepository)
         }
     }
-    fun getTakeAttendanceViewModel() = viewModelFactory {
+    fun getTakeAttendanceViewModel(branch: String) = viewModelFactory {
         initializer {
             val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CampusePulseApp)
             val takeAttendanceRepository = application.teacherModule.takeAttendanceRepository
-            TakeAttendanceViewModel(takeAttendanceRepository)
+            TakeAttendanceViewModel(takeAttendanceRepository, branch)
         }
     }
 }
