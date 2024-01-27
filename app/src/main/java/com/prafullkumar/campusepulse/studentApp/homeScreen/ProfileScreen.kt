@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -66,7 +65,7 @@ fun ProfileScreen(viewModel: StudentViewModel, navController: NavController) {
 fun ProfileMainUI(student: Student) {
     LazyColumn {
         item {
-            ProfileField(label = "Name", value = student.fName + " " + student.lName)
+            ProfileField(label = "Name", value = student.fname + " " + student.lname)
         }
         item {
             student.branch?.let { ProfileField(label = "Branch", value = it) }
@@ -81,10 +80,10 @@ fun ProfileMainUI(student: Student) {
             ProfileField(label = "Roll No.", value = student.rollNo.toString())
         }
         item {
-            ProfileField(label = "Admission No.", value = student.admissionNo.toString())
+            ProfileField(label = "Admission No.", value = student.admNo.toString())
         }
         item {
-            ProfileField(label = "Phone", value = student.phone.toString())
+            ProfileField(label = "Phone", value = student.phoneNo.toString())
         }
     }
 }

@@ -20,7 +20,7 @@ fun AdminNavGraph(adminViewModel: AdminViewModel) {
             AdminScreen(adminViewModel = adminViewModel, navController = adminNavController)
         }
         composable(AdminScreens.ADD_STUDENT.name) {
-            AddStudentScreen(adminViewModel = adminViewModel, navController = adminNavController)
+            AddStudentScreen(viewModel = adminViewModel, navController = adminNavController)
         }
         composable(AdminScreens.ADD_BRANCH.name) {
             AddBranchScreen(adminViewModel = adminViewModel, navController = adminNavController)

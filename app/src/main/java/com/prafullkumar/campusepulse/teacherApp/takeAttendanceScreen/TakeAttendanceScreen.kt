@@ -1,6 +1,5 @@
 package com.prafullkumar.campusepulse.teacherApp.takeAttendanceScreen
 
-import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.runtime.setValue
@@ -82,11 +81,11 @@ fun TakeAttendanceSuccess(students: List<Student>, viewModel: AttendanceViewMode
             student = student,
             onChecked = {
                 viewModel.attendanceList.add(student)
-                viewModel.addAttendance(studentID = student.admissionNo)
+                viewModel.addAttendance(studentID = student.admNo)
             },
             onUnchecked = {
                 viewModel.attendanceList.remove(student)
-                viewModel.subTractAttendance(studentID = student.admissionNo)
+                viewModel.subTractAttendance(studentID = student.admNo)
             }
         )
     }
@@ -125,7 +124,7 @@ fun StudentCard(student: Student,onChecked: () -> Unit, onUnchecked: () -> Unit 
                     text = student.rollNo.toString(),
                 )
                 Text(
-                    text = "${student.fName} ${student.lName}",
+                    text = "${student.fname} ${student.lname}",
                 )
             }
             Checkbox(

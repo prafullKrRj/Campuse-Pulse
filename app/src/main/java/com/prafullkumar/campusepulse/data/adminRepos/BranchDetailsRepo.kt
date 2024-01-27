@@ -35,6 +35,8 @@ class BranchDetailsRepositoryImpl(
                                 name = document.data?.get("name").toString(),
                                 strength = document.data?.get("strength")?.toString()?.toInt(),
                                 tt = if (tt != null) tt as Map<String, List<String>> else null,
+                                batches = document.data?.get("batches") as List<String>,
+                                subjects = document.data?.get("subjects") as List<String>
                             )
                         )
                         )
@@ -65,13 +67,13 @@ class BranchDetailsRepositoryImpl(
                         for (document in it.documents) {
                             students.add(
                                 Student(
-                                    fName = document.data?.get("fname").toString(),
-                                    lName = document.data?.get("lname").toString(),
+                                    fname = document.data?.get("fname").toString(),
+                                    lname = document.data?.get("lname").toString(),
                                     rollNo = document.data?.get("rollNo").toString().toLong(),
-                                    admissionNo = document.data?.get("admNo").toString().toLong(),
+                                    admNo = document.data?.get("admNo").toString().toLong(),
                                     branch = document.data?.get("branch").toString(),
                                     batch = document.data?.get("batch").toString(),
-                                    phone = document.data?.get("phoneNo").toString().toLong(),
+                                    phoneNo = document.data?.get("phoneNo").toString().toLong(),
                                     dob = document.data?.get("dob").toString(),
                                     attendance = document.data?.get("attendance") as Map<String, List<Long>>
                                 )

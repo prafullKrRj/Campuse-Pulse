@@ -60,6 +60,7 @@ fun InputFieldText(
 
 @Composable
 fun InputFieldNumber(
+    modifier: Modifier,
     label: String,
     value: String,
     onValueChange: (String) -> Unit
@@ -69,7 +70,7 @@ fun InputFieldNumber(
         value = value,
         onValueChange = onValueChange,
         label = { Text(label) },
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp, horizontal = 16.dp),
         keyboardOptions = KeyboardOptions(

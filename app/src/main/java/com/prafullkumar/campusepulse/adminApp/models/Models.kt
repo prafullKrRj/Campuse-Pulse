@@ -5,16 +5,18 @@ data class Branch(
     val name: String? = "",
     val strength: Int? = 0,
     val tt: Map<String, List<String>>? = mapOf(),
+    val batches: List<String>? = listOf(),
+    val subjects: List<String>
 )
 
 data class Student(
-    val fName: String? = "",
-    val lName: String? = "",
-    val phone: Long? = 0,
+    val fname: String? = "",
+    val lname: String? = "",
+    val phoneNo: Long? = 0,
     val branch: String? = "",
     val rollNo: Long? = 0,
-    val admissionNo: Long? = 0,
+    val admNo: Long? = 0,
     val dob: String? = "",
     val batch: String? = "",
-    val attendance: Map<String, List<Long>>? = mapOf()
+    val attendance: Map<String, List<Long>>? = mapOf(),
 )

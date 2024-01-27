@@ -1,6 +1,8 @@
 package com.prafullkumar.campusepulse.adminApp.homeScreen
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prafullkumar.campusepulse.adminApp.models.Branch
@@ -10,6 +12,7 @@ import com.prafullkumar.campusepulse.data.adminRepos.Result
 import com.prafullkumar.campusepulse.model.NewBranch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class AdminViewModel(
@@ -19,32 +22,65 @@ class AdminViewModel(
 
     private val _state = MutableStateFlow<AdminState>(AdminState.Initial)
     val state = _state.asStateFlow()
-
+    val branches = mutableStateOf<MutableList<Branch>?>(null)
+    var newStudent by mutableStateOf(NewStudent())
     init {
         _state.value = AdminState.Loading
         getBranches()
     }
-    fun addStudent(student: Student) {
+    fun addStudent() {
         viewModelScope.launch {
-            repository.addStudent(student)
+            repository.addStudent(
+                Student(
+                    fname = newStudent.fName,
+                    lname = newStudent.lName,
+                    phoneNo = newStudent.phone?.toLong(),
+                    branch = newStudent.branch,
+                    rollNo = newStudent.rollNo?.toLong(),
+                    admNo = newStudent.admissionNo?.toLong(),
+                    dob = newStudent.dob,
+                    batch = newStudent.batch,
+                    attendance = createMap(
+                        branches.value?.find { it.name == newStudent.branch }?.subjects ?: listOf()
+                    )
+                ),
+                branches.value?.find { it.name == newStudent.branch }?.strength ?: 0
+            )
         }
     }
-    private fun getBranches() {
+    private fun createMap(strings: List<String>): Map<String, List<Long>> {
+        val map = mutableMapOf<String, List<Long>>()
+        strings.forEach { string ->
+            map[string] = listOf(0L, 0L)
+        }
+    return map
+}
+    fun getBranches() {
         viewModelScope.launch {
             repository.getBranches().collect { result ->
                 when(result) {
                     is Result.Loading -> {
-                        _state.value = AdminState.Loading
+                        _state.update {
+                            AdminState.Loading
+                        }
                     }
                     is Result.Success -> {
-                        _state.value = AdminState.Success(result.data)
+                        _state.update {
+                            AdminState.Success(result.data)
+                        }
+                        branches.value = result.data
                     }
                     is Result.Error -> {
-                        _state.value = AdminState.Error(result.exception.message.toString())
+                        _state.update {
+                            AdminState.Error(result.exception.message)
+                        }
                     }
                 }
             }
         }
+    }
+    fun checkRollNo(rollNo: Long): Boolean {
+        return true
     }
     val branchName = mutableStateOf("")
     val year = mutableStateOf("")
@@ -54,6 +90,17 @@ class AdminViewModel(
         _newBranch.value = newBranch
     }
 }
+
+data class NewStudent(
+    val fName: String? = "",
+    val lName: String? = "",
+    val phone: String? = "",
+    val branch: String? = "",
+    val rollNo: String? = "",
+    val admissionNo: String?= "",
+    val dob: String? = "",
+    val batch: String? = "",
+)
 sealed class AdminState {
     data object Initial: AdminState()
     data class Success(val branches: MutableList<Branch>?): AdminState()

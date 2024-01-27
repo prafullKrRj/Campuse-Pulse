@@ -104,6 +104,7 @@ fun BranchCard(branch: Branch, navController: NavController) {
         Column(
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
         ) {
+            println(branch)
             if (!branch.name.isNullOrEmpty()) {
 
                 Text(

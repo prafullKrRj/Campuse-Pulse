@@ -51,13 +51,13 @@ class StudentRepositoryImpl (
      * */
     private fun getStudentFromDoc(students: DocumentSnapshot): Student {
         return Student(
-            fName = students.data?.get("fname").toString(),
-            lName = students.data?.get("lname").toString(),
+            fname = students.data?.get("fname").toString(),
+            lname = students.data?.get("lname").toString(),
             rollNo = students.data?.get("rollNo").toString().toLong(),
-            admissionNo = students.data?.get("admNo").toString().toLong(),
+            admNo = students.data?.get("admNo").toString().toLong(),
             branch = students.data?.get("branch").toString(),
             batch = students.data?.get("batch").toString(),
-            phone = students.data?.get("phoneNo").toString().toLong(),
+            phoneNo = students.data?.get("phoneNo").toString().toLong(),
             dob = students.data?.get("dob").toString(),
             attendance = students.data?.get("attendance") as Map<String, List<Long>>
         )
