@@ -18,12 +18,12 @@ import kotlinx.coroutines.launch
 class AdminViewModel(
     private val repository: AdminRepository
 ): ViewModel() {
-
-
     private val _state = MutableStateFlow<AdminState>(AdminState.Initial)
     val state = _state.asStateFlow()
     val branches = mutableStateOf<MutableList<Branch>?>(null)
     var newStudent by mutableStateOf(NewStudent())
+
+    var newBranch by mutableStateOf(NewBranch())
     init {
         _state.value = AdminState.Loading
         getBranches()
@@ -82,13 +82,7 @@ class AdminViewModel(
     fun checkRollNo(rollNo: Long): Boolean {
         return true
     }
-    val branchName = mutableStateOf("")
-    val year = mutableStateOf("")
-    private val _newBranch = MutableStateFlow(NewBranch())
-    val newBranch = _newBranch.asStateFlow()
-    fun updateBranch(newBranch: NewBranch) {
-        _newBranch.value = newBranch
-    }
+
 }
 
 data class NewStudent(

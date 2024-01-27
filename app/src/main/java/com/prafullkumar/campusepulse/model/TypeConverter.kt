@@ -12,7 +12,7 @@ fun fromBranchList(branchList: List<NewBranch>): String {
 }
 
 data class NewBranch(
-    val name: String = "",
+    val branchName: String = "",
     val total: Int = 0,
     val timeTable: TimeTable = TimeTable(
         monday = Day.Monday(emptyList()),
@@ -20,7 +20,10 @@ data class NewBranch(
         wednesday = Day.Wednesday(emptyList()),
         thursday = Day.Thursday(emptyList()),
         friday = Day.Friday(emptyList())
-    )
+    ),
+    val subjects: List<String> = emptyList(),
+    val batches: List<String> = emptyList(),
+    val year: String = "",
 )
 data class TimeTable(
     val monday: Day.Monday,
