@@ -1,6 +1,5 @@
 package com.prafullkumar.campusepulse.adminApp.addBranchScreen
 
-import android.util.Log
 import androidx.compose.runtime.remember
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.Icon
@@ -23,7 +22,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TimeInput
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,12 +30,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.prafullkumar.campusepulse.adminApp.addStudentScreen.AddNumbers
 import com.prafullkumar.campusepulse.adminApp.addStudentScreen.SelectFromOptions
 import com.prafullkumar.campusepulse.commons.TopAppBar
 import com.prafullkumar.campusepulse.model.ClassDetails
-import com.prafullkumar.campusepulse.model.NewBranch
-import kotlinx.coroutines.flow.update
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,7 +57,7 @@ fun PracticalSlotScreen(day: String, viewModel: AddBranchViewModel, navControlle
                     if (list.isNotEmpty()) {
                         branchState.newBranch.timeTable[day]?.add(
                             ClassDetails(
-                                subject = list,
+                                subTeacher = list,
                                 startTime = "${startTime.hour}:${startTime.minute}",
                                 endTime = "${endTime.hour}:${endTime.minute}",
                                 type = "P",
@@ -149,10 +144,10 @@ fun PracticalSlotScreen(day: String, viewModel: AddBranchViewModel, navControlle
                             label = "Teacher",
                             list = (state as TeacherDetailsState.Success).data.map { it.name }.toMutableList()
                           ) {
-                            teacher = it
+                            teacher = it.uppercase()
                           }
                           SelectFromOptions(label = "Subject", list = branchState.newBranch.subjects.toMutableList()) {
-                            subject = it
+                            subject = it.uppercase()
                           }
                    }
             },

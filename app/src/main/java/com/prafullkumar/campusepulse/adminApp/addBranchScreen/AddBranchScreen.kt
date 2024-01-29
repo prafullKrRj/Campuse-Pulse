@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Send
@@ -42,9 +43,7 @@ import androidx.navigation.NavController
 import com.prafullkumar.campusepulse.adminApp.addStudentScreen.AddTexts
 import com.prafullkumar.campusepulse.adminApp.addStudentScreen.SelectFromOptions
 import com.prafullkumar.campusepulse.commons.TopAppBar
-import com.prafullkumar.campusepulse.model.NewBranch
 import kotlinx.coroutines.flow.update
-
 /**
  *  @see com.prafullkumar.campusepulse.adminApp.uiComponents.AddBranchScreen
  */
@@ -134,14 +133,12 @@ fun AddBranchScreen(viewModel: AddBranchViewModel, navController: NavController)
             }
         }
     }
-
-
     if (backDialog) {
         AlertDialog(
             onDismissRequest = { backDialog = false },
             icon = { Icon(imageVector = Icons.Filled.Info, contentDescription = "Info") },
             title = {
-                Text(text = "Title")
+                Text(text = "Save Changes")
             },
             text = {
                 Text("Do you want to exit without saving")
@@ -195,9 +192,11 @@ fun AddBatches(listOfBatches: (List<String>) -> Unit) {
                 label = { Text("Batch") },
                 trailingIcon = {
                     IconButton(onClick = {
-                        batches.add(text.uppercase())
-                        listOfBatches(batches)
-                        text = ""
+                        if (text.isNotEmpty()) {
+                            batches.add(text.uppercase())
+                            listOfBatches(batches)
+                            text = ""
+                        }
                     }) {
                         Icon(Icons.Filled.Send, contentDescription = "Add")
                     }
@@ -215,7 +214,7 @@ fun AddBatches(listOfBatches: (List<String>) -> Unit) {
 }
 @Composable
 fun AddSubjects(listOfSubjects: (List<String>) -> Unit) {
-    val subjects by rememberSaveable { mutableStateOf(mutableListOf<String>()) }
+    var subjects by rememberSaveable { mutableStateOf(mutableListOf<String>()) }
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -228,7 +227,15 @@ fun AddSubjects(listOfSubjects: (List<String>) -> Unit) {
             .weight(.7f)
             .padding(vertical = 4.dp, horizontal = 16.dp)) {
             subjects.forEachIndexed { index, it ->
-                Text(text = "${index+1}. $it", fontWeight = SemiBold)
+                Row(modifier = Modifier, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(text = "${index + 1}. $it", fontWeight = SemiBold)
+                    IconButton(onClick = {
+                        subjects = subjects.toMutableList().apply { removeAt(index) }
+                        listOfSubjects(subjects)
+                    }) {
+                        Icon(imageVector = Icons.Default.Delete, contentDescription = null)
+                    }
+                }
                 Spacer(modifier = Modifier.padding(4.dp))
             }
             var text by rememberSaveable { mutableStateOf("") }
@@ -240,9 +247,11 @@ fun AddSubjects(listOfSubjects: (List<String>) -> Unit) {
                 label = { Text("Subject") },
                 trailingIcon = {
                     IconButton(onClick = {
-                        subjects.add(text.uppercase())
-                        listOfSubjects(subjects)
-                        text = ""
+                        if (text.isNotEmpty()) {
+                            subjects.add(text.uppercase())
+                            listOfSubjects(subjects)
+                            text = ""
+                        }
                     }) {
                         Icon(Icons.Filled.Send, contentDescription = "Add")
                     }

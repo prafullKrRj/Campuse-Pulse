@@ -55,7 +55,7 @@ fun TheorySlotScreen(day: String, viewModel: AddBranchViewModel, navController: 
                              if (teacher.isNotEmpty() && subject.isNotEmpty() && lh.isNotEmpty()) {
                                  branchState.newBranch.timeTable[day]?.add(
                                      ClassDetails(
-                                         subject = mutableListOf(Pair(subject, teacher)),
+                                         subTeacher = mutableListOf(Pair(subject, teacher)),
                                          startTime = "${startTime.hour}:${startTime.minute}",
                                          endTime = "${endTime.hour}:${endTime.minute}",
                                          lh = lh

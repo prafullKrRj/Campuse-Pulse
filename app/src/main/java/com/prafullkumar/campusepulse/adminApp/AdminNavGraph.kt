@@ -29,6 +29,7 @@ fun AdminNavGraph(adminViewModel: AdminViewModel) {
             AddStudentScreen(viewModel = adminViewModel, navController = adminNavController)
         }
         composable(AdminScreens.ADD_BRANCH.name) {
+            addBranchViewModel.resetNewBranch()
             AddBranchScreen(viewModel = addBranchViewModel, navController = adminNavController)
         }
         composable(AdminScreens.BRANCH_DETAILS.name + "/{id}") { backStackEntry ->

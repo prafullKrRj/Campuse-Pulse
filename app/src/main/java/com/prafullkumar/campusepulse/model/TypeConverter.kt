@@ -39,26 +39,26 @@ fun convertToBranch(newBranch: NewBranch): Branch {
         }
     }
     return Branch(
-        name = newBranch.branchName,
+        name = getId(newBranch.year, newBranch.branchName),
         strength = 0,
-        subjects = newBranch.subjects,
-        batches = newBranch.batches,
+        subjects = newBranch.subjects.map { it.uppercase() },
+        batches = newBranch.batches.map { it.uppercase() },
         tt = tt,
         id = getId(newBranch.year, newBranch.branchName)
     )
 }
 fun getId(year: String, name: String): String {
     return when (year[0]) {
-        '1' -> "fe-${name}"
-        '2' -> "se-${name}"
-        '3' -> "te-${name}"
-        else -> "be-${name}"
+        '1' -> "fe-${name.uppercase()}"
+        '2' -> "se-${name.uppercase()}"
+        '3' -> "te-${name.uppercase()}"
+        else -> "be-${name.uppercase()}"
     }
 }
 data class ClassDetails(
     val startTime: String = "",
     val endTime: String = "",
     val type: String = "T",
-    val subject: MutableList<Pair<String, String>> = mutableListOf(),
+    val subTeacher: MutableList<Pair<String, String>> = mutableListOf(),
     val lh: String = "",
 )

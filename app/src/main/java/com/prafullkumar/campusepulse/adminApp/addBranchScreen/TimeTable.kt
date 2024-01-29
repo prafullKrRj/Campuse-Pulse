@@ -74,7 +74,7 @@ fun TimeTableDayComp(viewModel: AddBranchViewModel, day: String, navController: 
     val branchState by viewModel.state.collectAsState()
     Column(modifier = Modifier.heightIn(min = LocalConfiguration.current.screenHeightDp.dp)) {
         branchState.newBranch.timeTable[day]?.forEachIndexed { _, classDetails ->
-            Text(text = classDetails.subject.toString())
+            Text(text = classDetails.subTeacher.toString())
         }
 
         Row(
