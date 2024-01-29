@@ -26,7 +26,7 @@ fun TimeTableUI(timeTable: List<String>) {
 }
 
 @Composable
-fun TimeTableSlot(slotDetails: String) {
+private fun TimeTableSlot(slotDetails: String) {
     val details = slotDetails.split("-")
     Row(
         Modifier.fillMaxWidth()
@@ -36,7 +36,7 @@ fun TimeTableSlot(slotDetails: String) {
     }
 }
 @Composable
-fun SubjectCard(
+private fun SubjectCard(
     modifier: Modifier = Modifier,
     subject: String,
     teacher: String,
@@ -53,7 +53,7 @@ fun SubjectCard(
     }
 }
 @Composable
-fun TimeCard(modifier: Modifier = Modifier, startTime: String = "8:45 AM", endTime: String = "9:45 AM") {
+private fun TimeCard(modifier: Modifier = Modifier, startTime: String = "8:45 AM", endTime: String = "9:45 AM") {
     Card(modifier = modifier.padding(vertical = 8.dp).padding(start = 8.dp)) {
         Column(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp)

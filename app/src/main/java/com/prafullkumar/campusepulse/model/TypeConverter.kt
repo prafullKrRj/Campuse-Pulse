@@ -1,49 +1,64 @@
 package com.prafullkumar.campusepulse.model
 
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.prafullkumar.campusepulse.adminApp.models.Branch
 
-
-fun fromString(value: String): List<NewBranch> {
-    val listType = object : com.google.gson.reflect.TypeToken<List<NewBranch>>() {}.type
-    return Gson().fromJson(value, listType)
+// Convert data class to JSON string
+fun toJson(newBranch: NewBranch): String {
+    val gson = Gson()
+    return gson.toJson(newBranch)
 }
-fun fromBranchList(branchList: List<NewBranch>): String {
-    return Gson().toJson(branchList)
+
+// Convert JSON string back to data class
+fun fromJson(json: String): NewBranch {
+    val gson = Gson()
+    val type = object : TypeToken<NewBranch>() {}.type
+    return gson.fromJson(json, type)
 }
 
 data class NewBranch(
     val branchName: String = "",
     val total: Int = 0,
-    val timeTable: TimeTable = TimeTable(
-        monday = Day.Monday(emptyList()),
-        tuesday = Day.Tuesday(emptyList()),
-        wednesday = Day.Wednesday(emptyList()),
-        thursday = Day.Thursday(emptyList()),
-        friday = Day.Friday(emptyList())
+    val timeTable: MutableMap<String, MutableList<ClassDetails>> = mutableMapOf(
+        "monday" to mutableListOf(),
+        "tuesday" to mutableListOf(),
+        "wednesday" to mutableListOf(),
+        "thursday" to mutableListOf(),
+        "friday" to mutableListOf(),
     ),
     val subjects: List<String> = emptyList(),
     val batches: List<String> = emptyList(),
     val year: String = "",
 )
-data class TimeTable(
-    val monday: Day.Monday,
-    val tuesday: Day.Tuesday,
-    val wednesday: Day.Wednesday,
-    val thursday: Day.Thursday,
-    val friday: Day.Friday
-)
-
-sealed class Day {
-    data class Monday(val slots: List<Slot>): Day()
-    data class Tuesday(val slots: List<Slot>): Day()
-    data class Wednesday(val slots: List<Slot>): Day()
-    data class Thursday(val slots: List<Slot>): Day()
-    data class Friday(val slots: List<Slot>): Day()
+fun convertToBranch(newBranch: NewBranch): Branch {
+    val gson = Gson()
+    val tt = newBranch.timeTable.mapValues { entry ->
+        entry.value.map { classDetails ->
+            gson.toJson(classDetails)
+        }
+    }
+    return Branch(
+        name = newBranch.branchName,
+        strength = 0,
+        subjects = newBranch.subjects,
+        batches = newBranch.batches,
+        tt = tt,
+        id = getId(newBranch.year, newBranch.branchName)
+    )
 }
-data class Slot(
-    val from: String,
-    val to: String,
-    val type: String,
-    val subject: String,
-    val faculty: String,
+fun getId(year: String, name: String): String {
+    return when (year[0]) {
+        '1' -> "fe-${name}"
+        '2' -> "se-${name}"
+        '3' -> "te-${name}"
+        else -> "be-${name}"
+    }
+}
+data class ClassDetails(
+    val startTime: String = "",
+    val endTime: String = "",
+    val type: String = "T",
+    val subject: MutableList<Pair<String, String>> = mutableListOf(),
+    val lh: String = "",
 )

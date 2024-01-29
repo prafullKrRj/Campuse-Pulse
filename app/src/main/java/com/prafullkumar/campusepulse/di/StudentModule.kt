@@ -3,39 +3,33 @@ package com.prafullkumar.campusepulse.di
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.prafullkumar.campusepulse.data.local.AppDatabase
 import com.prafullkumar.campusepulse.data.studentRepo.AssistantsRepository
 import com.prafullkumar.campusepulse.data.studentRepo.AssistantsRepositoryImpl
-import com.prafullkumar.campusepulse.data.studentRepo.NotesRepository
-import com.prafullkumar.campusepulse.data.studentRepo.NotesRepositoryImpl
 import com.prafullkumar.campusepulse.data.studentRepo.NoticesRepository
 import com.prafullkumar.campusepulse.data.studentRepo.NoticesRepositoryImpl
 import com.prafullkumar.campusepulse.data.studentRepo.StudentRepository
 import com.prafullkumar.campusepulse.data.studentRepo.StudentRepositoryImpl
+import com.prafullkumar.campusepulse.data.studentRepo.TasksRepository
+import com.prafullkumar.campusepulse.data.studentRepo.TasksRepositoryImpl
 
 interface StudentModule {
     val studentRepository: StudentRepository
-    val notesRepository: NotesRepository
     val assistantRepository: AssistantsRepository
     val noticesRepository: NoticesRepository
+    val tasksRepository: TasksRepository
 }
 class StudentModuleImpl(
     private val context: Context
 ) : StudentModule {
-
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }
-
     private val firebaseFirestore: FirebaseFirestore by lazy {
         FirebaseFirestore.getInstance()
     }
-
-
     override val studentRepository: StudentRepository by lazy {
         StudentRepositoryImpl(firebaseFirestore, firebaseAuth)
-    }
-    override val notesRepository: NotesRepository by lazy {
-        NotesRepositoryImpl()
     }
     override val assistantRepository: AssistantsRepository by lazy {
         AssistantsRepositoryImpl()
@@ -43,5 +37,7 @@ class StudentModuleImpl(
     override val noticesRepository: NoticesRepository by lazy {
         NoticesRepositoryImpl(context)
     }
-
+    override val tasksRepository: TasksRepository by lazy {
+        TasksRepositoryImpl(AppDatabase.getDatabase(context).appDao())
+    }
 }

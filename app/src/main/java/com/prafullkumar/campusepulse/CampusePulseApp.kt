@@ -15,6 +15,7 @@ class CampusePulseApp : Application() {
     lateinit var adminModule: AdminModule
     lateinit var studentModule: StudentModule
     lateinit var teacherModule: TeacherModule
+
     override fun onCreate() {
         super.onCreate()
         appModule = AppModuleImpl(this)

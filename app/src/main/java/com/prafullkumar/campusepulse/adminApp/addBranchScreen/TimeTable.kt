@@ -1,41 +1,38 @@
 package com.prafullkumar.campusepulse.adminApp.addBranchScreen
 
-import kotlinx.coroutines.launch
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.Alignment
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.material3.Text
-import androidx.compose.material3.TabRow
-import androidx.compose.material3.Tab
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.pager.PageSize
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.prafullkumar.campusepulse.adminApp.homeScreen.AdminViewModel
-import com.prafullkumar.campusepulse.studentApp.homeScreen.components.TimeTableUI
+import androidx.navigation.NavController
+import com.prafullkumar.campusepulse.adminApp.AdminScreens
 import com.prafullkumar.campusepulse.studentApp.homeScreen.getCurrentDayIndex
-
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun AddTimeTable(viewModel: AdminViewModel) {
+fun AddTimeTable(viewModel: AddBranchViewModel, navController: NavController) {
     val daysOfWeek = remember { listOf("Mon", "Tue", "Wed", "Thur", "Fri") }
     val fullNameDay = remember { listOf("monday", "tuesday", "wednesday", "thursday", "friday") }
     val selectedTabIndex = remember { mutableIntStateOf(getCurrentDayIndex()) }
@@ -64,10 +61,34 @@ fun AddTimeTable(viewModel: AdminViewModel) {
         }
     }
     HorizontalPager(state = pagerState, modifier = Modifier.fillMaxSize(), userScrollEnabled = true) { page ->
-
+        TimeTableDayComp(viewModel = viewModel, day = fullNameDay[page], navController)
     }
     LaunchedEffect(pagerState.currentPage) {
         selectedTabIndex.intValue = pagerState.currentPage
         state.animateScrollToItem(selectedTabIndex.intValue)
+    }
+}
+
+@Composable
+fun TimeTableDayComp(viewModel: AddBranchViewModel, day: String, navController: NavController) {
+    val branchState by viewModel.state.collectAsState()
+    Column(modifier = Modifier.heightIn(min = LocalConfiguration.current.screenHeightDp.dp)) {
+        branchState.newBranch.timeTable[day]?.forEachIndexed { _, classDetails ->
+            Text(text = classDetails.subject.toString())
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            if (branchState.newBranch.subjects.isNotEmpty() && branchState.newBranch.batches.isNotEmpty()) {
+                FilledTonalButton(onClick = { navController.navigate(AdminScreens.ADD_LAB_SLOT_SCREEN.name + "/$day") }) {
+                    Text("Add Lab")
+                }
+                FilledTonalButton(onClick = { navController.navigate(AdminScreens.ADD_THEORY_SLOT_SCREEN.name + "/$day") }) {
+                    Text("Add Theory")
+                }
+            }
+        }
     }
 }

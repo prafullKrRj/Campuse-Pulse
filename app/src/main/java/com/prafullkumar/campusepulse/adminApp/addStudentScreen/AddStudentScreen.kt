@@ -260,7 +260,7 @@ fun SelectFromOptions(
         AlertDialog(
             onDismissRequest = { openDialog = false },
             title = {
-                Text(text = "Select Branches")
+                Text(text = "Select $label")
             },
             text = {
                 Column {

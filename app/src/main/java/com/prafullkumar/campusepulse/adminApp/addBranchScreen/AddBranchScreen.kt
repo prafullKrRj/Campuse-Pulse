@@ -1,6 +1,8 @@
 package com.prafullkumar.campusepulse.adminApp.addBranchScreen
 
-import androidx.compose.material3.OutlinedTextField
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,19 +14,24 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Send
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -34,9 +41,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.prafullkumar.campusepulse.adminApp.addStudentScreen.AddTexts
 import com.prafullkumar.campusepulse.adminApp.addStudentScreen.SelectFromOptions
-import com.prafullkumar.campusepulse.adminApp.homeScreen.AdminViewModel
-import com.prafullkumar.campusepulse.adminApp.uiComponents.InputFieldText
-import org.jsoup.internal.StringUtil.padding
+import com.prafullkumar.campusepulse.commons.TopAppBar
+import com.prafullkumar.campusepulse.model.NewBranch
+import kotlinx.coroutines.flow.update
 
 /**
  *  @see com.prafullkumar.campusepulse.adminApp.uiComponents.AddBranchScreen
@@ -44,15 +51,27 @@ import org.jsoup.internal.StringUtil.padding
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddBranchScreen(adminViewModel: AdminViewModel, navController: NavController) {
+fun AddBranchScreen(viewModel: AddBranchViewModel, navController: NavController) {
+    val branchState by viewModel.state.collectAsState()
+    Log.d("newBranch", "AddBranchScreen: ${branchState.newBranch}")
+    var backDialog by remember { mutableStateOf(false) }
+    BackHandler {
+
+    }
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Add Branch") },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                heading = "Add Branch", actionIcon = Icons.Default.Done, actionIconClicked = {
+                    if (branchState.newBranch.branchName.isNotEmpty() && branchState.newBranch.year.isNotEmpty()) {
+                        viewModel.addBranch()
+                        viewModel.resetNewBranch()
+                        navController.popBackStack()
+                    } else {
+                        Toast.makeText(navController.context, "Please fill all the fields", Toast.LENGTH_SHORT).show()
                     }
+
+                }, navIcon = Icons.Default.ArrowBack, navIconClicked = {
+                    backDialog = true
                 }
             )
         }
@@ -63,43 +82,92 @@ fun AddBranchScreen(adminViewModel: AdminViewModel, navController: NavController
                     label = "Select Year",
                     list = mutableListOf("1st", "2nd", "3rd", "4th"),
                 ) {
-                    adminViewModel.newBranch = adminViewModel.newBranch.copy(
-                        year = it
-                    )
+                    viewModel.state.update { state ->
+                        state.copy(
+                            newBranch = state.newBranch.copy(
+                                year = it
+                            )
+                        )
+                    }
                 }
             }
             item {
                 AddTexts(
                     label = "Branch",
                     onValueChange = {
-                        adminViewModel.newBranch = adminViewModel.newBranch.copy(
-                            total = it.toInt()
-                        )
+                        viewModel.state.update { state ->
+                            state.copy(
+                                newBranch = state.newBranch.copy(
+                                    branchName = it
+                                )
+                            )
+                        }
                     }
                 )
             }
             item {
                 AddSubjects {
-                    adminViewModel.newBranch = adminViewModel.newBranch.copy(
-                        subjects = it
-                    )
+                    viewModel.state.update { state ->
+                        state.copy(
+                            newBranch = state.newBranch.copy(
+                                subjects = it
+                            )
+                        )
+                    }
                 }
             }
             item {
                 AddBatches {
-                    adminViewModel.newBranch = adminViewModel.newBranch.copy(
-                        batches = it
-                    )
+                    viewModel.state.update { state ->
+                        state.copy(
+                            newBranch = state.newBranch.copy(
+                                batches = it
+                            )
+                        )
+                    }
                 }
             }
-            item {
-                AddTimeTable(viewModel = adminViewModel)
+            if (branchState.newBranch.batches.isNotEmpty() && branchState.newBranch.subjects.isNotEmpty()) {
+                item {
+                    AddTimeTable(viewModel = viewModel, navController)
+                }
             }
         }
     }
+
+
+    if (backDialog) {
+        AlertDialog(
+            onDismissRequest = { backDialog = false },
+            icon = { Icon(imageVector = Icons.Filled.Info, contentDescription = "Info") },
+            title = {
+                Text(text = "Title")
+            },
+            text = {
+                Text("Do you want to exit without saving")
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        backDialog = false
+                        navController.popBackStack()
+                    }
+                ) {
+                    Text("Confirm")
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        backDialog = false
+                    }
+                ) {
+                    Text("Dismiss")
+                }
+            }
+        )
+    }
 }
-
-
 @Composable
 fun AddBatches(listOfBatches: (List<String>) -> Unit) {
     val batches by rememberSaveable { mutableStateOf(mutableListOf<String>()) }

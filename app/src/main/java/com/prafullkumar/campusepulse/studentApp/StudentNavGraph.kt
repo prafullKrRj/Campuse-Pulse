@@ -31,7 +31,7 @@ import com.prafullkumar.campusepulse.studentApp.attendanceScreen.AttendanceScree
 import com.prafullkumar.campusepulse.studentApp.homeScreen.StudentHomeScreenNavGraph
 import com.prafullkumar.campusepulse.studentApp.homeScreen.StudentViewModel
 import com.prafullkumar.campusepulse.studentApp.notes.TasksScreen
-import com.prafullkumar.campusepulse.studentApp.notes.NotesViewModel
+import com.prafullkumar.campusepulse.studentApp.notes.TasksViewModel
 import com.prafullkumar.campusepulse.studentApp.noticeScreen.NoticeScreen
 import com.prafullkumar.campusepulse.studentApp.noticeScreen.NoticeViewModel
 
@@ -40,7 +40,7 @@ fun StudentNavGraph() {
     val sNavController = rememberNavController()
     val viewModels = listOf(
         viewModel<StudentViewModel>(factory = ViewModelProvider.getStudentViewModel()),
-        viewModel<NotesViewModel>(factory = ViewModelProvider.getNotesViewModel()),
+        viewModel<TasksViewModel>(factory = ViewModelProvider.getNotesViewModel()),
         viewModel<AssistantsViewModel>(factory = ViewModelProvider.getStudentAssistantViewModel()),
         viewModel<NoticeViewModel>(factory = ViewModelProvider.getStudentNoticeViewModel()),
     )
@@ -60,7 +60,7 @@ fun StudentNavGraph() {
                     AttendanceScreen(viewModel = viewModels[0] as StudentViewModel)
                 }
                 composable(StudentScreens.TASKS.name) {
-                    TasksScreen(viewModel = viewModels[1] as NotesViewModel)
+                    TasksScreen(viewModel = viewModels[1] as TasksViewModel)
                 }
                 composable(StudentScreens.ASSISTANT.name) {
                     AssistantScreen(viewModel = viewModels[2] as AssistantsViewModel)
