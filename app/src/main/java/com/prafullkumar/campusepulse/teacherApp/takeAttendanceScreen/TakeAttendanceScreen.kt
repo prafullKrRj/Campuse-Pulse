@@ -38,10 +38,13 @@ import com.prafullkumar.campusepulse.adminApp.models.Student
 import com.prafullkumar.campusepulse.commons.ErrorScreen
 import com.prafullkumar.campusepulse.commons.LoadingScreen
 import com.prafullkumar.campusepulse.commons.TopAppBar
+import com.prafullkumar.campusepulse.goBackStack
 
 @Composable
 fun TakeAttendance(viewModel: AttendanceViewModel, navController: NavController) {
     val state by viewModel.state.collectAsState()
+    var openDialog by remember { mutableStateOf(false) }
+
     BackHandler {
 
     }
@@ -49,9 +52,10 @@ fun TakeAttendance(viewModel: AttendanceViewModel, navController: NavController)
         TopAppBar(heading = "Take Attendance",
             navIcon = Icons.Default.ArrowBack,
             navIconClicked = {
-                navController.popBackStack()
+                openDialog = true
             }, actionIcon = Icons.Default.Done, actionIconClicked = {
                 viewModel.onSavedClicked()
+                navController.goBackStack()
             })
     }) { paddingValues ->
         LazyColumn(contentPadding = paddingValues) {
@@ -74,6 +78,39 @@ fun TakeAttendance(viewModel: AttendanceViewModel, navController: NavController)
                 }
             }
         }
+    }
+    if (openDialog) {
+        AlertDialog(
+            onDismissRequest = { openDialog = false },
+            icon = { Icon(imageVector = Icons.Filled.Info, contentDescription = "Info") },
+            title = {
+                Text(text = "Attendance")
+            },
+            text = {
+                Text(text = "Save the attendance?")
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        openDialog = false
+                        navController.goBackStack()
+                        viewModel.onSavedClicked()
+                    }
+                ) {
+                    Text("Confirm")
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        openDialog = false
+                        navController.goBackStack()
+                    }
+                ) {
+                    Text("Dismiss")
+                }
+            }
+        )
     }
 }
 

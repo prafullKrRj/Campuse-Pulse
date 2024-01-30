@@ -55,13 +55,31 @@ fun NavigationGraph(
             )
         }
         composable(Screen.ADMIN.route) {
-            AdminNavGraph()
+            AdminNavGraph {
+                mainNavController.navigate(Screen.MAIN.route) {
+                    popUpTo(Screen.MAIN.route) {
+                        inclusive = true
+                    }
+                }
+            }
         }
         composable(Screen.STUDENT.route) {
-            StudentNavGraph()
+            StudentNavGraph {
+                mainNavController.navigate(Screen.MAIN.route) {
+                    popUpTo(Screen.MAIN.route) {
+                        inclusive = true
+                    }
+                }
+            }
         }
         composable(Screen.TEACHER.route) {
-            TeacherNavGraph()
+            TeacherNavGraph {
+                mainNavController.navigate(Screen.MAIN.route) {
+                    popUpTo(Screen.MAIN.route) {
+                        inclusive = true
+                    }
+                }
+            }
         }
     }
 

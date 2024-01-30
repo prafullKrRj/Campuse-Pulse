@@ -36,7 +36,7 @@ import com.prafullkumar.campusepulse.studentApp.noticeScreen.NoticeScreen
 import com.prafullkumar.campusepulse.studentApp.noticeScreen.NoticeViewModel
 
 @Composable
-fun StudentNavGraph() {
+fun StudentNavGraph(signOut: () -> Unit = { }) {
     val sNavController = rememberNavController()
     val viewModels = listOf(
         viewModel<StudentViewModel>(factory = ViewModelProvider.getStudentViewModel()),
@@ -54,7 +54,9 @@ fun StudentNavGraph() {
             .padding(innerPadding)) {
             NavHost(navController = sNavController, startDestination = StudentScreens.HOME.name) {
                 composable(StudentScreens.HOME.name) {
-                    StudentHomeScreenNavGraph(viewModel = viewModels[0] as StudentViewModel)
+                    StudentHomeScreenNavGraph(viewModel = viewModels[0] as StudentViewModel) {
+                        signOut()
+                    }
                 }
                 composable(StudentScreens.ATTENDANCE.name) {
                     AttendanceScreen(viewModel = viewModels[0] as StudentViewModel)

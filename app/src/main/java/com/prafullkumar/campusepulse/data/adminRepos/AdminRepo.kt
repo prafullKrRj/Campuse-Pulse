@@ -8,6 +8,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.prafullkumar.campusepulse.adminApp.models.Branch
 import com.prafullkumar.campusepulse.adminApp.models.Student
 import com.prafullkumar.campusepulse.data.teacherRepos.TeacherDetails
+import com.prafullkumar.campusepulse.managers.SharedPrefManager
 import com.prafullkumar.campusepulse.model.NewBranch
 import com.prafullkumar.campusepulse.model.convertToBranch
 import kotlinx.coroutines.channels.awaitClose
@@ -19,13 +20,15 @@ interface AdminRepository {
     suspend fun getBranches(): Flow<Result<MutableList<Branch>>>
 
     suspend fun addBranch(newBranch: NewBranch): Flow<Result<Boolean>>
+    fun signOut()
 }
 
 @Suppress("UNCHECKED_CAST")
 class AdminRepositoryImpl (
     private val firebaseAuth: FirebaseAuth,
     private val firebaseFirestore: FirebaseFirestore,
-    private val context: Context
+    private val context: Context,
+    private val sharedPrefManager: SharedPrefManager
 ) : AdminRepository {
 
     /**
@@ -115,6 +118,12 @@ class AdminRepositoryImpl (
             }
             awaitClose {  }
         }
+    }
+
+    override fun signOut() {
+        firebaseAuth.signOut()
+        sharedPrefManager.setLoggedIn(false)
+        sharedPrefManager.setLoggedInUserType("")
     }
 }
 

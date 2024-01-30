@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,7 +28,7 @@ import com.prafullkumar.campusepulse.commons.LoadingScreen
 import com.prafullkumar.campusepulse.commons.TopAppBar
 
 @Composable
-fun ProfileScreen(viewModel: StudentViewModel, navController: NavController) {
+fun ProfileScreen(viewModel: StudentViewModel, navController: NavController, signOut: () -> Unit) {
     val state by viewModel.studentScreenState.collectAsState()
     Scaffold(
         topBar = {
@@ -49,7 +50,9 @@ fun ProfileScreen(viewModel: StudentViewModel, navController: NavController) {
                     LoadingScreen()
                 }
                 is StudentScreenState.Success -> {
-                    ProfileMainUI(student = (state as StudentScreenState.Success).studentData.first)
+                    ProfileMainUI(student = (state as StudentScreenState.Success).studentData.first, viewModel) {
+                        signOut()
+                    }
                 }
                 is StudentScreenState.Error -> {
                     ErrorScreen {
@@ -62,7 +65,7 @@ fun ProfileScreen(viewModel: StudentViewModel, navController: NavController) {
 }
 
 @Composable
-fun ProfileMainUI(student: Student) {
+fun ProfileMainUI(student: Student, viewModel: StudentViewModel, signOut: () -> Unit) {
     LazyColumn {
         item {
             ProfileField(label = "Name", value = student.fname + " " + student.lname)
@@ -85,6 +88,17 @@ fun ProfileMainUI(student: Student) {
         item {
             ProfileField(label = "Phone", value = student.phoneNo.toString())
         }
+        item {
+            FilledTonalButton(
+                modifier = Modifier.fillMaxWidth().padding(32.dp),
+                onClick = {
+                    viewModel.signOut()
+                    signOut()
+                }
+            ) {
+                Text("Sign Out")
+            }
+        }
     }
 }
 @Composable
@@ -95,8 +109,4 @@ fun ProfileField(label: String, value: String) {
         Text(text = value, fontSize = 18.sp, modifier = Modifier.weight(.65f))
     }
     Spacer(modifier = Modifier.height(8.dp))
-}
-@Composable
-fun NameSection(student: Student) {
-
 }

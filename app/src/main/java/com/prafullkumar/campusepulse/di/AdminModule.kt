@@ -7,6 +7,7 @@ import com.prafullkumar.campusepulse.data.adminRepos.AdminRepository
 import com.prafullkumar.campusepulse.data.adminRepos.AdminRepositoryImpl
 import com.prafullkumar.campusepulse.data.adminRepos.BranchDetailsRepository
 import com.prafullkumar.campusepulse.data.adminRepos.BranchDetailsRepositoryImpl
+import com.prafullkumar.campusepulse.managers.SharedPrefManager
 
 interface AdminModule {
     val adminRepository: AdminRepository
@@ -23,9 +24,11 @@ class AdminModuleImpl(
     private val firebaseFirestore: FirebaseFirestore by lazy {
         FirebaseFirestore.getInstance()
     }
-
+    private val sharedPrefManager: SharedPrefManager by lazy {
+        SharedPrefManager(context)
+    }
     override val adminRepository: AdminRepository by lazy {
-        AdminRepositoryImpl(firebaseAuth, firebaseFirestore, context)
+        AdminRepositoryImpl(firebaseAuth, firebaseFirestore, context, sharedPrefManager)
     }
     override val branchDetailsRepository: BranchDetailsRepository by lazy {
         BranchDetailsRepositoryImpl(firestore = firebaseFirestore)

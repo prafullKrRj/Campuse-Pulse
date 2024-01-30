@@ -14,7 +14,7 @@ import com.prafullkumar.campusepulse.adminApp.homeScreen.AdminViewModel
 import com.prafullkumar.campusepulse.managers.ViewModelProvider
 
 @Composable
-fun AdminNavGraph() {
+fun AdminNavGraph(signOut :()->Unit = { }) {
     val adminNavController = rememberNavController()
     val addBranchViewModel: AddBranchViewModel = viewModel(
         factory = ViewModelProvider.addBranchViewModel()
@@ -24,7 +24,9 @@ fun AdminNavGraph() {
     )
     NavHost(navController = adminNavController, startDestination = AdminScreens.HOME.name) {
         composable(AdminScreens.HOME.name)  {
-            AdminScreen(adminViewModel = adminViewModel, navController = adminNavController)
+            AdminScreen(adminViewModel = adminViewModel, navController = adminNavController)  {
+                signOut()
+            }
         }
         composable(AdminScreens.ADD_STUDENT.name) {
             AddStudentScreen(viewModel = adminViewModel, navController = adminNavController)

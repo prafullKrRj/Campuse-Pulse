@@ -12,6 +12,7 @@ import com.prafullkumar.campusepulse.data.studentRepo.StudentRepository
 import com.prafullkumar.campusepulse.data.studentRepo.StudentRepositoryImpl
 import com.prafullkumar.campusepulse.data.studentRepo.TasksRepository
 import com.prafullkumar.campusepulse.data.studentRepo.TasksRepositoryImpl
+import com.prafullkumar.campusepulse.managers.SharedPrefManager
 
 interface StudentModule {
     val studentRepository: StudentRepository
@@ -28,8 +29,11 @@ class StudentModuleImpl(
     private val firebaseFirestore: FirebaseFirestore by lazy {
         FirebaseFirestore.getInstance()
     }
+    private val sharedPrefManager: SharedPrefManager by lazy {
+        SharedPrefManager(context)
+    }
     override val studentRepository: StudentRepository by lazy {
-        StudentRepositoryImpl(firebaseFirestore, firebaseAuth)
+        StudentRepositoryImpl(firebaseFirestore, firebaseAuth, sharedPrefManager)
     }
     override val assistantRepository: AssistantsRepository by lazy {
         AssistantsRepositoryImpl()

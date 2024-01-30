@@ -9,7 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun StudentHomeScreenNavGraph(viewModel: StudentViewModel) {
+fun StudentHomeScreenNavGraph(viewModel: StudentViewModel, signOut: () -> Unit = { }) {
     val navController = rememberNavController()
     Column(
         Modifier.fillMaxSize()
@@ -19,7 +19,9 @@ fun StudentHomeScreenNavGraph(viewModel: StudentViewModel) {
                 StudentHomeScreen(navController = navController, viewModel = viewModel)
             }
             composable(StudentHomeScreens.PROFILE.name) {
-                ProfileScreen(viewModel, navController)
+                ProfileScreen(viewModel, navController) {
+                    signOut()
+                }
             }
         }
     }

@@ -8,6 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.prafullkumar.campusepulse.adminApp.models.Student
 import com.prafullkumar.campusepulse.data.adminRepos.Result
+import com.prafullkumar.campusepulse.managers.SharedPrefManager
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -15,12 +16,14 @@ import kotlinx.coroutines.tasks.await
 
 interface StudentRepository {
     suspend fun getStudentDetails(): Flow<Result<Pair<Student, String>>>
+    fun signOut()
 }
 
 @Suppress("UNCHECKED_CAST", "LABEL_NAME_CLASH")
 class StudentRepositoryImpl (
     private val firestore: FirebaseFirestore,
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: FirebaseAuth,
+    private val sharedPrefManager: SharedPrefManager
 ) : StudentRepository {
     private val storage = FirebaseStorage.getInstance()
 
@@ -64,6 +67,13 @@ class StudentRepositoryImpl (
             awaitClose {  }
         }
 }
+
+    override fun signOut() {
+        firebaseAuth.signOut()
+        sharedPrefManager.setLoggedIn(false)
+        sharedPrefManager.setLoggedInUserType("")
+    }
+
     /**
      *       This function is used to get the student details from the document snapshot
      * */

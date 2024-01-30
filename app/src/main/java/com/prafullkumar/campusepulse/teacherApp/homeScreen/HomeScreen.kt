@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -102,10 +103,10 @@ fun ClassDetails(branch: String, index: Int, onClick: () -> Unit) {
                 onClick()
             },
     ) {
-        Row(modifier = Modifier) {
-            Text(text = "$index")
+        Row(modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+            Text(text = "$index.", modifier = Modifier.weight(.1f), fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
             Column(
-                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+                modifier = Modifier.weight(.9f)
             ) {
                 Text(
                     text = "Branch: ${branch.substringBefore(":")}",

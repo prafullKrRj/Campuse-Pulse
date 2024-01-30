@@ -9,6 +9,7 @@ import com.prafullkumar.campusepulse.data.teacherRepos.DisplayAttendRepository
 import com.prafullkumar.campusepulse.data.teacherRepos.DisplayAttendRepositoryImpl
 import com.prafullkumar.campusepulse.data.teacherRepos.TeacherRepository
 import com.prafullkumar.campusepulse.data.teacherRepos.TeacherRepositoryImpl
+import com.prafullkumar.campusepulse.managers.SharedPrefManager
 
 interface TeacherModule {
     val teacherRepository: TeacherRepository
@@ -26,8 +27,11 @@ class TeacherModuleImpl(
     private val firebaseFirestore: FirebaseFirestore by lazy {
         FirebaseFirestore.getInstance()
     }
+    private val sharedPrefManager: SharedPrefManager by lazy {
+        SharedPrefManager(context)
+    }
     override val teacherRepository: TeacherRepository by lazy{
-        TeacherRepositoryImpl(firebaseFirestore, firebaseAuth)
+        TeacherRepositoryImpl(firebaseFirestore, firebaseAuth, sharedPrefManager)
     }
     override val takeAttendanceRepository: AttendanceRepository by lazy {
         AttendanceRepositoryImpl(

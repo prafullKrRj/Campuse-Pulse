@@ -47,6 +47,10 @@ class TeacherViewModel(
             }
         }
     }
+
+    fun signOut() {
+        repository.signOut()
+    }
 }
 sealed class TeacherState {
     data object Loading : TeacherState()

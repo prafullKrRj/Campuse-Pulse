@@ -1,5 +1,9 @@
 package com.prafullkumar.campusepulse.adminApp.homeScreen
 
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,6 +13,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
@@ -44,7 +50,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun AdminScreen(
     adminViewModel: AdminViewModel,
-    navController: NavController
+    navController: NavController,
+    signOut: () -> Unit = { }
 ) {
     val state by adminViewModel.state.collectAsState()
     val refreshScope = rememberCoroutineScope()
@@ -56,10 +63,15 @@ fun AdminScreen(
         refreshing = false
     }
     val refreshState = rememberPullRefreshState(refreshing, ::refresh)
+    var openDialog by remember { mutableStateOf(false) }
     Scaffold(
         topBar = {
             TopAppBar(
-                label = R.string.admin
+                label = R.string.admin,
+                actionIcon = Icons.Default.AccountBox,
+                actionIconClicked = {
+                    openDialog = true
+                }
             )
         },
         floatingActionButton = {
@@ -108,7 +120,38 @@ fun AdminScreen(
             PullRefreshIndicator(refreshing, refreshState, Modifier.align(Alignment.TopCenter))
         }
     }
-
+    if (openDialog) {
+        AlertDialog(
+            onDismissRequest = { openDialog = false },
+            icon = { Icon(imageVector = Icons.Filled.Info, contentDescription = "Info") },
+            title = {
+                Text(text = "LogOut")
+            },
+            text = {
+                Text("Want to log Out?")
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        openDialog = false
+                        signOut()
+                        adminViewModel.signOut()
+                    }
+                ) {
+                    Text("Confirm")
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = {
+                        openDialog = false
+                    }
+                ) {
+                    Text("Dismiss")
+                }
+            }
+        )
+    }
 }
 
 @Composable

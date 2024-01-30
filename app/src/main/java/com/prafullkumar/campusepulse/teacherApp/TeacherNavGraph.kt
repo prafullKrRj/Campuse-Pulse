@@ -27,7 +27,7 @@ import com.prafullkumar.campusepulse.teacherApp.homeScreen.TeacherViewModel
 import com.prafullkumar.campusepulse.teacherApp.takeAttendanceScreen.TakeAttendance
 
 @Composable
-fun TeacherNavGraph() {
+fun TeacherNavGraph(signOut: () -> Unit) {
     val teacherNavController = rememberNavController()
     var isTakeAttendance by rememberSaveable { mutableStateOf(false) }
     val viewModels = listOf(
@@ -59,7 +59,9 @@ fun TeacherNavGraph() {
                     }
                 }
                 composable(TeacherScreens.PROFILE.name) {
-                    TeacherProfileScreen(viewModel = viewModels[0] as TeacherViewModel)
+                    TeacherProfileScreen(viewModel = viewModels[0] as TeacherViewModel) {
+                        signOut()
+                    }
                 }
                 composable(TeacherScreens.ATTENDANCE.name) {
                     DisplayAttendance(
