@@ -23,6 +23,10 @@ class DisplayAttendRepositoryImpl (
     override suspend fun getClasses(): Flow<Result<TeacherDetails>> {
         return callbackFlow {
             trySend(Result.Loading)
+            if (id == "") {
+                trySend(Result.Error(Exception("User not logged in")))
+                return@callbackFlow
+            }
             val docRef = firestore.collection("teachers")
                 .document(id)
                 .get()

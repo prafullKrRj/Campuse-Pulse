@@ -1,5 +1,6 @@
 package com.prafullkumar.campusepulse
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.google.firebase.auth.FirebaseAuth
 import com.prafullkumar.campusepulse.managers.SharedPrefManager
 import com.prafullkumar.campusepulse.managers.ViewModelProvider
 import com.prafullkumar.campusepulse.presentations.navigationGraph.NavigationGraph
@@ -19,6 +21,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
             CampusePulseTheme (darkTheme = true){
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -28,11 +31,19 @@ class MainActivity : ComponentActivity() {
                         onBoardViewModel = viewModel(
                             factory = ViewModelProvider.getMainViewModel()
                         )
-                    )
+                    ) {
+                        signOutAndExit(this)
+                    }
                 }
             }
         }
     }
+}
+fun signOutAndExit(activity: Activity) {
+    FirebaseAuth.getInstance().signOut()
+    SharedPrefManager(activity).setLoggedIn(false)
+    SharedPrefManager(activity).setLoggedInUserType("")
+    activity.finishAffinity()
 }
 fun NavController.goBackStack() {
     if (currentBackStackEntry?.lifecycle?.currentState == Lifecycle.State.RESUMED) {

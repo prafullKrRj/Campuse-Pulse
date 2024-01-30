@@ -10,14 +10,13 @@ import kotlinx.coroutines.flow.callbackFlow
 
 interface TeacherRepository {
     suspend fun getClassList(): Flow<Result<TeacherDetails>>
-    fun signOut()
 }
 
 @Suppress("UNCHECKED_CAST")
 class TeacherRepositoryImpl(
     private val firebaseFirestore: FirebaseFirestore,
     private val firebaseAuth: FirebaseAuth,
-    private val sharedPrefManager: SharedPrefManager
+    private val sharedPrefManager: SharedPrefManager,
 ) : TeacherRepository {
 
     val id: String = firebaseAuth.currentUser?.email?.substringBefore('@') ?: ""
@@ -26,31 +25,33 @@ class TeacherRepositoryImpl(
      *     used to get the list of classes of the teacher
      * */
     override suspend fun getClassList(): Flow<Result<TeacherDetails>> {
-        return callbackFlow {
-            trySend(Result.Loading)
-            firebaseFirestore.collection("teachers")
-                .document(id)
-                .get()
-                .addOnSuccessListener {
-                    val teacherDetails = TeacherDetails(
-                        id = it.id,
-                        name = it.data?.get("name") as String?,
-                        branches = it.data?.get("branches") as List<String>?
-                    )
-                    trySend(Result.Success(teacherDetails))
-                }
-                .addOnFailureListener {
-                    trySend(Result.Error(it))
-                }
-            awaitClose { }
+    return callbackFlow {
+        trySend(Result.Loading)
+        if (id.isEmpty()) {
+            trySend(Result.Error(Exception("User not logged in")))
+            return@callbackFlow
         }
+        val docRef = firebaseFirestore.collection("teachers").document(id)
+        val successListener = docRef.addSnapshotListener { snapshot, e ->
+            if (e != null) {
+                trySend(Result.Error(e))
+                return@addSnapshotListener
+            }
+            if (snapshot != null && snapshot.exists()) {
+                val teacherDetails = TeacherDetails(
+                    id = snapshot.id,
+                    name = snapshot.data?.get("name") as String?,
+                    branches = snapshot.data?.get("branches") as List<String>?
+                )
+                trySend(Result.Success(teacherDetails))
+            } else {
+                trySend(Result.Error(Exception("No such document")))
+            }
+        }
+        awaitClose { successListener.remove() }
     }
+}
 
-    override fun signOut() {
-        firebaseAuth.signOut()
-        sharedPrefManager.setLoggedIn(false)
-        sharedPrefManager.setLoggedInUserType("")
-    }
 }
 data class TeacherDetails(
     val id: String?,

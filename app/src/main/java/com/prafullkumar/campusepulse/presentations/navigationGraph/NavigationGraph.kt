@@ -18,7 +18,8 @@ import com.prafullkumar.campusepulse.teacherApp.TeacherNavGraph
 
 @Composable
 fun NavigationGraph(
-    onBoardViewModel: OnBoardViewModel
+    onBoardViewModel: OnBoardViewModel,
+    signOut : () -> Unit
 ) {
     val mainNavController = rememberNavController()
     var startDestination = Screen.MAIN.route
@@ -56,29 +57,18 @@ fun NavigationGraph(
         }
         composable(Screen.ADMIN.route) {
             AdminNavGraph {
-                mainNavController.navigate(Screen.MAIN.route) {
-                    popUpTo(Screen.MAIN.route) {
-                        inclusive = true
-                    }
-                }
+                signOut()
             }
         }
         composable(Screen.STUDENT.route) {
             StudentNavGraph {
-                mainNavController.navigate(Screen.MAIN.route) {
-                    popUpTo(Screen.MAIN.route) {
-                        inclusive = true
-                    }
-                }
+                signOut()
             }
         }
         composable(Screen.TEACHER.route) {
             TeacherNavGraph {
-                mainNavController.navigate(Screen.MAIN.route) {
-                    popUpTo(Screen.MAIN.route) {
-                        inclusive = true
-                    }
-                }
+                signOut()
+
             }
         }
     }

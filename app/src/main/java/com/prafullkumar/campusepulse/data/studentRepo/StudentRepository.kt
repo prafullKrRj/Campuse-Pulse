@@ -13,10 +13,10 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
+import kotlin.system.exitProcess
 
 interface StudentRepository {
     suspend fun getStudentDetails(): Flow<Result<Pair<Student, String>>>
-    fun signOut()
 }
 
 @Suppress("UNCHECKED_CAST", "LABEL_NAME_CLASH")
@@ -36,43 +36,39 @@ class StudentRepositoryImpl (
         return callbackFlow {
             trySend(Result.Loading).isSuccess
             val id = firebaseAuth.currentUser?.email?.substringBefore('@')
-            var found = false
-            firestore.collection(main)
-                .get()
-                .addOnSuccessListener { documents ->
-                    for (doc in documents) {
-                        if (found) continue
-                        firestore.collection(main)
-                            .document(doc.id)
-                            .collection(sub)
-                            .document(id ?: "")
-                            .get()
-                            .addOnSuccessListener { st ->
-                                if (st.exists() && st.id == id) {
-                                    storage.reference.child("timeTables/${doc.id}").downloadUrl.addOnSuccessListener {
-                                        trySend(Result.Success(Pair(getStudentFromDoc(st), it.toString()))).isSuccess
-                                    }.addOnFailureListener {
-                                        trySend(Result.Success(Pair(getStudentFromDoc(st), ""))).isSuccess
+            if (id != null) {
+                var found = false
+                firestore.collection(main)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        for (doc in documents) {
+                            if (found) continue
+                            firestore.collection(main)
+                                .document(doc.id)
+                                .collection(sub)
+                                .document(id ?: "")
+                                .get()
+                                .addOnSuccessListener { st ->
+                                    if (st.exists() && st.id == id) {
+                                        storage.reference.child("timeTables/${doc.id}").downloadUrl.addOnSuccessListener {
+                                            trySend(Result.Success(Pair(getStudentFromDoc(st), it.toString()))).isSuccess
+                                        }.addOnFailureListener {
+                                            trySend(Result.Success(Pair(getStudentFromDoc(st), ""))).isSuccess
+                                        }
+                                        found = true
                                     }
-                                    found = true
+                                }.addOnFailureListener {
+                                    trySend(Result.Error(it)).isSuccess
                                 }
-                            }.addOnFailureListener {
-                                trySend(Result.Error(it)).isSuccess
-                            }
+                        }
                     }
-                }
-                .addOnFailureListener {
-                    trySend(Result.Error(it)).isSuccess
-                }
+                    .addOnFailureListener {
+                        trySend(Result.Error(it)).isSuccess
+                    }
+            }
             awaitClose {  }
         }
 }
-
-    override fun signOut() {
-        firebaseAuth.signOut()
-        sharedPrefManager.setLoggedIn(false)
-        sharedPrefManager.setLoggedInUserType("")
-    }
 
     /**
      *       This function is used to get the student details from the document snapshot

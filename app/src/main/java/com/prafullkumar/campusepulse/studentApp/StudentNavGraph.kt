@@ -36,7 +36,7 @@ import com.prafullkumar.campusepulse.studentApp.noticeScreen.NoticeScreen
 import com.prafullkumar.campusepulse.studentApp.noticeScreen.NoticeViewModel
 
 @Composable
-fun StudentNavGraph(signOut: () -> Unit = { }) {
+fun StudentNavGraph(signOut: () -> Unit) {
     val sNavController = rememberNavController()
     val viewModels = listOf(
         viewModel<StudentViewModel>(factory = ViewModelProvider.getStudentViewModel()),

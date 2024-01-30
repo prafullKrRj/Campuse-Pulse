@@ -14,13 +14,13 @@ import com.prafullkumar.campusepulse.model.convertToBranch
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlin.system.exitProcess
 
 interface AdminRepository {
     suspend fun addStudent(student: Student, branchStrength: Long)
     suspend fun getBranches(): Flow<Result<MutableList<Branch>>>
 
     suspend fun addBranch(newBranch: NewBranch): Flow<Result<Boolean>>
-    fun signOut()
 }
 
 @Suppress("UNCHECKED_CAST")
@@ -118,12 +118,6 @@ class AdminRepositoryImpl (
             }
             awaitClose {  }
         }
-    }
-
-    override fun signOut() {
-        firebaseAuth.signOut()
-        sharedPrefManager.setLoggedIn(false)
-        sharedPrefManager.setLoggedInUserType("")
     }
 }
 

@@ -7,7 +7,6 @@ import com.prafullkumar.campusepulse.data.teacherRepos.TeacherDetails
 import com.prafullkumar.campusepulse.data.teacherRepos.TeacherRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -48,9 +47,6 @@ class TeacherViewModel(
         }
     }
 
-    fun signOut() {
-        repository.signOut()
-    }
 }
 sealed class TeacherState {
     data object Loading : TeacherState()

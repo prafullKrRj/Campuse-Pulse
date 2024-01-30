@@ -67,8 +67,8 @@ private fun StudentCard(studentDisplayAttendance: StudentDisplayAttendance) {
                 studentDisplayAttendance.rollNo?.let { Text(text = it) }
             }
             Column {
-                studentDisplayAttendance.present?.let { Text(text = it.toString()) }
-                studentDisplayAttendance.absent?.let { Text(text = it.toString()) }
+                studentDisplayAttendance.present?.let { Text(text = "  Present : ${it.toString()}") }
+                studentDisplayAttendance.absent?.let { Text(text = "  Absent : ${it.toString()}") }
             }
         }
     }

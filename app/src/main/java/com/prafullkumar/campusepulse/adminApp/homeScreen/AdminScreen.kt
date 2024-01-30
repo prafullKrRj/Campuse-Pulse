@@ -135,7 +135,6 @@ fun AdminScreen(
                     onClick = {
                         openDialog = false
                         signOut()
-                        adminViewModel.signOut()
                     }
                 ) {
                     Text("Confirm")

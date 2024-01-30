@@ -7,6 +7,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import com.prafullkumar.campusepulse.commons.LoadingScreen
 import com.prafullkumar.campusepulse.presentations.components.SignInField
 import com.prafullkumar.campusepulse.presentations.navigationGraph.Screen
 import com.prafullkumar.campusepulse.presentations.navigationGraph.USER
@@ -18,13 +19,6 @@ fun OnBoardingStudentScreen(
 ) {
     val state by onBoardViewModel.state.collectAsState()
     val context = LocalContext.current
-    SignInField(type = USER.STUDENT.name) {
-        onBoardViewModel.signInUser(
-            userType = USER.STUDENT.name,
-            email = it.id,
-            password = it.pass
-        )
-    }
     when(state) {
         is OnboardingState.Initial -> {
             // do nothing
@@ -40,7 +34,15 @@ fun OnBoardingStudentScreen(
             ).show()
         }
         is OnboardingState.Loading -> {
-            CircularProgressIndicator()
+            LoadingScreen()
         }
     }
+    SignInField(type = USER.STUDENT.name) {
+        onBoardViewModel.signInUser(
+            userType = USER.STUDENT.name,
+            email = it.id,
+            password = it.pass
+        )
+    }
+
 }

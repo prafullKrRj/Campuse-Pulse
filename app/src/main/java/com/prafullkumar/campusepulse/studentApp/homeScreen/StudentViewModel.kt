@@ -44,9 +44,6 @@ class StudentViewModel(
         }
     }
 
-    fun signOut() {
-        repository.signOut()
-    }
 }
 
 sealed class StudentScreenState {
