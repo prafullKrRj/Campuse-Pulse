@@ -7,8 +7,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.prafullkumar.campusepulse.adminApp.addBranchScreen.AddBranchScreen
 import com.prafullkumar.campusepulse.adminApp.addBranchScreen.AddBranchViewModel
-import com.prafullkumar.campusepulse.adminApp.addBranchScreen.PracticalSlotScreen
-import com.prafullkumar.campusepulse.adminApp.addBranchScreen.TheorySlotScreen
 import com.prafullkumar.campusepulse.adminApp.addStudentScreen.AddStudentScreen
 import com.prafullkumar.campusepulse.adminApp.branchDetailsScreen.BranchDetailsScreen
 import com.prafullkumar.campusepulse.adminApp.homeScreen.AdminScreen
@@ -16,13 +14,16 @@ import com.prafullkumar.campusepulse.adminApp.homeScreen.AdminViewModel
 import com.prafullkumar.campusepulse.managers.ViewModelProvider
 
 @Composable
-fun AdminNavGraph(adminViewModel: AdminViewModel) {
+fun AdminNavGraph() {
     val adminNavController = rememberNavController()
     val addBranchViewModel: AddBranchViewModel = viewModel(
         factory = ViewModelProvider.addBranchViewModel()
     )
+    val adminViewModel: AdminViewModel = viewModel(
+        factory = ViewModelProvider.getAdminViewModel()
+    )
     NavHost(navController = adminNavController, startDestination = AdminScreens.HOME.name) {
-        composable(AdminScreens.HOME.name) {
+        composable(AdminScreens.HOME.name)  {
             AdminScreen(adminViewModel = adminViewModel, navController = adminNavController)
         }
         composable(AdminScreens.ADD_STUDENT.name) {
@@ -36,19 +37,10 @@ fun AdminNavGraph(adminViewModel: AdminViewModel) {
             val id = backStackEntry.arguments?.getString("id") ?: ""
             BranchDetailsScreen(viewModel = viewModel(
                 factory = ViewModelProvider.getBranchDetailsViewModel(id = id)
-            ))
-        }
-        composable(AdminScreens.ADD_THEORY_SLOT_SCREEN.name + "/{day}") { backStackEntry ->
-            val day = backStackEntry.arguments?.getString("day") ?: ""
-            TheorySlotScreen(day = day, viewModel = addBranchViewModel, navController = adminNavController)
-        }
-        composable(AdminScreens.ADD_LAB_SLOT_SCREEN.name + "/{day}") { backStackEntry ->
-            val day = backStackEntry.arguments?.getString("day") ?: ""
-            PracticalSlotScreen(day = day, viewModel = addBranchViewModel, navController = adminNavController)
+            ), navController = adminNavController)
         }
     }
 }
 enum class AdminScreens {
     HOME, ADD_STUDENT, ADD_BRANCH, BRANCH_DETAILS,
-    ADD_THEORY_SLOT_SCREEN, ADD_LAB_SLOT_SCREEN
 }

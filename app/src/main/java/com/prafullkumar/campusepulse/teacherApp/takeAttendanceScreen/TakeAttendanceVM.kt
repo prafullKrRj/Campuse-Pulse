@@ -18,6 +18,7 @@ class AttendanceViewModel(
     private val _takeAttendanceState = MutableStateFlow<TakeAttendanceState>(TakeAttendanceState.Loading)
     val state = _takeAttendanceState.asStateFlow()
     var attendanceList = mutableListOf<Student>()
+    var studentList = mutableListOf<Student>()
     init {
         getClassStudentList()
     }
@@ -32,6 +33,7 @@ class AttendanceViewModel(
                         _takeAttendanceState.update {
                             TakeAttendanceState.Success(repo.data)
                         }
+                        studentList = repo.data.toMutableList()
                     }
                     is Result.Error -> {
                         _takeAttendanceState.update {
@@ -66,8 +68,21 @@ class AttendanceViewModel(
             )
         }
     }
-    fun onSavedClicked() {
 
+    fun onSavedClicked() {
+        val list = mutableListOf<String>()
+        for (student in studentList) {
+            if (!attendanceList.contains(student)) {
+                list.add(student.admNo.toString())
+            }
+        }
+        viewModelScope.launch {
+            repository.addFinalAttendance(
+                branch = branch.substringBefore(":"),
+                subject = branch.substringAfter(":"),
+                students = list
+            )
+        }
     }
 }
 

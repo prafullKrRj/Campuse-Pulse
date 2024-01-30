@@ -1,57 +1,52 @@
 package com.prafullkumar.campusepulse.adminApp.addBranchScreen
 
-import android.util.Log
-import androidx.compose.runtime.mutableStateOf
+import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
+import android.provider.MediaStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prafullkumar.campusepulse.data.adminRepos.AdminRepository
 import com.prafullkumar.campusepulse.data.adminRepos.Result
+import com.prafullkumar.campusepulse.data.adminRepos.Result.Loading
 import com.prafullkumar.campusepulse.data.teacherRepos.TeacherDetails
-import com.prafullkumar.campusepulse.model.ClassDetails
 import com.prafullkumar.campusepulse.model.NewBranch
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class AddBranchViewModel(
     private val repository: AdminRepository
 ): ViewModel() {
-    private val _teachers: MutableStateFlow<TeacherDetailsState> = MutableStateFlow(TeacherDetailsState.Loading)
-    val teachers = _teachers.asStateFlow()
 
     val state:MutableStateFlow<AddBranchState> = MutableStateFlow(AddBranchState())
+
+    val upLoaded = MutableStateFlow<Uploaded>(Uploaded.Initial)
     init {
-        getTeachers()
+        resetNewBranch()
     }
-    private fun getTeachers() {
-        _teachers.value = TeacherDetailsState.Loading
+
+    fun addBranch() {
         viewModelScope.launch {
-            repository.getTeachers().collect { repo ->
-                when (repo) {
-                    Result.Loading -> {
-                        _teachers.update {
-                            TeacherDetailsState.Loading
+            repository.addBranch(state.value.newBranch).collect { ans ->
+                when (ans) {
+                    is Loading -> {
+                        upLoaded.update {
+                            Uploaded.Loading
                         }
-                    }
-                    is Result.Success -> {
-                        _teachers.update {
-                            TeacherDetailsState.Success(repo.data)
-                        }
-                        Log.d("teacher", "getTeachers: ${repo.data}")
                     }
                     is Result.Error -> {
-                        _teachers.update {
-                            TeacherDetailsState.Error(repo.exception.message ?: "Error")
+                        upLoaded.update {
+                            Uploaded.Error(ans.exception.message ?: "Error")
+                        }
+                    }
+                    else -> {
+                        upLoaded.update {
+                            Uploaded.Success("Branch added successfully")
                         }
                     }
                 }
             }
-        }
-    }
-    fun addBranch() {
-        viewModelScope.launch {
-            repository.addBranch(state.value.newBranch)
         }
     }
     fun resetNewBranch() {
@@ -59,15 +54,23 @@ class AddBranchViewModel(
             AddBranchState()
         }
     }
+    fun uploadTimeTable(uri: Uri?) {
+        state.update {
+            it.copy(
+                newBranch = it.newBranch.copy(
+                    timeTable = uri
+                )
+            )
+        }
+    }
 }
-
 data class AddBranchState(
     var newBranch: NewBranch = NewBranch(),
-    var slot: ClassDetails = ClassDetails()
 )
 
-sealed class TeacherDetailsState {
-    data object Loading: TeacherDetailsState()
-    data class Success(val data: MutableList<TeacherDetails>): TeacherDetailsState()
-    data class Error(val message: String): TeacherDetailsState()
+sealed class Uploaded {
+    data object Initial: Uploaded()
+    data object Loading: Uploaded()
+    data class Success(val url: String): Uploaded()
+    data class Error(val msg: String): Uploaded()
 }

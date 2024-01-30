@@ -1,22 +1,27 @@
 package com.prafullkumar.campusepulse.data.adminRepos
 
+import android.net.Uri
+import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.prafullkumar.campusepulse.adminApp.models.Branch
 import com.prafullkumar.campusepulse.adminApp.models.Student
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.tasks.await
 
 interface BranchDetailsRepository {
     suspend fun getBranchDetails(branchId: String): Flow<Result<Branch>>
     suspend fun getStudents(branchId: String): Flow<Result<List<Student>>>
+    fun updateTimeTable(branchId: String, uri: Uri): Flow<Result<Boolean>>
 }
 
 @Suppress("UNCHECKED_CAST")
 class BranchDetailsRepositoryImpl(
     private val firestore: FirebaseFirestore
 ) : BranchDetailsRepository {
-
+    private val storage = FirebaseStorage.getInstance()
     /**
      *      This function will return the branch details of the branch with the given id
      * */
@@ -24,26 +29,29 @@ class BranchDetailsRepositoryImpl(
         return callbackFlow {
             try {
                 trySend(Result.Loading)
+                var tt : String? = null
+                val storageRef = storage.reference      // Reference to the root of the storage
+                storageRef.child("timeTables/${branchId}").downloadUrl.addOnSuccessListener { uri ->
+                    tt = uri.toString() // Download the time table of the branch
+                }.await()
                 firestore.collection("branches")
                     .document(branchId)
                     .get()
                     .addOnSuccessListener { document ->
-                        val tt = document.data?.get("timeTable")
-                        trySend(Result.Success(
-                            Branch(
-                                id = document.id,
-                                name = document.data?.get("name").toString(),
-                                strength = document.data?.get("strength")?.toString()?.toInt(),
-                                tt = if (tt != null) tt as Map<String, List<String>> else null,
-                                batches = document.data?.get("batches") as List<String>,
-                                subjects = document.data?.get("subjects") as List<String>
-                            )
-                        )
-                        )
+
+                        trySend(Result.Success(Branch(
+                            id = document.id,
+                            name = document.data?.get("name").toString(),
+                            strength = document.data?.get("strength").toString().toLong(),
+                            batches = document.data?.get("batches") as List<String> ?: listOf(),
+                            subjects = document.data?.get("subjects") as List<String> ?: listOf(),
+                            timeTable = tt
+
+                        )))
                     }
-                    .addOnFailureListener { error ->
-                        trySend(Result.Error(error))
-                    }
+                .addOnFailureListener { error ->
+                    trySend(Result.Error(error))
+                }
             } catch (e: Exception) {
                 trySend(Result.Error(e))
             }
@@ -57,35 +65,19 @@ class BranchDetailsRepositoryImpl(
      * */
     override suspend fun getStudents(branchId: String): Flow<Result<List<Student>>> {
         return callbackFlow {
-            try {
-                trySend(Result.Loading)
-                firestore.collection("branches").document(branchId)
-                    .collection("students")
-                    .get()
-                    .addOnSuccessListener {
-                        val students = mutableListOf<Student>()
-                        for (document in it.documents) {
-                            students.add(
-                                Student(
-                                    fname = document.data?.get("fname").toString(),
-                                    lname = document.data?.get("lname").toString(),
-                                    rollNo = document.data?.get("rollNo").toString().toLong(),
-                                    admNo = document.data?.get("admNo").toString().toLong(),
-                                    branch = document.data?.get("branch").toString(),
-                                    batch = document.data?.get("batch").toString(),
-                                    phoneNo = document.data?.get("phoneNo").toString().toLong(),
-                                    dob = document.data?.get("dob").toString(),
-                                    attendance = document.data?.get("attendance") as Map<String, List<Long>>
-                                )
-                            )
-                        }
-                        trySend(Result.Success(students))
-                    }
-                    .addOnFailureListener {
-                        trySend(Result.Error(it))
-                    }
-            } catch (e: Exception) {
-                trySend(Result.Error(e))
+
+            awaitClose {  }
+        }
+    }
+
+    override fun updateTimeTable(branchId: String, uri: Uri):Flow<Result<Boolean>> {
+        return callbackFlow {
+            trySend(Result.Loading)
+            val storageRef = storage.reference
+            storageRef.child("timeTables/${branchId}").putFile(uri).addOnSuccessListener {
+                trySend(Result.Success(true))
+            }.addOnFailureListener {
+                trySend(Result.Error(it))
             }
             awaitClose {  }
         }

@@ -1,13 +1,16 @@
 package com.prafullkumar.campusepulse.adminApp.branchDetailsScreen
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.prafullkumar.campusepulse.adminApp.addBranchScreen.Uploaded
 import com.prafullkumar.campusepulse.adminApp.models.Branch
 import com.prafullkumar.campusepulse.adminApp.models.Student
 import com.prafullkumar.campusepulse.data.adminRepos.BranchDetailsRepository
 import com.prafullkumar.campusepulse.data.adminRepos.Result
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -18,7 +21,7 @@ class BranchDetailsViewModel(
 
     private val _branchDetails = MutableStateFlow<BranchDetailsState>(BranchDetailsState.Initial)
     val branchDetails = _branchDetails.asStateFlow()
-
+    val upLoaded = MutableStateFlow<Uploaded>(Uploaded.Initial)
     private val _students = MutableStateFlow<StudentsState>(StudentsState.Initial)
     val studentsFlow = _students.asStateFlow()
     init {
@@ -65,6 +68,30 @@ class BranchDetailsViewModel(
                     is Result.Success -> {
                         _students.update {
                             StudentsState.Success(repo.data)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    fun updateTimeTable(branchId: String, uri: Uri){
+        viewModelScope.launch {
+            repository.updateTimeTable(branchId, uri).collect { ans ->
+                when (ans) {
+                    is Result.Loading -> {
+                        upLoaded.update {
+                            Uploaded.Loading
+                        }
+                    }
+                    is Result.Error -> {
+                        upLoaded.update {
+                            Uploaded.Error(ans.exception.message ?: "Error")
+                        }
+                    }
+                    else -> {
+                        upLoaded.update {
+                            Uploaded.Success("Branch added successfully")
                         }
                     }
                 }

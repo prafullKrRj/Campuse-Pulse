@@ -1,12 +1,14 @@
 package com.prafullkumar.campusepulse.adminApp.models
 
+import android.net.Uri
+
 data class Branch(
     val id: String? = "",
     val name: String? = "",
-    val strength: Int? = 0,
-    val tt: Map<String, List<String>>? = mapOf(),
+    val strength: Long? = 0,
     val batches: List<String>? = listOf(),
-    val subjects: List<String>
+    val subjects: List<String> = listOf(),
+    var timeTable: String? = null
 )
 
 data class Student(

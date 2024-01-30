@@ -24,7 +24,6 @@ import com.prafullkumar.campusepulse.commons.TopAppBar
 @Composable
 fun StudentHomeScreen(navController: NavController, viewModel: StudentViewModel) {
     val state by viewModel.studentScreenState.collectAsState()
-    val scrollState = rememberScrollState()
     Scaffold(
         topBar = {
             TopAppBar(
@@ -38,8 +37,7 @@ fun StudentHomeScreen(navController: NavController, viewModel: StudentViewModel)
     ) { paddingValues ->
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(paddingValues)
-            .verticalScroll(scrollState)) {
+            .padding(paddingValues)) {
             when(state) {
                 is StudentScreenState.Initial -> {
                     Text(stringResource(R.string.initial))
@@ -50,7 +48,7 @@ fun StudentHomeScreen(navController: NavController, viewModel: StudentViewModel)
                     }
                 }
                 is StudentScreenState.Success -> {
-                    StudentUI((state as StudentScreenState.Success).studentData)
+                    StudentUI(studentData = (state as StudentScreenState.Success).studentData)
                 }
                 is StudentScreenState.Error -> {
                     (state as StudentScreenState.Error).error?.let { Text(text = it) }

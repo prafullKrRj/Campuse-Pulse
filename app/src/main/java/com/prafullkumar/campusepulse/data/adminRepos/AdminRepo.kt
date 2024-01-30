@@ -4,6 +4,7 @@ import android.content.Context
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.prafullkumar.campusepulse.adminApp.models.Branch
 import com.prafullkumar.campusepulse.adminApp.models.Student
 import com.prafullkumar.campusepulse.data.teacherRepos.TeacherDetails
@@ -14,11 +15,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 interface AdminRepository {
-    suspend fun addStudent(student: Student, branchStrength: Int)
+    suspend fun addStudent(student: Student, branchStrength: Long)
     suspend fun getBranches(): Flow<Result<MutableList<Branch>>>
 
-    suspend fun getTeachers(): Flow<Result<MutableList<TeacherDetails>>>
-    suspend fun addBranch(newBranch: NewBranch)
+    suspend fun addBranch(newBranch: NewBranch): Flow<Result<Boolean>>
 }
 
 @Suppress("UNCHECKED_CAST")
@@ -31,14 +31,14 @@ class AdminRepositoryImpl (
     /**
      *  This function adds the student to the firebase authentication and then adds the student to the firebase firestore
      * */
-    override suspend fun addStudent(student: Student, branchStrength: Int) {
+    override suspend fun addStudent(student: Student, branchStrength: Long) {
         firebaseAuth.createUserWithEmailAndPassword(
             "${student.admNo}@student.com",
             "password"
         )
             .addOnSuccessListener {
-                firebaseFirestore.collection("branches").document(student.branch ?: "")
-                    .collection("students")
+                firebaseFirestore.collection("branches")
+                    .document(student.branch ?: "").collection("students")
                     .document(student.admNo.toString())
                     .set(student)
                     .addOnSuccessListener {
@@ -66,13 +66,11 @@ class AdminRepositoryImpl (
                     .addOnSuccessListener { result ->
                         val branches = mutableListOf<Branch>()  // stores the branches
                         result.forEach { document ->
-                            val tt = document.data["timeTable"]
                             branches.add(
                                 Branch(
                                     id = document.id,
                                     name = document.data["name"].toString(),
-                                    strength = document.data["strength"]?.toString()?.toInt(),
-                                    tt = if (tt != null) tt as Map<String, List<String>> else null,
+                                    strength = document.data["strength"]?.toString()?.toLong() ?: 0L,
                                     batches = document.data["batches"] as List<String>,
                                     subjects = document.data["subjects"] as List<String>
                                 )
@@ -90,48 +88,36 @@ class AdminRepositoryImpl (
         }
     }
 
-    override suspend fun getTeachers(): Flow<Result<MutableList<TeacherDetails>>> {
+
+
+    override suspend fun addBranch(newBranch: NewBranch): Flow<Result<Boolean>> {
         return callbackFlow {
-            try {
-                trySend(Result.Loading).isSuccess
-                firebaseFirestore.collection("teachers")
-                    .get()
-                    .addOnSuccessListener { result ->
-                        val teachers = mutableListOf<TeacherDetails>()  // stores the branches
-                        result.forEach {
-                            teachers.add(
-                                TeacherDetails(
-                                    id = it.id,
-                                    name = it.data?.get("name") as String?,
-                                    branches = it.data?.get("branches") as List<String>?
-                                )
-                            )
+            trySend(Result.Loading)
+            val branch = convertToBranch(newBranch)
+            val storageRef = FirebaseStorage.getInstance().reference
+            val fileRef = storageRef.child("timeTables/${branch.id}")
+            val uploadTask = fileRef.putFile(newBranch.timeTable!!)
+            uploadTask.addOnSuccessListener {
+                Toast.makeText(context, "Time table uploaded successfully", Toast.LENGTH_SHORT).show()
+                branch.id?.let { it1 ->
+                    firebaseFirestore.collection("branches")
+                        .document(it1)
+                        .set(branch)
+                        .addOnSuccessListener {
+                            trySend(Result.Success(true)).isSuccess
                         }
-                        trySend(Result.Success(teachers)).isSuccess // This is the line which send the data to the flow
-                    }
-                    .addOnFailureListener { exception ->
-                        trySend(Result.Error(exception)).isSuccess
-                    }
-            } catch (e: Exception) {
-                trySend(Result.Error(e))
+                        .addOnFailureListener {
+                            trySend(Result.Error(it)).isSuccess
+                        }
+                }
+            }.addOnFailureListener {
+                trySend(Result.Error(it))
             }
             awaitClose {  }
         }
     }
-
-    override suspend fun addBranch(newBranch: NewBranch) {
-        val branch = convertToBranch(newBranch)
-        firebaseFirestore.collection("branches")
-            .document(branch.id ?: "")
-            .set(branch)
-            .addOnSuccessListener {
-                Toast.makeText(context, "Branch added successfully", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "Failed to add branch", Toast.LENGTH_SHORT).show()
-            }
-    }
 }
+
 sealed class Result<out T> {
     data class Success<out T>(val data: T) : Result<T>()
     data class Error(val exception: Exception) : Result<Nothing>()

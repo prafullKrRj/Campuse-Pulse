@@ -52,7 +52,7 @@ fun StudentNavGraph() {
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(innerPadding)) {
-            NavHost(navController = sNavController, startDestination = StudentScreens.TASKS.name) {
+            NavHost(navController = sNavController, startDestination = StudentScreens.HOME.name) {
                 composable(StudentScreens.HOME.name) {
                     StudentHomeScreenNavGraph(viewModel = viewModels[0] as StudentViewModel)
                 }

@@ -55,9 +55,7 @@ fun NavigationGraph(
             )
         }
         composable(Screen.ADMIN.route) {
-            AdminNavGraph(adminViewModel = viewModel(
-                factory = ViewModelProvider.getAdminViewModel()
-            ))
+            AdminNavGraph()
         }
         composable(Screen.STUDENT.route) {
             StudentNavGraph()

@@ -1,8 +1,15 @@
 package com.prafullkumar.campusepulse.adminApp.addBranchScreen
 
-import android.util.Log
+import android.content.Context
+import android.graphics.BitmapFactory
+import android.net.Uri
+import androidx.compose.material3.ExperimentalMaterial3Api
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,7 +26,7 @@ import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -33,38 +40,44 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.prafullkumar.campusepulse.adminApp.addStudentScreen.AddTexts
 import com.prafullkumar.campusepulse.adminApp.addStudentScreen.SelectFromOptions
+import com.prafullkumar.campusepulse.commons.LoadingScreen
 import com.prafullkumar.campusepulse.commons.TopAppBar
 import kotlinx.coroutines.flow.update
-/**
- *  @see com.prafullkumar.campusepulse.adminApp.uiComponents.AddBranchScreen
- */
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddBranchScreen(viewModel: AddBranchViewModel, navController: NavController) {
     val branchState by viewModel.state.collectAsState()
-    Log.d("newBranch", "AddBranchScreen: ${branchState.newBranch}")
     var backDialog by remember { mutableStateOf(false) }
+    val getImages = rememberLauncherForActivityResult(contract = ActivityResultContracts.PickVisualMedia()) { uri ->
+        uri?.let { viewModel.uploadTimeTable(it) }
+    }
+    val scope = rememberCoroutineScope()
+    val uploaded by viewModel.upLoaded.collectAsState()
     BackHandler {
 
     }
+
     Scaffold(
         topBar = {
             TopAppBar(
                 heading = "Add Branch", actionIcon = Icons.Default.Done, actionIconClicked = {
                     if (branchState.newBranch.branchName.isNotEmpty() && branchState.newBranch.year.isNotEmpty()) {
                         viewModel.addBranch()
-                        viewModel.resetNewBranch()
-                        navController.popBackStack()
                     } else {
                         Toast.makeText(navController.context, "Please fill all the fields", Toast.LENGTH_SHORT).show()
                     }
@@ -75,6 +88,7 @@ fun AddBranchScreen(viewModel: AddBranchViewModel, navController: NavController)
             )
         }
     ) { paddingValues ->
+
         LazyColumn(contentPadding = paddingValues, modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
             item {
                 SelectFromOptions(
@@ -126,10 +140,34 @@ fun AddBranchScreen(viewModel: AddBranchViewModel, navController: NavController)
                     }
                 }
             }
-            if (branchState.newBranch.batches.isNotEmpty() && branchState.newBranch.subjects.isNotEmpty()) {
-                item {
-                    AddTimeTable(viewModel = viewModel, navController)
+            item {
+                Button(onClick = {
+                    scope.launch {
+                        getImages.launch(PickVisualMediaRequest(mediaType = ActivityResultContracts.PickVisualMedia.ImageOnly))
+                    }
+                }) {
+                    Text(text = "Upload Time Table")
                 }
+            }
+            item {
+                branchState.newBranch.timeTable?.let {
+                    ImageWindow(image = it)
+                }
+            }
+        }
+        when (uploaded) {
+            is Uploaded.Error -> {
+                Toast.makeText(navController.context, (uploaded as Uploaded.Error).msg, Toast.LENGTH_SHORT).show()
+            }
+            Uploaded.Initial -> {
+
+            }
+            Uploaded.Loading -> {
+                LoadingScreen()
+            }
+            is Uploaded.Success -> {
+                Toast.makeText(navController.context, (uploaded as Uploaded.Success).url, Toast.LENGTH_SHORT).show()
+                navController.popBackStack()
             }
         }
     }
@@ -165,6 +203,37 @@ fun AddBranchScreen(viewModel: AddBranchViewModel, navController: NavController)
         )
     }
 }
+@Composable
+fun ImageWindow(image: Uri?) {
+    /*if (image != null) {
+        Image(bitmap = image.asImageBitmap(), contentDescription = null, contentScale = ContentScale.FillWidth)
+    }*/
+    val context = LocalContext.current
+    val bitmap: ImageBitmap? = image?.let { loadBitmapFromUri(it, context) }
+    if (bitmap != null) {
+        Image(bitmap = bitmap, contentDescription = null)
+    }
+}
+private fun loadBitmapFromUri(uri: Uri, context: Context): ImageBitmap? {
+    return try {
+        val inputStream = context.contentResolver.openInputStream(uri)
+        val bitmap = BitmapFactory.decodeStream(inputStream)
+        bitmap?.asImageBitmap()
+    } catch (e: Exception) {
+        // Handle exceptions, such as IOException or SecurityException
+        null
+    }
+}
+
+
+
+
+
+
+
+
+
+
 @Composable
 fun AddBatches(listOfBatches: (List<String>) -> Unit) {
     val batches by rememberSaveable { mutableStateOf(mutableListOf<String>()) }

@@ -2,6 +2,7 @@ package com.prafullkumar.campusepulse.teacherApp.homeScreen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -101,14 +102,25 @@ fun ClassDetails(branch: String, index: Int, onClick: () -> Unit) {
                 onClick()
             },
     ) {
-        Column(
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
-        ) {
-            Text(text = "Branch: ${branch.substringBefore(":")}", fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "Subject: ${branch.substringAfter(":")}", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
-            Spacer(modifier = Modifier.width(8.dp))
+        Row(modifier = Modifier) {
             Text(text = "$index")
+            Column(
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+            ) {
+                Text(
+                    text = "Branch: ${branch.substringBefore(":")}",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "Subject: ${branch.substringAfter(":")}",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+
+            }
         }
     }
 }

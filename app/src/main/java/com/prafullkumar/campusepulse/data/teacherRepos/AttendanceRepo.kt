@@ -14,6 +14,7 @@ interface AttendanceRepository {
     suspend fun getClassStudentList(branch: String): Flow<Result<List<Student>>>
     suspend fun subTractAttendance(branch: String, studentID: String, subject: String)
     suspend fun addAttendance(branch: String, studentID: String, subject: String)
+    suspend fun addFinalAttendance(branch: String, students: List<String>, subject: String)
 }
 
 class AttendanceRepositoryImpl(
@@ -73,6 +74,31 @@ class AttendanceRepositoryImpl(
                 }.addOnFailureListener {
                     Toast.makeText(null, "Failed to update attendance", Toast.LENGTH_SHORT).show()
                     return@addOnFailureListener
+                }
+            }
+        }
+    }
+
+    override suspend fun addFinalAttendance(
+        branch: String,
+        students: List<String>,
+        subject: String
+    ) {
+        val docRef = firebaseFirestore.collection("branches").document(branch).collection("students")
+        for (student in students) {
+            val docRef2 = docRef.document(student)
+            docRef2.get().addOnSuccessListener { document ->
+                if (document != null) {
+                    val attendance = (document.data?.get("attendance") as Map<String, List<Long>>).toMutableMap()
+                    val attendanceList = attendance[subject]?.toMutableList()
+                    attendanceList?.set(1, attendanceList[1] + 1)
+                    attendance[subject] = attendanceList!!
+                    docRef2.update("attendance", attendance).addOnSuccessListener {
+                        return@addOnSuccessListener
+                    }.addOnFailureListener {
+                        Toast.makeText(null, "Failed to update attendance", Toast.LENGTH_SHORT).show()
+                        return@addOnFailureListener
+                    }
                 }
             }
         }

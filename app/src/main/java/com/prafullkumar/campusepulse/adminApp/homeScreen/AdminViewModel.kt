@@ -10,8 +10,6 @@ import com.prafullkumar.campusepulse.adminApp.models.Student
 import com.prafullkumar.campusepulse.data.adminRepos.AdminRepository
 import com.prafullkumar.campusepulse.data.adminRepos.Result
 import com.prafullkumar.campusepulse.data.teacherRepos.TeacherDetails
-import com.prafullkumar.campusepulse.model.ClassDetails
-import com.prafullkumar.campusepulse.model.NewBranch
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -23,10 +21,7 @@ class AdminViewModel(
     private val _state = MutableStateFlow<AdminState>(AdminState.Initial)
     val state = _state.asStateFlow()
     val branches = mutableStateOf<MutableList<Branch>?>(null)
-    val teachers = mutableStateOf<MutableList<TeacherDetails>?>(null)
-
     var newStudent by mutableStateOf(NewStudent())
-
 
     init {
         _state.value = AdminState.Loading
@@ -48,7 +43,7 @@ class AdminViewModel(
                         branches.value?.find { it.name == newStudent.branch }?.subjects ?: listOf()
                     )
                 ),
-                branches.value?.find { it.name == newStudent.branch }?.strength ?: 0
+                branches.value?.find { it.name == newStudent.branch }?.strength ?: 0L
             )
         }
     }

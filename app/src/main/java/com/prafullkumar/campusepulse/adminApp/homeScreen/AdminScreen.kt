@@ -2,11 +2,16 @@ package com.prafullkumar.campusepulse.adminApp.homeScreen
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
@@ -16,6 +21,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -28,14 +37,26 @@ import com.prafullkumar.campusepulse.adminApp.AdminScreens
 import com.prafullkumar.campusepulse.adminApp.models.Branch
 import com.prafullkumar.campusepulse.adminApp.uiComponents.AddButton
 import com.prafullkumar.campusepulse.commons.TopAppBar
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AdminScreen(
     adminViewModel: AdminViewModel,
     navController: NavController
 ) {
     val state by adminViewModel.state.collectAsState()
-    Scaffold (
+    val refreshScope = rememberCoroutineScope()
+    var refreshing by remember { mutableStateOf(false) }
+    fun refresh() = refreshScope.launch {
+        refreshing = true
+        adminViewModel.getBranches()
+        delay(1500)
+        refreshing = false
+    }
+    val refreshState = rememberPullRefreshState(refreshing, ::refresh)
+    Scaffold(
         topBar = {
             TopAppBar(
                 label = R.string.admin
@@ -50,31 +71,44 @@ fun AdminScreen(
                     navController.navigate(AdminScreens.ADD_STUDENT.name)
                 }
             )
-        }
-    ){ paddingValues ->
-        Column(
-            modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            when (state) {
-                is AdminState.Initial -> {
-                    Text(text = stringResource(R.string.initial))
+        },
+    ) { paddingValues ->
+        Box(modifier = Modifier.pullRefresh(refreshState)) {
+            Column(
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                when (state) {
+                    is AdminState.Initial -> {
+                        Text(text = stringResource(R.string.initial))
+                    }
+
+                    is AdminState.Success -> {
+                        (state as AdminState.Success).branches?.let {
+                            AdminMainUI(
+                                it,
+                                navController
+                            )
+                        }
+                    }
+
+                    is AdminState.Error -> {
+                        (state as AdminState.Error).error?.let { Text(text = it) }
+                    }
+
+                    is AdminState.Loading -> {
+                        CircularProgressIndicator()
+                    }
                 }
-                is AdminState.Success -> {
-                    (state as AdminState.Success).branches?.let { AdminMainUI(it, navController) }
-                }
-                is AdminState.Error -> {
-                    (state as AdminState.Error).error?.let { Text(text = it) }
-                }
-                is AdminState.Loading -> {
-                    CircularProgressIndicator()
-                }
+
             }
+            PullRefreshIndicator(refreshing, refreshState, Modifier.align(Alignment.TopCenter))
         }
     }
+
 }
 
 @Composable
