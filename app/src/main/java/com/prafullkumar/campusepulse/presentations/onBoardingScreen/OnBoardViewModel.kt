@@ -1,5 +1,8 @@
 package com.prafullkumar.campusepulse.presentations.onBoardingScreen
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prafullkumar.campusepulse.data.OnBoardingRepository
@@ -18,6 +21,8 @@ class OnBoardViewModel(
     fun loggedInUserType() = onBoardingRepository.loggedInUserType()
     private val _state: MutableStateFlow<OnboardingState> = MutableStateFlow(OnboardingState.Initial)
     val state: StateFlow<OnboardingState> = _state.asStateFlow()
+
+    var loginButtonEnabled by mutableStateOf(true)
     fun signInUser(userType: String, email: String, password: String) {
         viewModelScope.launch {
             onBoardingRepository.loginToFirebase(email, password).collectLatest {
@@ -32,6 +37,7 @@ class OnBoardViewModel(
                     }
                     is Resource.Error -> {
                         _state.value = OnboardingState.Error(it.message)
+                        loginButtonEnabled = true
                     }
                 }
             }

@@ -24,10 +24,12 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.prafullkumar.campusepulse.R
 import com.prafullkumar.campusepulse.presentations.navigationGraph.USER
+import com.prafullkumar.campusepulse.presentations.onBoardingScreen.OnBoardViewModel
 
 
 @Composable
 fun SignInField(
+    viewModel: OnBoardViewModel,
     type: String,
     onSignIn: (User) -> Unit,
 ) {
@@ -38,7 +40,6 @@ fun SignInField(
     ) {
         var identifier by rememberSaveable { mutableStateOf("") }
         var pass by rememberSaveable { mutableStateOf("") }
-        var buttonClicked by rememberSaveable { mutableStateOf(false) }
         OutlinedTextField(
             value = identifier,
             onValueChange = { identifier = it },
@@ -68,9 +69,9 @@ fun SignInField(
                         onSignIn(User("${identifier}@teacher.com", pass))
                     }
                 }
-                buttonClicked = true
+                viewModel.loginButtonEnabled = false
             },
-            enabled = identifier.isNotBlank() && pass.isNotBlank() && !buttonClicked
+            enabled = identifier.isNotBlank() && pass.isNotBlank() && viewModel.loginButtonEnabled
         ) {
             Text("Login")
         }

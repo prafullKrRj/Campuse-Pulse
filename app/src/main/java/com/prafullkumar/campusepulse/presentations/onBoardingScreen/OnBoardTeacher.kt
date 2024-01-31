@@ -38,7 +38,7 @@ fun OnBoardTeacher(
             LoadingScreen()
         }
     }
-    SignInField(type = USER.TEACHER.name) {
+    SignInField(type = USER.TEACHER.name, viewModel = onBoardViewModel) {
         onBoardViewModel.signInUser(
             userType = USER.TEACHER.name,
             email = it.id,

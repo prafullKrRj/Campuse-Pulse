@@ -41,7 +41,7 @@ fun OnBoardingAdminScreen(
             LoadingScreen()
         }
     }
-    SignInField(type = USER.ADMIN.name) {
+    SignInField(type = USER.ADMIN.name, viewModel = onBoardViewModel) {
         onBoardViewModel.signInUser(
             userType = USER.ADMIN.name,
             email = it.id,
