@@ -1,8 +1,8 @@
 package com.prafullkumar.campusepulse.adminApp.domain.repositories
 
 import com.prafullkumar.campusepulse.adminApp.domain.models.Branch
+import com.prafullkumar.campusepulse.adminApp.domain.models.NewBranch
 import com.prafullkumar.campusepulse.adminApp.domain.models.Student
-import com.prafullkumar.campusepulse.model.NewBranch
 import kotlinx.coroutines.flow.Flow
 
 interface AdminRepository {

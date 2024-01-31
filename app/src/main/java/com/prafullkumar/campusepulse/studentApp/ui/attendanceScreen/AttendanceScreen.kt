@@ -50,7 +50,10 @@ fun AttendanceScreen(viewModel: StudentViewModel) {
                }
             }
             is StudentScreenState.Success -> {
-                AttendanceBody(viewModel = viewModel, paddingValues = paddingValues, studentData = (state as StudentScreenState.Success).studentData.first)
+                AttendanceBody(
+                    paddingValues = paddingValues,
+                    studentData = (state as StudentScreenState.Success).studentData.first
+                )
             }
             else -> {
                 Text(text = "Something went wrong")
@@ -60,7 +63,7 @@ fun AttendanceScreen(viewModel: StudentViewModel) {
 }
 
 @Composable
-fun AttendanceBody(viewModel: StudentViewModel, paddingValues: PaddingValues, studentData: Student) {
+fun AttendanceBody(paddingValues: PaddingValues, studentData: Student) {
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
@@ -68,18 +71,22 @@ fun AttendanceBody(viewModel: StudentViewModel, paddingValues: PaddingValues, st
             .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        OverallAttendanceSection(heading = stringResource(id = R.string.overall_attendance), chartData = GetChartData.getOverallAttendanceData(
-            getOverallAttendanceData(studentData.attendance!!)
+        OverallAttendanceSection(
+            heading = stringResource(id = R.string.overall_attendance), chartData = GetChartData.getOverallAttendanceData(
+                getOverallAttendanceData(studentData.attendance!!)
+            )
         )
-        )
-        studentData.attendance?.forEach { (key, value) ->
-            OverallAttendanceSection(heading = key, chartData = GetChartData.getOverallAttendanceData(value))
+        studentData.attendance.forEach { (key, value) ->
+            OverallAttendanceSection(
+                heading = key,
+                chartData = GetChartData.getOverallAttendanceData(value)
+            )
         }
     }
 }
 
 @Composable
-fun OverallAttendanceSection(heading: String, chartData: PieChartData, modifier: Modifier = Modifier) {
+fun OverallAttendanceSection(heading: String, chartData: PieChartData) {
     val attendance = chartData.slices[0].value/(chartData.slices[0].value + chartData.slices[1].value) * 100
     Card(modifier = Modifier
         .fillMaxWidth()
@@ -146,7 +153,7 @@ object GetChartData {
 fun getOverallAttendanceData(data: Map<String, List<Long>>): List<Long> {
     var totalP = 0L
     var totalA = 0L
-    data.forEach { (key, value) ->
+    data.forEach { (_, value) ->
         totalP += value[0]
         totalA += value[1]
     }

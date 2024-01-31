@@ -6,12 +6,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.prafullkumar.campusepulse.adminApp.domain.models.Branch
+import com.prafullkumar.campusepulse.adminApp.domain.models.NewBranch
 import com.prafullkumar.campusepulse.adminApp.domain.models.Student
 import com.prafullkumar.campusepulse.adminApp.domain.repositories.AdminRepository
 import com.prafullkumar.campusepulse.adminApp.domain.repositories.Result
+import com.prafullkumar.campusepulse.adminApp.ui.addBranchScreen.convertToBranch
 import com.prafullkumar.campusepulse.managers.SharedPrefManager
-import com.prafullkumar.campusepulse.model.NewBranch
-import com.prafullkumar.campusepulse.model.convertToBranch
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow

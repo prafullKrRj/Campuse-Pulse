@@ -1,6 +1,7 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.prafullkumar.campusepulse.teacherApp.data.repositories
 
-import android.content.Context
 import android.widget.Toast
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -12,9 +13,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 
+@Suppress("LABEL_NAME_CLASH")
 class AttendanceRepositoryImpl(
-    private val firebaseFirestore: FirebaseFirestore,
-    private val context: Context
+    private val firebaseFirestore: FirebaseFirestore
 ) : AttendanceRepository {
 
     override suspend fun getClassStudentList(branch: String): Flow<Result<List<Student>>> {

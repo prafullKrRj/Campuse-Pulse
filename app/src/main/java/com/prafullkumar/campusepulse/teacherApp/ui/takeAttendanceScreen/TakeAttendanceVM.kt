@@ -18,7 +18,7 @@ class AttendanceViewModel(
     private val _takeAttendanceState = MutableStateFlow<TakeAttendanceState>(TakeAttendanceState.Loading)
     val state = _takeAttendanceState.asStateFlow()
     var attendanceList = mutableListOf<Student>()
-    var studentList = mutableListOf<Student>()
+    private var studentList = mutableListOf<Student>()          // all students list
     init {
         getClassStudentList()
     }

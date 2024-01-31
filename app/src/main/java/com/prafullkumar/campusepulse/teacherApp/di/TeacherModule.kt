@@ -35,8 +35,7 @@ class TeacherModuleImpl(
     }
     override val takeAttendanceRepository: AttendanceRepository by lazy {
         AttendanceRepositoryImpl(
-            firebaseFirestore = firebaseFirestore,
-            context
+            firebaseFirestore = firebaseFirestore
         )
     }
     override val displayAttendRepository: DisplayAttendRepository by lazy {

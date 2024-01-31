@@ -57,7 +57,7 @@ fun ProfileScreen(viewModel: StudentViewModel, navController: NavController, sig
                     LoadingScreen()
                 }
                 is StudentScreenState.Success -> {
-                    ProfileMainUI(student = (state as StudentScreenState.Success).studentData.first, viewModel) {
+                    ProfileMainUI(student = (state as StudentScreenState.Success).studentData.first) {
                         signOut()
                     }
                 }
@@ -72,7 +72,7 @@ fun ProfileScreen(viewModel: StudentViewModel, navController: NavController, sig
 }
 
 @Composable
-fun ProfileMainUI(student: Student, viewModel: StudentViewModel, signOut: () -> Unit) {
+fun ProfileMainUI(student: Student, signOut: () -> Unit) {
     var openDialog by remember { mutableStateOf(false) }
     LazyColumn {
         item {

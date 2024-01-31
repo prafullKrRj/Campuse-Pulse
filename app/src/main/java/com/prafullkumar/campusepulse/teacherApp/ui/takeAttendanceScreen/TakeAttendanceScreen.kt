@@ -116,7 +116,7 @@ fun TakeAttendance(viewModel: AttendanceViewModel, navController: NavController)
 
 @Composable
 fun TakeAttendanceSuccess(students: List<Student>, viewModel: AttendanceViewModel) {
-    students.forEachIndexed { index, student ->
+    students.forEachIndexed { _, student ->
         StudentCard(
             student = student,
             onChecked = {
@@ -132,7 +132,7 @@ fun TakeAttendanceSuccess(students: List<Student>, viewModel: AttendanceViewMode
 }
 @Composable
 fun StudentCard(student: Student, onChecked: () -> Unit, onUnchecked: () -> Unit = {}) {
-    val context = LocalContext.current
+    LocalContext.current
     var checked by remember { mutableStateOf(false) }
     Card(
         modifier = Modifier
@@ -177,37 +177,3 @@ fun StudentCard(student: Student, onChecked: () -> Unit, onUnchecked: () -> Unit
     }
 }
 
-@Composable
-fun SaveAlertDialog(
-    viewModel: AttendanceViewModel
-) {
-    var openDialog by remember { mutableStateOf(true) }
-
-    if (openDialog) {
-        AlertDialog(
-            onDismissRequest = { openDialog = false },
-            icon = { Icon(imageVector = Icons.Filled.Info, contentDescription = "Info") },
-            title = {
-                Text(text = "Do you want to save the attendance?")
-            },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        openDialog = false
-                    }
-                ) {
-                    Text("Ok")
-                }
-            },
-            dismissButton = {
-                TextButton(
-                    onClick = {
-                        openDialog = false
-                    }
-                ) {
-                    Text("Cancel")
-                }
-            }
-        )
-    }
-}
