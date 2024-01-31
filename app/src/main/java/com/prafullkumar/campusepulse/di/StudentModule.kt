@@ -42,6 +42,6 @@ class StudentModuleImpl(
         NoticesRepositoryImpl(context)
     }
     override val tasksRepository: TasksRepository by lazy {
-        TasksRepositoryImpl(AppDatabase.getDatabase(context).appDao())
+        TasksRepositoryImpl(AppDatabase.getDatabase(context).appDao(), context)
     }
 }
