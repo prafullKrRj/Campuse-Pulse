@@ -44,6 +44,11 @@ class StudentViewModel(
         }
     }
 
+    fun clearDatabase() {
+        viewModelScope.launch {
+            repository.clearDatabase()
+        }
+    }
 }
 
 sealed class StudentScreenState {

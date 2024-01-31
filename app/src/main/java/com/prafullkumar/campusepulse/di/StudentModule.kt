@@ -33,7 +33,7 @@ class StudentModuleImpl(
         SharedPrefManager(context)
     }
     override val studentRepository: StudentRepository by lazy {
-        StudentRepositoryImpl(firebaseFirestore, firebaseAuth, sharedPrefManager)
+        StudentRepositoryImpl(firebaseFirestore, firebaseAuth, sharedPrefManager, AppDatabase.getDatabase(context).appDao())
     }
     override val assistantRepository: AssistantsRepository by lazy {
         AssistantsRepositoryImpl()

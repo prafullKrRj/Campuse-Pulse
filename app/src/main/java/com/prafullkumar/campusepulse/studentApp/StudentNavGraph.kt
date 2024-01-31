@@ -56,6 +56,7 @@ fun StudentNavGraph(signOut: () -> Unit) {
                 composable(StudentScreens.HOME.name) {
                     StudentHomeScreenNavGraph(viewModel = viewModels[0] as StudentViewModel) {
                         signOut()
+                        (viewModels[0] as StudentViewModel)
                     }
                 }
                 composable(StudentScreens.ATTENDANCE.name) {

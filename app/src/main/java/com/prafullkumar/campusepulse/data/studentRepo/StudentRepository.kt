@@ -8,6 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.prafullkumar.campusepulse.adminApp.models.Student
 import com.prafullkumar.campusepulse.data.adminRepos.Result
+import com.prafullkumar.campusepulse.data.local.AppDao
 import com.prafullkumar.campusepulse.managers.SharedPrefManager
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -17,13 +18,15 @@ import kotlin.system.exitProcess
 
 interface StudentRepository {
     suspend fun getStudentDetails(): Flow<Result<Pair<Student, String>>>
+    suspend fun clearDatabase()
 }
 
 @Suppress("UNCHECKED_CAST", "LABEL_NAME_CLASH")
 class StudentRepositoryImpl (
     private val firestore: FirebaseFirestore,
     private val firebaseAuth: FirebaseAuth,
-    private val sharedPrefManager: SharedPrefManager
+    private val sharedPrefManager: SharedPrefManager,
+    private val appDao: AppDao
 ) : StudentRepository {
     private val storage = FirebaseStorage.getInstance()
 
@@ -69,6 +72,10 @@ class StudentRepositoryImpl (
             awaitClose {  }
         }
 }
+
+    override suspend fun clearDatabase() {
+        appDao.deleteAllTasks()
+    }
 
     /**
      *       This function is used to get the student details from the document snapshot
