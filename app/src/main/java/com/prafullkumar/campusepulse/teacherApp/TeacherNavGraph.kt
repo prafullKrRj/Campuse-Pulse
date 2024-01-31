@@ -16,15 +16,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.prafullkumar.campusepulse.R
-import com.prafullkumar.campusepulse.managers.ViewModelProvider
+import com.prafullkumar.campusepulse.ViewModelProvider
 import com.prafullkumar.campusepulse.studentApp.BottomNavigationBar
-import com.prafullkumar.campusepulse.teacherApp.attendanceScreen.DisplayAttendance
-import com.prafullkumar.campusepulse.teacherApp.attendanceScreen.DisplayAttendanceViewModel
-import com.prafullkumar.campusepulse.teacherApp.attendanceScreen.ShowClassAttendance
-import com.prafullkumar.campusepulse.teacherApp.homeScreen.TeacherHomeScreen
-import com.prafullkumar.campusepulse.teacherApp.homeScreen.TeacherProfileScreen
-import com.prafullkumar.campusepulse.teacherApp.homeScreen.TeacherViewModel
-import com.prafullkumar.campusepulse.teacherApp.takeAttendanceScreen.TakeAttendance
+import com.prafullkumar.campusepulse.teacherApp.ui.attendanceScreen.DisplayAttendance
+import com.prafullkumar.campusepulse.teacherApp.ui.attendanceScreen.DisplayAttendanceViewModel
+import com.prafullkumar.campusepulse.teacherApp.ui.attendanceScreen.ShowClassAttendance
+import com.prafullkumar.campusepulse.teacherApp.ui.homeScreen.TeacherHomeScreen
+import com.prafullkumar.campusepulse.teacherApp.ui.homeScreen.TeacherProfileScreen
+import com.prafullkumar.campusepulse.teacherApp.ui.homeScreen.TeacherViewModel
+import com.prafullkumar.campusepulse.teacherApp.ui.takeAttendanceScreen.TakeAttendance
 
 @Composable
 fun TeacherNavGraph(signOut: () -> Unit) {

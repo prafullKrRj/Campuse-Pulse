@@ -13,8 +13,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import com.prafullkumar.campusepulse.managers.SharedPrefManager
-import com.prafullkumar.campusepulse.managers.ViewModelProvider
-import com.prafullkumar.campusepulse.presentations.navigationGraph.NavigationGraph
+import com.prafullkumar.campusepulse.onBoard.navigationGraph.NavigationGraph
 import com.prafullkumar.campusepulse.ui.theme.CampusePulseTheme
 
 class MainActivity : ComponentActivity() {

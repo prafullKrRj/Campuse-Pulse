@@ -5,12 +5,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.prafullkumar.campusepulse.adminApp.addBranchScreen.AddBranchScreen
-import com.prafullkumar.campusepulse.adminApp.addBranchScreen.AddBranchViewModel
-import com.prafullkumar.campusepulse.adminApp.addStudentScreen.AddStudentScreen
-import com.prafullkumar.campusepulse.adminApp.branchDetailsScreen.BranchDetailsScreen
-import com.prafullkumar.campusepulse.adminApp.homeScreen.AdminScreen
-import com.prafullkumar.campusepulse.managers.ViewModelProvider
+import com.prafullkumar.campusepulse.adminApp.ui.addBranchScreen.AddBranchScreen
+import com.prafullkumar.campusepulse.adminApp.ui.addBranchScreen.AddBranchViewModel
+import com.prafullkumar.campusepulse.adminApp.ui.addStudentScreen.AddStudentScreen
+import com.prafullkumar.campusepulse.adminApp.ui.branchDetailsScreen.BranchDetailsScreen
+import com.prafullkumar.campusepulse.adminApp.ui.homeScreen.AdminScreen
+import com.prafullkumar.campusepulse.ViewModelProvider
 
 @Composable
 fun AdminNavGraph(signOut :()->Unit = { }) {

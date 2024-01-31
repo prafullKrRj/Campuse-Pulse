@@ -24,16 +24,16 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.prafullkumar.campusepulse.R
-import com.prafullkumar.campusepulse.managers.ViewModelProvider
-import com.prafullkumar.campusepulse.studentApp.assistant.AssistantScreen
-import com.prafullkumar.campusepulse.studentApp.assistant.AssistantsViewModel
-import com.prafullkumar.campusepulse.studentApp.attendanceScreen.AttendanceScreen
-import com.prafullkumar.campusepulse.studentApp.homeScreen.StudentHomeScreenNavGraph
-import com.prafullkumar.campusepulse.studentApp.homeScreen.StudentViewModel
-import com.prafullkumar.campusepulse.studentApp.notes.TasksScreen
-import com.prafullkumar.campusepulse.studentApp.notes.TasksViewModel
-import com.prafullkumar.campusepulse.studentApp.noticeScreen.NoticeScreen
-import com.prafullkumar.campusepulse.studentApp.noticeScreen.NoticeViewModel
+import com.prafullkumar.campusepulse.ViewModelProvider
+import com.prafullkumar.campusepulse.studentApp.ui.assistant.AssistantScreen
+import com.prafullkumar.campusepulse.studentApp.ui.assistant.AssistantsViewModel
+import com.prafullkumar.campusepulse.studentApp.ui.attendanceScreen.AttendanceScreen
+import com.prafullkumar.campusepulse.studentApp.ui.homeScreen.StudentHomeScreenNavGraph
+import com.prafullkumar.campusepulse.studentApp.ui.homeScreen.StudentViewModel
+import com.prafullkumar.campusepulse.studentApp.ui.notes.TasksScreen
+import com.prafullkumar.campusepulse.studentApp.ui.notes.TasksViewModel
+import com.prafullkumar.campusepulse.studentApp.ui.noticeScreen.NoticeScreen
+import com.prafullkumar.campusepulse.studentApp.ui.noticeScreen.NoticeViewModel
 
 @Composable
 fun StudentNavGraph(signOut: () -> Unit) {

@@ -1,10 +1,9 @@
 package com.prafullkumar.campusepulse.model
 
-import android.graphics.Bitmap
 import android.net.Uri
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.prafullkumar.campusepulse.adminApp.models.Branch
+import com.prafullkumar.campusepulse.adminApp.domain.models.Branch
 
 // Convert data class to JSON string
 fun toJson(newBranch: NewBranch): String {
