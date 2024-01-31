@@ -28,7 +28,6 @@ fun StudentUI(studentData: Pair<Student, String>) {
     LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         item {
             CurrentDate()
-            Text(text = "${studentData.first.fname}")
         }
         item {
             TimeTableWindow(url = studentData.second)
@@ -37,14 +36,21 @@ fun StudentUI(studentData: Pair<Student, String>) {
 }
 @Composable
 fun TimeTableWindow(url: String) {
-    Text(text = "Time Table", fontWeight = FontWeight.SemiBold, fontSize = 22.sp)
-    AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current).data(url).build(),
-        contentDescription = null,
-        contentScale = ContentScale.FillWidth,
-        placeholder = painterResource(id = R.drawable.loading_img),
-        error = painterResource(id = R.drawable.ic_broken_image)
-    )
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(10.dp),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Text(text = "Time Table", fontWeight = FontWeight.SemiBold, fontSize = 22.sp)
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current).data(url).build(),
+            contentDescription = null,
+            contentScale = ContentScale.FillWidth,
+            placeholder = painterResource(id = R.drawable.loading_img),
+            error = painterResource(id = R.drawable.ic_broken_image)
+        )
+    }
 }
 @Composable
 fun CurrentDate(date: LocalDate = getCurrentDate()) {
