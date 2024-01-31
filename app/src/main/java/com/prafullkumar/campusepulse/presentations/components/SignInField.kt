@@ -38,6 +38,7 @@ fun SignInField(
     ) {
         var identifier by rememberSaveable { mutableStateOf("") }
         var pass by rememberSaveable { mutableStateOf("") }
+        var buttonClicked by rememberSaveable { mutableStateOf(false) }
         OutlinedTextField(
             value = identifier,
             onValueChange = { identifier = it },
@@ -56,15 +57,20 @@ fun SignInField(
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
-                if (type == USER.ADMIN.name) {
-                    onSignIn(User("${identifier}@admin.com", pass))
-                } else if (type == USER.STUDENT.name) {
-                    onSignIn(User("${identifier}@student.com", pass))
-                } else {
-                    onSignIn(User("${identifier}@teacher.com", pass))
+                when (type) {
+                    USER.ADMIN.name -> {
+                        onSignIn(User("${identifier}@admin.com", pass))
+                    }
+                    USER.STUDENT.name -> {
+                        onSignIn(User("${identifier}@student.com", pass))
+                    }
+                    else -> {
+                        onSignIn(User("${identifier}@teacher.com", pass))
+                    }
                 }
+                buttonClicked = true
             },
-            enabled = identifier.isNotBlank() && pass.isNotBlank()
+            enabled = identifier.isNotBlank() && pass.isNotBlank() && !buttonClicked
         ) {
             Text("Login")
         }

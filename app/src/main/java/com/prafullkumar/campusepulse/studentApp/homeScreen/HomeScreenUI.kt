@@ -21,7 +21,6 @@ import coil.request.ImageRequest
 import com.prafullkumar.campusepulse.R
 import com.prafullkumar.campusepulse.adminApp.models.Student
 import java.time.LocalDate
-import java.util.Calendar
 
 @Composable
 fun StudentUI(studentData: Pair<Student, String>) {
@@ -44,6 +43,7 @@ fun TimeTableWindow(url: String) {
     ) {
         Text(text = "Time Table", fontWeight = FontWeight.SemiBold, fontSize = 22.sp)
         AsyncImage(
+            modifier = Modifier.fillMaxWidth(),
             model = ImageRequest.Builder(LocalContext.current).data(url).build(),
             contentDescription = null,
             contentScale = ContentScale.FillWidth,
