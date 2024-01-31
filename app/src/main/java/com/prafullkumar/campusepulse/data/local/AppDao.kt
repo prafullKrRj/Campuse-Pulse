@@ -15,7 +15,6 @@ interface AppDao {
     @Query("DELETE FROM tasks WHERE isCompleted = :status")
     suspend fun deleteTasksByStatus(status: Boolean)
 
-
     @Query("SELECT * FROM tasks WHERE isCompleted = :status ORDER BY time DESC")
     fun getTasksByStatus(status: Boolean): Flow<List<TasksEntity>>
 

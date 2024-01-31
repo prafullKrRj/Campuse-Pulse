@@ -10,7 +10,6 @@ import com.prafullkumar.campusepulse.adminApp.addBranchScreen.AddBranchViewModel
 import com.prafullkumar.campusepulse.adminApp.addStudentScreen.AddStudentScreen
 import com.prafullkumar.campusepulse.adminApp.branchDetailsScreen.BranchDetailsScreen
 import com.prafullkumar.campusepulse.adminApp.homeScreen.AdminScreen
-import com.prafullkumar.campusepulse.adminApp.homeScreen.AdminViewModel
 import com.prafullkumar.campusepulse.managers.ViewModelProvider
 
 @Composable
@@ -29,6 +28,7 @@ fun AdminNavGraph(signOut :()->Unit = { }) {
             }
         }
         composable(AdminScreens.ADD_STUDENT.name) {
+            adminViewModel.resetStudent()
             AddStudentScreen(viewModel = adminViewModel, navController = adminNavController)
         }
         composable(AdminScreens.ADD_BRANCH.name) {
@@ -44,5 +44,5 @@ fun AdminNavGraph(signOut :()->Unit = { }) {
     }
 }
 enum class AdminScreens {
-    HOME, ADD_STUDENT, ADD_BRANCH, BRANCH_DETAILS,
+    HOME, ADD_STUDENT, ADD_BRANCH, BRANCH_DETAILS
 }

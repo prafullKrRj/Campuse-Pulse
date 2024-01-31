@@ -35,9 +35,10 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.prafullkumar.campusepulse.adminApp.homeScreen.AdminViewModel
+import com.prafullkumar.campusepulse.adminApp.AdminViewModel
 import com.prafullkumar.campusepulse.adminApp.uiComponents.InputFieldNumber
 import com.prafullkumar.campusepulse.adminApp.uiComponents.InputFieldText
+import com.prafullkumar.campusepulse.goBackStack
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,7 +48,7 @@ fun AddStudentScreen(viewModel: AdminViewModel, navController: NavController) {
             TopAppBar(
                 title = { Text(text = "Add Student") },
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
+                    IconButton(onClick = { navController.goBackStack() }) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                     }
                 }

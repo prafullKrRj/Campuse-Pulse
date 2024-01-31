@@ -1,4 +1,4 @@
-package com.prafullkumar.campusepulse.adminApp.homeScreen
+package com.prafullkumar.campusepulse.adminApp
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -9,7 +9,6 @@ import com.prafullkumar.campusepulse.adminApp.models.Branch
 import com.prafullkumar.campusepulse.adminApp.models.Student
 import com.prafullkumar.campusepulse.data.adminRepos.AdminRepository
 import com.prafullkumar.campusepulse.data.adminRepos.Result
-import com.prafullkumar.campusepulse.data.teacherRepos.TeacherDetails
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -22,7 +21,7 @@ class AdminViewModel(
     val state = _state.asStateFlow()
     val branches = mutableStateOf<MutableList<Branch>?>(null)
     var newStudent by mutableStateOf(NewStudent())
-
+    var newTeacher by mutableStateOf(NewTeacher())
     init {
         _state.value = AdminState.Loading
         getBranches()
@@ -78,15 +77,23 @@ class AdminViewModel(
             }
         }
     }
-
-    fun checkRollNo(rollNo: Long): Boolean {
-        return true
+    fun resetStudent() {
+        newStudent = NewStudent()
     }
-
-
-
+    fun resetTeacher() {
+        newTeacher = NewTeacher()
+    }
 }
 
+data class NewTeacher(
+    val name: String = "",
+    val branches: List<TeacherBranch> = emptyList()
+)
+data class TeacherBranch(
+    val year: String,
+    val branch: String,
+    val subject: String
+)
 data class NewStudent(
     val fName: String? = "",
     val lName: String? = "",

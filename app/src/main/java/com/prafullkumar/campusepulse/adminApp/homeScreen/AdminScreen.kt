@@ -40,6 +40,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.prafullkumar.campusepulse.R
 import com.prafullkumar.campusepulse.adminApp.AdminScreens
+import com.prafullkumar.campusepulse.adminApp.AdminState
+import com.prafullkumar.campusepulse.adminApp.AdminViewModel
 import com.prafullkumar.campusepulse.adminApp.models.Branch
 import com.prafullkumar.campusepulse.adminApp.uiComponents.AddButton
 import com.prafullkumar.campusepulse.commons.TopAppBar
@@ -78,11 +80,10 @@ fun AdminScreen(
             AddButton(
                 addClass = {
                     navController.navigate(AdminScreens.ADD_BRANCH.name)
-                },
-                addStudent = {
-                    navController.navigate(AdminScreens.ADD_STUDENT.name)
                 }
-            )
+            ) {
+                navController.navigate(AdminScreens.ADD_STUDENT.name)
+            }
         },
     ) { paddingValues ->
         Box(modifier = Modifier.pullRefresh(refreshState)) {

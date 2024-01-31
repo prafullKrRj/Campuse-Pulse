@@ -1,7 +1,5 @@
 package com.prafullkumar.campusepulse.adminApp.models
 
-import android.net.Uri
-
 data class Branch(
     val id: String? = "",
     val name: String? = "",

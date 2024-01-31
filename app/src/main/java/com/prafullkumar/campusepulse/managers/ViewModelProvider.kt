@@ -6,7 +6,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.prafullkumar.campusepulse.CampusePulseApp
 import com.prafullkumar.campusepulse.adminApp.addBranchScreen.AddBranchViewModel
 import com.prafullkumar.campusepulse.adminApp.branchDetailsScreen.BranchDetailsViewModel
-import com.prafullkumar.campusepulse.adminApp.homeScreen.AdminViewModel
+import com.prafullkumar.campusepulse.adminApp.AdminViewModel
 import com.prafullkumar.campusepulse.presentations.onBoardingScreen.OnBoardViewModel
 import com.prafullkumar.campusepulse.studentApp.assistant.AssistantsViewModel
 import com.prafullkumar.campusepulse.studentApp.homeScreen.StudentViewModel
@@ -45,6 +45,13 @@ object ViewModelProvider {
             val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CampusePulseApp)
             val addBranchRepository = application.adminModule.adminRepository
             AddBranchViewModel(addBranchRepository)
+        }
+    }
+    fun addTeacherViewModel() = viewModelFactory {
+        initializer {
+            val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as CampusePulseApp)
+            val addTeacherRepository = application.adminModule.adminRepository
+            AddBranchViewModel(addTeacherRepository)
         }
     }
     /**
