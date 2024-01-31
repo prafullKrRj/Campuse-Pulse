@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 
+@Suppress("UNCHECKED_CAST")
 class DisplayAttendRepositoryImpl (
     private val firestore: FirebaseFirestore,
     private val firebaseAuth: FirebaseAuth
