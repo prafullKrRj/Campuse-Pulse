@@ -7,7 +7,6 @@ import com.prafullkumar.campusepulse.adminApp.data.repositories.AdminRepositoryI
 import com.prafullkumar.campusepulse.adminApp.data.repositories.BranchDetailsRepositoryImpl
 import com.prafullkumar.campusepulse.adminApp.domain.repositories.AdminRepository
 import com.prafullkumar.campusepulse.adminApp.domain.repositories.BranchDetailsRepository
-import com.prafullkumar.campusepulse.managers.SharedPrefManager
 
 interface AdminModule {
     val adminRepository: AdminRepository
