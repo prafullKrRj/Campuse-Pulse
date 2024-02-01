@@ -1,5 +1,6 @@
 package com.prafullkumar.campusepulse.studentApp.ui.notes
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,8 +42,23 @@ import java.util.Date
 
 @Composable
 fun TasksScreen(viewModel: TasksViewModel) {
-    val completedTasks by viewModel.completedTasks.collectAsState()
-    val incompleteTasks by viewModel.incompleteTasks.collectAsState()
+    var completedTasks by rememberSaveable {
+        mutableStateOf<List<TasksEntity>>(emptyList())
+    }
+    var incompleteTasks by rememberSaveable {
+        mutableStateOf<List<TasksEntity>>(emptyList())
+    }
+    LaunchedEffect(viewModel.completedTasks) {
+        viewModel.completedTasks.observeForever { tasks ->
+            completedTasks = tasks
+            Log.d("TasksScreen", "TasksScreen: $tasks")
+        }
+    }
+    LaunchedEffect(viewModel.incompleteTasks) {
+        viewModel.incompleteTasks.observeForever { tasks ->
+            incompleteTasks = tasks
+        }
+    }
     var openDialog by remember { mutableStateOf(false) }
     var deleteDialog by remember { mutableStateOf(false) }
     Scaffold(

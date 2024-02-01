@@ -2,6 +2,7 @@ package com.prafullkumar.campusepulse.studentApp.data.repositories
 
 import android.content.Context
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import com.prafullkumar.campusepulse.studentApp.data.local.AppDao
 import com.prafullkumar.campusepulse.studentApp.data.local.TasksEntity
 import com.prafullkumar.campusepulse.studentApp.domain.TasksRepository
@@ -24,11 +25,11 @@ class TasksRepositoryImpl (
         appDao.deleteTasksByStatus(status)
     }
 
-    override fun getCompletedTasks(): Flow<List<TasksEntity>> {
+    override fun getCompletedTasks(): LiveData<List<TasksEntity>> {
         return appDao.getTasksByStatus(true)
     }
 
-    override fun getIncompleteTasks(): Flow<List<TasksEntity>> {
+    override fun getIncompleteTasks(): LiveData<List<TasksEntity>> {
         return appDao.getTasksByStatus(false)
     }
 

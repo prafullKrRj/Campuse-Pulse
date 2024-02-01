@@ -1,5 +1,6 @@
 package com.prafullkumar.campusepulse.studentApp.data.local
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
@@ -16,7 +17,7 @@ interface AppDao {
     suspend fun deleteTasksByStatus(status: Boolean)
 
     @Query("SELECT * FROM tasks WHERE isCompleted = :status ORDER BY time DESC")
-    fun getTasksByStatus(status: Boolean): Flow<List<TasksEntity>>
+    fun getTasksByStatus(status: Boolean): LiveData<List<TasksEntity>>
 
 
     @Delete

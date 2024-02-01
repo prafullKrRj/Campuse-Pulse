@@ -11,18 +11,16 @@ import com.prafullkumar.campusepulse.adminApp.domain.models.Student
 import com.prafullkumar.campusepulse.adminApp.domain.repositories.AdminRepository
 import com.prafullkumar.campusepulse.adminApp.domain.repositories.Result
 import com.prafullkumar.campusepulse.adminApp.ui.addBranchScreen.convertToBranch
-import com.prafullkumar.campusepulse.managers.SharedPrefManager
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 
 @Suppress("UNCHECKED_CAST")
-class AdminRepositoryImpl (
+class AdminRepositoryImpl(
     private val firebaseAuth: FirebaseAuth,
     private val firebaseFirestore: FirebaseFirestore,
-    private val context: Context,
-    private val sharedPrefManager: SharedPrefManager
+    private val context: Context
 ) : AdminRepository {
 
     /**

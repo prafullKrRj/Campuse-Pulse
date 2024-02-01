@@ -1,5 +1,6 @@
 package com.prafullkumar.campusepulse.studentApp.ui.notes
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prafullkumar.campusepulse.studentApp.data.local.TasksEntity
@@ -13,16 +14,16 @@ class TasksViewModel(
     private val tasksRepository: TasksRepository
 ): ViewModel() {
 
-    private var _completedTasks: StateFlow<List<TasksEntity>> = tasksRepository.getCompletedTasks().stateIn(
+/*    private var _completedTasks: StateFlow<List<TasksEntity>> = tasksRepository.getCompletedTasks().stateIn(
         viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList()
     )
-    val completedTasks: StateFlow<List<TasksEntity>> = _completedTasks
-
-    private var _incompleteTasks: StateFlow<List<TasksEntity>> = tasksRepository.getIncompleteTasks().stateIn(
+    val completedTasks: StateFlow<List<TasksEntity>> = _completedTasks*/
+    var completedTasks = tasksRepository.getCompletedTasks()
+    var incompleteTasks = tasksRepository.getIncompleteTasks()
+   /* private var _incompleteTasks: StateFlow<List<TasksEntity>> = tasksRepository.getIncompleteTasks().stateIn(
         viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList()
     )
-    val incompleteTasks: StateFlow<List<TasksEntity>> = _incompleteTasks
-
+    val incompleteTasks: StateFlow<List<TasksEntity>> = _incompleteTasks*/
 
     fun addTask(task: TasksEntity) {
         viewModelScope.launch {
