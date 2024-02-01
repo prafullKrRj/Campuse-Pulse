@@ -27,7 +27,6 @@ import com.prafullkumar.campusepulse.R
 import com.prafullkumar.campusepulse.ViewModelProvider
 import com.prafullkumar.campusepulse.studentApp.ui.assistant.AssistantScreen
 import com.prafullkumar.campusepulse.studentApp.ui.assistant.AssistantsViewModel
-import com.prafullkumar.campusepulse.studentApp.ui.attendanceScreen.AttendanceScreen
 import com.prafullkumar.campusepulse.studentApp.ui.homeScreen.StudentHomeScreenNavGraph
 import com.prafullkumar.campusepulse.studentApp.ui.homeScreen.StudentViewModel
 import com.prafullkumar.campusepulse.studentApp.ui.notes.TasksScreen
