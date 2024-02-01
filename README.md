@@ -33,19 +33,18 @@ Here are some of the key features of Campus Pulse:
 
 *   Admin Section:
     - Add and manage branches
-    - Add and manage students and teachers
+    - Add and manage students
 
 *   Teacher Section:
     - Take attendance of students
     - View attendance records
-    - Manage timetables
-    - Post notices for students
 
 *   Student Section:
     - View attendance records
     - Access timetables
-    - Read notices from teachers
+    - See College Notices
     - Chat assistant for clearing doubts
+    - Task Manager.
 
 <h2>🛠️ Installation Steps:</h2>
 
