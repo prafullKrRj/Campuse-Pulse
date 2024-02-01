@@ -23,9 +23,6 @@ class AdminModuleImpl(
     private val firebaseFirestore: FirebaseFirestore by lazy {
         FirebaseFirestore.getInstance()
     }
-    private val sharedPrefManager: SharedPrefManager by lazy {
-        SharedPrefManager(context)
-    }
     override val adminRepository: AdminRepository by lazy {
         AdminRepositoryImpl(firebaseAuth, firebaseFirestore, context)
     }

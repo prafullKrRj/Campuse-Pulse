@@ -1,13 +1,9 @@
 package com.prafullkumar.campusepulse.studentApp.ui.notes
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prafullkumar.campusepulse.studentApp.data.local.TasksEntity
 import com.prafullkumar.campusepulse.studentApp.domain.TasksRepository
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class TasksViewModel(

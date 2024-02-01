@@ -1,5 +1,6 @@
 package com.prafullkumar.campusepulse.studentApp.ui.notes
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,7 +22,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -235,6 +235,7 @@ fun TaskRow(viewModel: TasksViewModel, task: TasksEntity) {
         }
     }
 }
+@SuppressLint("SimpleDateFormat")
 fun converter(time: Long): String {
     val sdf = SimpleDateFormat("HH:mm dd/MM/yyyy")
     return sdf.format(Date(time))
