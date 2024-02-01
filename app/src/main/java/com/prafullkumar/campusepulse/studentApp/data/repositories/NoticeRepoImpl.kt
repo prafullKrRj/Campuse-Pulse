@@ -3,6 +3,7 @@ package com.prafullkumar.campusepulse.studentApp.data.repositories
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import com.prafullkumar.campusepulse.adminApp.domain.repositories.Result
 import com.prafullkumar.campusepulse.studentApp.domain.NoticesRepository
 import kotlinx.coroutines.channels.awaitClose
@@ -23,12 +24,13 @@ class NoticesRepositoryImpl (
         return callbackFlow {
             try {
                 trySend(Result.Loading)
-                val doc = Jsoup.connect("https://www.aitpune.com/Notices-and-Circulars.aspx/").get()
+                val doc = Jsoup.connect("https://www.aitpune.com/Notices-and-Circulars.aspx#cir02/").get()
                 val elements = doc.select("h6 a")
                 val list = ArrayList<String>()
                 for (element in elements) {
                     list.add(element.attr("href"))
                 }
+                Log.d("Notices", list.toString())
                 trySend(Result.Success(list))
             } catch (e: Exception) {
                 trySend(Result.Error(e))
