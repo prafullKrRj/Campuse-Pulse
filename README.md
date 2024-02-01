@@ -59,5 +59,14 @@ Here are some of the key features of Campus Pulse:
 Technologies used in the project:
 
 *   Android Studio: The app is developed using Android Studio.
-*   Room: For storing data offline on the user's device.
+*   Room: For storing tasks offline.
 *   Jetpack Compose: For building the application's UI.
+*   LiveData: For observing room database data in Task Manager.
+*   Coil: For loading Time Table from FireBase.
+*   YML Charts: Visualising student attendance.
+*   FireBase:
+    - Firestore: For storing branches, students and Teachers data.
+    - Firebase Storage: For storing Time Table.
+    - Firebase Authentication: For authenticating students, teachers and Admin.
+* Google Gemini: Used Gemini-Pro as an Student own AI assistant for daily chores.
+* Jetpack Navigation: For Navigating between screens.
