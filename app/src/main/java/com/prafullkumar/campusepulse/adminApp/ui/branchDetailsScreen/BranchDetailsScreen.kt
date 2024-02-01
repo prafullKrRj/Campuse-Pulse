@@ -22,21 +22,16 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import com.prafullkumar.campusepulse.R
+import com.prafullkumar.campusepulse.adminApp.domain.models.Branch
 import com.prafullkumar.campusepulse.adminApp.ui.addBranchScreen.ImageWindow
 import com.prafullkumar.campusepulse.adminApp.ui.addBranchScreen.Uploaded
-import com.prafullkumar.campusepulse.adminApp.domain.models.Branch
 import com.prafullkumar.campusepulse.commons.LoadingScreen
+import com.prafullkumar.campusepulse.commons.TimeTableImage
 import com.prafullkumar.campusepulse.commons.TopAppBar
 import com.prafullkumar.campusepulse.studentApp.ui.homeScreen.ProfileField
 import kotlinx.coroutines.launch
@@ -142,7 +137,7 @@ fun BranchDetailsSection(branch: Branch, viewModel: BranchDetailsViewModel) {
     }
     when (uploaded) {
         is Uploaded.Error -> {
-            (uploaded as Uploaded.Error).msg?.let { Text(text = it) }
+            Text(text = (uploaded as Uploaded.Error).msg)
         }
         is Uploaded.Loading -> {
             LoadingScreen()
@@ -152,18 +147,4 @@ fun BranchDetailsSection(branch: Branch, viewModel: BranchDetailsViewModel) {
         }
         else -> {}
     }
-}
-
-@Composable
-fun TimeTableImage(data: String) {
-    AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current).data(data).build(),
-        contentDescription = null,
-        contentScale = ContentScale.Fit,
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth(),
-        placeholder = painterResource(id = R.drawable.loading_img),
-        error = painterResource(id = R.drawable.ic_broken_image)
-    )
 }

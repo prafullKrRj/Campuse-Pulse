@@ -10,16 +10,16 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.prafullkumar.campusepulse.R
 import com.prafullkumar.campusepulse.adminApp.domain.models.Student
+import com.prafullkumar.campusepulse.commons.TimeTableImage
+import com.prafullkumar.campusepulse.studentApp.ui.attendanceScreen.GetChartData
+import com.prafullkumar.campusepulse.studentApp.ui.attendanceScreen.OverallAttendanceSection
+import com.prafullkumar.campusepulse.studentApp.ui.attendanceScreen.getOverallAttendanceData
 import java.time.LocalDate
 
 @Composable
@@ -30,6 +30,29 @@ fun StudentUI(studentData: Pair<Student, String>) {
         }
         item {
             TimeTableWindow(url = studentData.second)
+        }
+        item {
+            Text(
+                text = stringResource(id = R.string.overall_attendance),
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 22.sp,
+                modifier = Modifier.padding(10.dp)
+            )
+        }
+        item {
+            OverallAttendanceSection(
+                heading = stringResource(id = R.string.overall_attendance), chartData = GetChartData.getOverallAttendanceData(
+                    getOverallAttendanceData(studentData.first.attendance!!)
+                )
+            )
+        }
+        studentData.first.attendance?.forEach { (key, value) ->
+            item {
+                OverallAttendanceSection(
+                    heading = key,
+                    chartData = GetChartData.getOverallAttendanceData(value)
+                )
+            }
         }
     }
 }
@@ -42,14 +65,7 @@ fun TimeTableWindow(url: String) {
         verticalArrangement = Arrangement.Center,
     ) {
         Text(text = "Time Table", fontWeight = FontWeight.SemiBold, fontSize = 22.sp)
-        AsyncImage(
-            modifier = Modifier.fillMaxWidth(),
-            model = ImageRequest.Builder(LocalContext.current).data(url).build(),
-            contentDescription = null,
-            contentScale = ContentScale.FillWidth,
-            placeholder = painterResource(id = R.drawable.loading_img),
-            error = painterResource(id = R.drawable.ic_broken_image)
-        )
+        TimeTableImage(data = url)
     }
 }
 @Composable

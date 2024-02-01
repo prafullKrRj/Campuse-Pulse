@@ -59,9 +59,6 @@ fun StudentNavGraph(signOut: () -> Unit) {
                         (viewModels[0] as StudentViewModel).clearDatabase()
                     }
                 }
-                composable(StudentScreens.ATTENDANCE.name) {
-                    AttendanceScreen(viewModel = viewModels[0] as StudentViewModel)
-                }
                 composable(StudentScreens.TASKS.name) {
                     TasksScreen(viewModel = viewModels[1] as TasksViewModel)
                 }
@@ -99,13 +96,12 @@ fun BottomNavigationBar(sNavController: NavController, selected: Int, items: Lis
     }
 }
 enum class StudentScreens {
-    HOME, NOTICE, ATTENDANCE, TASKS, ASSISTANT
+    HOME, NOTICE, TASKS, ASSISTANT
 }
 @Immutable
 object StudentConst {
     val items = listOf(
         "Home" to StudentScreens.HOME.name to R.drawable.baseline_school_24,
-        "Attend" to StudentScreens.ATTENDANCE.name to R.drawable.baseline_data_saver_off_24,
         "Assistant" to StudentScreens.ASSISTANT.name to R.drawable.microchip,
         "Notices" to StudentScreens.NOTICE.name to R.drawable.baseline_dashboard_24,
         "Tasks" to StudentScreens.TASKS.name to R.drawable.baseline_edit_note_24,
