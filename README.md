@@ -83,7 +83,7 @@ Technologies used in the project:
 * Jetpack Navigation: For Navigating between screens.
 
 
-<h3>🛫 TODOs </h3>
+<h2>🛫 TODOs </h2>
 *  Admin:
     - Adding student images, updating student and branch data.
     - Visualising Student data.
