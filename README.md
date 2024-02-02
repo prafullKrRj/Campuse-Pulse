@@ -46,14 +46,25 @@ Here are some of the key features of Campus Pulse:
     - Chat assistant for clearing doubts
     - Task Manager.
 
-<h2>🛠️ Installation Steps:</h2>
+<h2>🛠️ Installation and usage:</h2>
 
 <p>1. Download the APK file: <a href="https://github.com/prafullKrRj/TranquilJot-Notes-App-/raw/master/TranquilJot%20Notes.apk">Click here</a>.</p>
 
 <p>2. Install the application on your Android device.</p>
 
 <p>3. Open the app and explore its features.</p>
+<p>4. Dummy IDs:</p>
+<h3>Admin</h3>
+<p>ID: admin</p>
+<p>Password: password</p>
 
+<h3>Student</h3>
+<p>ID: 22631</p>
+<p>Password: password</p>
+
+<h3>Teacher</h3>
+<p>ID: dummyteacher</p>
+<p>Password: password</p>
 <h2>💻 Built with</h2>
 
 Technologies used in the project:
@@ -70,3 +81,13 @@ Technologies used in the project:
     - Firebase Authentication: For authenticating students, teachers and Admin.
 * Google Gemini: Used Gemini-Pro as an Student own AI assistant for daily chores.
 * Jetpack Navigation: For Navigating between screens.
+
+
+<h2>🛫 TODOs </h2>
+*  Admin:
+    - Adding student images, updating student and branch data.
+    - Visualising Student data.
+    - Adding teachers.
+*  Student:
+    - Getting student syllabus.
+    - All notices.
