@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -61,21 +62,21 @@ fun AddStudentScreen(viewModel: AdminViewModel, navController: NavController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-                AddTexts(label = "First Name:", onValueChange = {
+                AddTexts(label = "First Name", onValueChange = {
                     viewModel.newStudent = viewModel.newStudent.copy(
-                        fName  = it
+                        fName  = it.capitalize()
                     )
                 })
             }
             item {
-                AddTexts(label = "Last Name:", onValueChange = {
+                AddTexts(label = "Last Name", onValueChange = {
                     viewModel.newStudent = viewModel.newStudent.copy(
-                        lName = it
+                        lName = it.capitalize()
                     )
                 })
             }
             item {
-                AddNumbers(label = "Roll No:", onValueChange = {
+                AddNumbers(label = "Roll No", onValueChange = {
                     viewModel.newStudent = viewModel.newStudent.copy(
                         rollNo = it
                     )
@@ -84,7 +85,7 @@ fun AddStudentScreen(viewModel: AdminViewModel, navController: NavController) {
             item {
                 if (viewModel.branches.value != null) {
                     SelectFromOptions(label = "Branch", list = viewModel.branches.value!!.map {
-                        it?.name
+                        it.name
                     }.toMutableList(), onValueChange = {
                         viewModel.newStudent = viewModel.newStudent.copy(
                             branch = it

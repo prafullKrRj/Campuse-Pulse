@@ -42,8 +42,6 @@ class BranchDetailsRepositoryImpl(
                                     strength = document.data?.get("strength").toString().toLong(),
                                     batches = document.data?.get("batches") as List<String> ?: listOf(),
                                     subjects = document.data?.get("subjects") as List<String> ?: listOf(),
-                                    timeTable = tt
-
                                 )
                             ))
                     }

@@ -88,9 +88,6 @@ dependencies {
     implementation ("com.google.accompanist:accompanist-coil:0.12.0")
 
 
-    // Swipe Refresh
-
-
     //Room
     implementation("androidx.room:room-runtime:${rootProject.extra["room_version"]}")
     implementation("androidx.core:core-ktx:1.10.1")

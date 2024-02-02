@@ -91,13 +91,13 @@ class AdminRepositoryImpl(
             val fileRef = storageRef.child("timeTables/${branch.id}")
             val uploadTask = fileRef.putFile(newBranch.timeTable!!)
             uploadTask.addOnSuccessListener {
-                Toast.makeText(context, "Time table uploaded successfully", Toast.LENGTH_SHORT).show()
                 branch.id?.let { it1 ->
                     firebaseFirestore.collection("branches")
                         .document(it1)
                         .set(branch)
                         .addOnSuccessListener {
                             trySend(Result.Success(true)).isSuccess
+                            Toast.makeText(context, "Branch added successfully", Toast.LENGTH_SHORT).show()
                         }
                         .addOnFailureListener {
                             trySend(Result.Error(it)).isSuccess

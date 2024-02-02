@@ -1,5 +1,6 @@
 package com.prafullkumar.campusepulse.adminApp.ui.addBranchScreen
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -55,9 +56,11 @@ import com.prafullkumar.campusepulse.adminApp.ui.addStudentScreen.AddTexts
 import com.prafullkumar.campusepulse.adminApp.ui.addStudentScreen.SelectFromOptions
 import com.prafullkumar.campusepulse.commons.LoadingScreen
 import com.prafullkumar.campusepulse.commons.TopAppBar
+import com.prafullkumar.campusepulse.goBackStack
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddBranchScreen(viewModel: AddBranchViewModel, navController: NavController) {
@@ -76,12 +79,15 @@ fun AddBranchScreen(viewModel: AddBranchViewModel, navController: NavController)
         topBar = {
             TopAppBar(
                 heading = "Add Branch", actionIcon = Icons.Default.Done, actionIconClicked = {
-                    if (branchState.newBranch.branchName.isNotEmpty() && branchState.newBranch.year.isNotEmpty()) {
-                        viewModel.addBranch()
-                    } else {
-                        Toast.makeText(navController.context, "Please fill all the fields", Toast.LENGTH_SHORT).show()
+                    if (!viewModel.addButtonClicked) {
+                        if (branchState.newBranch.branchName.isNotEmpty() && branchState.newBranch.year.isNotEmpty()) {
+                            viewModel.addBranch()
+                            navController.goBackStack()
+                            viewModel.addButtonClicked = true
+                        } else {
+                            Toast.makeText(navController.context, "Please fill all the fields", Toast.LENGTH_SHORT).show()
+                        }
                     }
-
                 }, navIcon = Icons.Default.ArrowBack, navIconClicked = {
                     backDialog = true
                 }
@@ -92,7 +98,7 @@ fun AddBranchScreen(viewModel: AddBranchViewModel, navController: NavController)
         LazyColumn(contentPadding = paddingValues, modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
             item {
                 SelectFromOptions(
-                    label = "Select Year",
+                    label = if (viewModel.state.value.newBranch.year == "") "Select Year" else viewModel.state.value.newBranch.year,
                     list = mutableListOf("1st", "2nd", "3rd", "4th"),
                 ) {
                     viewModel.state.update { state ->

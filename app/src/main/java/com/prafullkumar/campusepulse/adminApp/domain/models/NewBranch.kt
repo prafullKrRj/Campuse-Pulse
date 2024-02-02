@@ -8,5 +8,5 @@ data class NewBranch(
     val subjects: List<String> = emptyList(),
     val batches: List<String> = emptyList(),
     val year: String = "",
-    val timeTable: Uri? = null,
+    val timeTable: Uri? = null
 )

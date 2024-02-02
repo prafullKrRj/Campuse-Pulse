@@ -25,6 +25,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.prafullkumar.campusepulse.R
 import com.prafullkumar.campusepulse.ViewModelProvider
+import com.prafullkumar.campusepulse.goBackStack
 import com.prafullkumar.campusepulse.studentApp.ui.assistant.AssistantScreen
 import com.prafullkumar.campusepulse.studentApp.ui.assistant.AssistantsViewModel
 import com.prafullkumar.campusepulse.studentApp.ui.homeScreen.StudentHomeScreenNavGraph
@@ -88,6 +89,7 @@ fun BottomNavigationBar(sNavController: NavController, selected: Int, items: Lis
                 onClick = {
                     selectedItem = index
                     onSelectedChange(index)
+                    sNavController.goBackStack()
                     sNavController.navigate(item.first.second)
                 }
             )

@@ -1,6 +1,9 @@
 package com.prafullkumar.campusepulse.adminApp.ui.addBranchScreen
 
 import android.net.Uri
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.prafullkumar.campusepulse.adminApp.domain.models.Branch
@@ -22,7 +25,7 @@ class AddBranchViewModel(
     init {
         resetNewBranch()
     }
-
+    var addButtonClicked by mutableStateOf(false)
     fun addBranch() {
         viewModelScope.launch {
             repository.addBranch(state.value.newBranch).collect { ans ->
@@ -41,6 +44,7 @@ class AddBranchViewModel(
                         upLoaded.update {
                             Uploaded.Success("Branch added successfully")
                         }
+                        addButtonClicked = false
                     }
                 }
             }

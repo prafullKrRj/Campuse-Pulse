@@ -33,6 +33,7 @@ import com.prafullkumar.campusepulse.adminApp.domain.models.Student
 import com.prafullkumar.campusepulse.commons.ErrorScreen
 import com.prafullkumar.campusepulse.commons.LoadingScreen
 import com.prafullkumar.campusepulse.commons.TopAppBar
+import com.prafullkumar.campusepulse.goBackStack
 
 @Composable
 fun ProfileScreen(viewModel: StudentViewModel, navController: NavController, signOut: () -> Unit) {
@@ -43,7 +44,7 @@ fun ProfileScreen(viewModel: StudentViewModel, navController: NavController, sig
                 heading = "Profile",
                 navIcon = Icons.Default.ArrowBack,
                 navIconClicked = {
-                    navController.popBackStack()
+                    navController.goBackStack()
                 }
             )
         }
