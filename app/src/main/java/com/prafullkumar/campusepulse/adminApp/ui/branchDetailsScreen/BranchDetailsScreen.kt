@@ -116,7 +116,7 @@ fun BranchDetailsSection(branch: Branch, viewModel: BranchDetailsViewModel) {
         item {
             Text(text = "Time Table", textAlign = TextAlign.Center, fontSize = 20.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(16.dp))
             if (!isNewImage) {
-                TimeTableImage(data = branch.name?: "")
+                TimeTableImage(data = branch.id?: "")
             }
         }
         item {
