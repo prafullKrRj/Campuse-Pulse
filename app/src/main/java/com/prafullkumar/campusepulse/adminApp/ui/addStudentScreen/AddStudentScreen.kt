@@ -94,14 +94,14 @@ fun AddStudentScreen(viewModel: AdminViewModel, navController: NavController) {
                 }
             }
             item {
-                AddNumbers(label = "Adm No:", onValueChange = {
+                AddNumbers(label = "Adm No", onValueChange = {
                     viewModel.newStudent = viewModel.newStudent.copy(
                         admissionNo = it
                     )
                 })
             }
             item {
-                AddNumbers(label = "Phone:", onValueChange = {
+                AddNumbers(label = "Phone", onValueChange = {
                     viewModel.newStudent = viewModel.newStudent.copy(
                         phone = it
                     )
@@ -270,8 +270,7 @@ fun SelectFromOptions(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
                             RadioButton(
                                 selected = radioSelected == index,
