@@ -1,31 +1,71 @@
 <h1 align="center" id="title">Campus Pulse</h1>
 
 <p id="description">Welcome to the Campuse Pulse repository! This application provides a comprehensive platform for managing college-related activities for administrators, teachers, and students.</p>
-
+<section>
+  <h2>User flows</h2>
+  <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/User%20Flow.jpg?raw=true" alt="user flows" width="730.8" height="426.4"
+</section>
 <h2>Project Screenshots:</h2>
-<table>
+<section>
+  <h3>Admin:<h3>
+  <table>
   <tr>
     <td>
-      <img src="https://raw.githubusercontent.com/prafullKrRj/TranquilJot-Notes-App-/master/Images/img1.jpg" alt="project-screenshot" width="290" height="570">
+      <img src="https://raw.githubusercontent.com/prafullKrRj/Campuse-Pulse/master/ScreenShots/Admin/1.jpg" alt="project-screenshot" width="290" height="570">
     </td>
     <td>
-      <img src="https://raw.githubusercontent.com/prafullKrRj/TranquilJot-Notes-App-/master/Images/img2.jpg" alt="project-screenshot" width="290" height="570">
+      <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/Admin/2.jpg?raw=true" alt="project-screenshot" width="290" height="570">
     </td>
     <td>
-      <img src="https://raw.githubusercontent.com/prafullKrRj/TranquilJot-Notes-App-/master/Images/img3.jpg" alt="project-screenshot" width="290" height="570">
+      <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/Admin/3.jpg?raw=true" alt="project-screenshot" width="290" height="570">
     </td>
   </tr>
 </table>
+
 <table>
   <tr>
     <td>
-      <img src="https://raw.githubusercontent.com/prafullKrRj/TranquilJot-Notes-App-/master/Images/img4.jpg" alt="project-screenshot" width="290" height="570">
-    </td>
-    <td>
-      <img src="https://raw.githubusercontent.com/prafullKrRj/TranquilJot-Notes-App-/master/Images/img5.jpg" alt="project-screenshot" width="290" height="570">
+      <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/Admin/4.jpg?raw=true" alt="project-screenshot" width="290" height="570">
     </td>
   </tr>
 </table>
+<h3>Student:<h3>
+  <table>
+  <tr>
+    <td>
+      <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/Student/1.jpg?raw=true" alt="project-screenshot" width="290" height="570">
+    </td>
+    <td>
+      <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/Student/2.jpg?raw=true" alt="project-screenshot" width="290" height="570">
+    </td>
+    <td>
+      <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/Student/3.jpg?raw=true" alt="project-screenshot" width="290" height="570">
+    </td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td>
+      <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/Student/4.jpg?raw=true" alt="project-screenshot" width="290" height="570">
+    </td>
+  </tr>
+</table>
+<h3>Teacher:<h3>
+  <table>
+  <tr>
+    <td>
+      <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/Teacher/1.jpg?raw=true" alt="project-screenshot" width="290" height="570">
+    </td>
+    <td>
+      <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/Teacher/2.jpg?raw=true" alt="project-screenshot" width="290" height="570">
+    </td>
+    <td>
+      <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/Teacher/2.jpg?raw=true" alt="project-screenshot" width="290" height="570">
+    </td>
+  </tr>
+</table>
+</section>
 
 <h2>🧐 Features</h2>
 
@@ -81,13 +121,19 @@ Technologies used in the project:
     - Firebase Authentication: For authenticating students, teachers and Admin.
 * Google Gemini: Used Gemini-Pro as an Student own AI assistant for daily chores.
 * Jetpack Navigation: For Navigating between screens.
-
-
+* Kotlin Flows: For making application more responsive.
 <h2>🛫 TODOs </h2>
-*  Admin:
-    - Adding student images, updating student and branch data.
-    - Visualising Student data.
-    - Adding teachers.
-*  Student:
-    - Getting student syllabus.
-    - All notices.
+
+<h4>Admin:</h4>
+<ul>
+  <li>Adding student images</li>
+  <li>Updating student and branch data</li>
+  <li>Visualizing student data</li>
+  <li>Adding teachers</li>
+</ul>
+
+<h4>Student:</h4>
+<ul>
+  <li>Getting student syllabus</li>
+  <li>Viewing all notices</li>
+</ul>
