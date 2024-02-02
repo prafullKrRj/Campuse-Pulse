@@ -1,10 +1,12 @@
 package com.prafullkumar.campusepulse.onBoard.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -17,6 +19,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -33,10 +36,15 @@ fun SignInField(
     onSignIn: (User) -> Unit,
 ) {
     Column(
-        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.college),
+            contentDescription = null,
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier.padding(16.dp)
+        )
         var identifier by rememberSaveable { mutableStateOf("") }
         var pass by rememberSaveable { mutableStateOf("") }
         OutlinedTextField(
@@ -48,7 +56,9 @@ fun SignInField(
                     USER.STUDENT.name -> "Student ID"
                     else -> "Teacher ID"
                 }
-            ) }
+            )
+            },
+            singleLine = true,
         )
         Spacer(modifier = Modifier.height(16.dp))
         PasswordTextField {
@@ -100,6 +110,7 @@ fun PasswordTextField(
                 )
             }
         },
+        singleLine = true,
     )
 }
 data class User(val id: String, val pass: String)

@@ -76,7 +76,7 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
-
+    implementation ("androidx.core:core-splashscreen:1.0.1")
     implementation("androidx.compose.material:material:1.4.0-beta01")
     implementation("org.jsoup:jsoup:1.14.3")
     implementation("androidx.navigation:navigation-compose:2.7.6")
@@ -98,4 +98,5 @@ dependencies {
     implementation("com.google.ai.client.generativeai:generativeai:0.1.2")
 
     implementation("co.yml:ycharts:2.1.0")
+
 }
