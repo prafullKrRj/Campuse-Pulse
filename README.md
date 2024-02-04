@@ -9,7 +9,7 @@ Our solution is an intuitive mobile application designed to address the challeng
   -  Administrators have the ability to manage timetables, add students and branches, and ensure that all information is up-to-date and easily accessible. 
   -  By leveraging technology and providing a user-friendly interface, our app streamlines administrative tasks, improves communication, and enhances overall           efficiency within educational institutions.
 <section>
-  <h2>User flows</h2>
+  <h2>User Flow:</h2>
   <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/User%20Flow.jpg?raw=true" alt="user flows" width="730.8" height="426.4"
 </section>
 <h2>Project Screenshots:</h2>
@@ -74,9 +74,9 @@ Our solution is an intuitive mobile application designed to address the challeng
 </table>
 </section>
 
-<h2>🧐 Features</h2>
+<h2>🧐 Functionality and Concepts Used</h2>
 
-Here are some of the key features of Campus Pulse:
+Here are some of the key functionalities of Campus Pulse:
 
 *   Admin Section:
     - Add and manage branches
@@ -92,7 +92,23 @@ Here are some of the key features of Campus Pulse:
     - See College Notices
     - Chat assistant for clearing doubts
     - Task Manager.
+    
+Here are some key concepts used in Campuse Pulse
 
+*   Android Studio: The app is developed using Android Studio.
+*   Room: For storing tasks offline.
+*   Jetpack Compose: For building the application's UI.
+*   LiveData: For observing room database data in Task Manager.
+*   Coil: For loading Time Table from FireBase.
+*   YML Charts: Visualising student attendance.
+*   FireBase:
+    - Firestore: For storing branches, students and Teachers data.
+    - Firebase Storage: For storing Time Table.
+    - Firebase Authentication: For authenticating students, teachers and Admin.
+* Google Gemini: Used Gemini-Pro as an Student own AI assistant for daily chores.
+* Jetpack Navigation: For Navigating between screens.
+* Kotlin Flows: For making application more responsive.
+* Kotlin Coroutines: Doing non UI related tasks on different threads.
 <h2>🛠️ Installation and usage:</h2>
 
 <p>1. Download the APK file: <a href="https://github.com/prafullKrRj/TranquilJot-Notes-App-/raw/master/TranquilJot%20Notes.apk">Click here</a>.</p>
@@ -116,20 +132,8 @@ Here are some of the key features of Campus Pulse:
 
 Technologies used in the project:
 
-*   Android Studio: The app is developed using Android Studio.
-*   Room: For storing tasks offline.
-*   Jetpack Compose: For building the application's UI.
-*   LiveData: For observing room database data in Task Manager.
-*   Coil: For loading Time Table from FireBase.
-*   YML Charts: Visualising student attendance.
-*   FireBase:
-    - Firestore: For storing branches, students and Teachers data.
-    - Firebase Storage: For storing Time Table.
-    - Firebase Authentication: For authenticating students, teachers and Admin.
-* Google Gemini: Used Gemini-Pro as an Student own AI assistant for daily chores.
-* Jetpack Navigation: For Navigating between screens.
-* Kotlin Flows: For making application more responsive.
-<h2>🛫 TODOs </h2>
+
+<h2>🛫 Future Scopes </h2>
 
 <h4>Admin:</h4>
 <ul>
@@ -137,6 +141,7 @@ Technologies used in the project:
   <li>Updating student and branch data</li>
   <li>Visualizing student data</li>
   <li>Adding teachers</li>
+  <li>Currently Admin has to update time table in the form of an image in future what we can do the admin can add table in the fields so easily maintainable.</li>
 </ul>
 
 <h4>Student:</h4>
