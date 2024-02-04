@@ -17,7 +17,7 @@ Our solution is an intuitive mobile application designed to address the challeng
   <h3>Admin:<h3>
   <img src="https://raw.githubusercontent.com/prafullKrRj/Campuse-Pulse/master/ScreenShots/admin.png" alt="project-screenshot" width="716" height="366.4">
   <h3>Teacher:</h3>
-  <img src="https://raw.githubusercontent.com/prafullKrRj/Campuse-Pulse/master/ScreenShots/teacher.png alt="project-screenshot" width="638.5" height="391.2">
+  <img src="https://raw.githubusercontent.com/prafullKrRj/Campuse-Pulse/master/ScreenShots/teacher.png" alt="project-screenshot" width="638.5" height="391.2">
   <h3>Student:</h3>
   <img src="https://raw.githubusercontent.com/prafullKrRj/Campuse-Pulse/master/ScreenShots/student.png" alt="project-screenshot" width="748.4" height="384">
 </section>
