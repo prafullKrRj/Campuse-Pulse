@@ -59,7 +59,7 @@ Here are some key concepts used in Campuse Pulse
 * Kotlin Coroutines: Doing non UI related tasks on different threads.
 <h2>🛠️ Installation and usage:</h2>
 
-<p>1. Download the APK file: <a href="https://github.com/prafullKrRj/TranquilJot-Notes-App-/raw/master/TranquilJot%20Notes.apk">Click here</a>.</p>
+<p>1. Download the APK file: <a href="https://github.com/prafullKrRj/Campuse-Pulse/raw/master/Campuse%20Pulse.apk">Click here</a>.</p>
 
 <p>2. Install the application on your Android device.</p>
 
