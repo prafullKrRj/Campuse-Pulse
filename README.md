@@ -15,63 +15,11 @@ Our solution is an intuitive mobile application designed to address the challeng
 <h2>Project Screenshots:</h2>
 <section>
   <h3>Admin:<h3>
-  <table>
-  <tr>
-    <td>
-      <img src="https://raw.githubusercontent.com/prafullKrRj/Campuse-Pulse/master/ScreenShots/Admin/1.jpg" alt="project-screenshot" width="290" height="570">
-    </td>
-    <td>
-      <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/Admin/2.jpg?raw=true" alt="project-screenshot" width="290" height="570">
-    </td>
-    <td>
-      <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/Admin/3.jpg?raw=true" alt="project-screenshot" width="290" height="570">
-    </td>
-  </tr>
-</table>
-
-<table>
-  <tr>
-    <td>
-      <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/Admin/4.jpg?raw=true" alt="project-screenshot" width="290" height="570">
-    </td>
-  </tr>
-</table>
-<h3>Student:<h3>
-  <table>
-  <tr>
-    <td>
-      <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/Student/1.jpg?raw=true" alt="project-screenshot" width="290" height="570">
-    </td>
-    <td>
-      <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/Student/2.jpg?raw=true" alt="project-screenshot" width="290" height="570">
-    </td>
-    <td>
-      <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/Student/3.jpg?raw=true" alt="project-screenshot" width="290" height="570">
-    </td>
-  </tr>
-</table>
-
-<table>
-  <tr>
-    <td>
-      <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/Student/4.jpg?raw=true" alt="project-screenshot" width="290" height="570">
-    </td>
-  </tr>
-</table>
-<h3>Teacher:<h3>
-  <table>
-  <tr>
-    <td>
-      <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/Teacher/1.jpg?raw=true" alt="project-screenshot" width="290" height="570">
-    </td>
-    <td>
-      <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/Teacher/2.jpg?raw=true" alt="project-screenshot" width="290" height="570">
-    </td>
-    <td>
-      <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/Teacher/2.jpg?raw=true" alt="project-screenshot" width="290" height="570">
-    </td>
-  </tr>
-</table>
+  <img src="https://raw.githubusercontent.com/prafullKrRj/Campuse-Pulse/master/ScreenShots/admin.png" alt="project-screenshot" width="716" height="366.4">
+  <h3>Teacher:</h3>
+  <img src="https://raw.githubusercontent.com/prafullKrRj/Campuse-Pulse/master/ScreenShots/teacher.png alt="project-screenshot" width="638.5" height="391.2">
+  <h3>Student:</h3>
+  <img src="https://raw.githubusercontent.com/prafullKrRj/Campuse-Pulse/master/ScreenShots/student.png" alt="project-screenshot" width="748.4" height="384">
 </section>
 
 <h2>🧐 Functionality and Concepts Used</h2>
@@ -134,6 +82,7 @@ Here are some key concepts used in Campuse Pulse
 
 <h4>Admin:</h4>
 <ul>
+  <li>Improving UI</li>
   <li>Adding student images</li>
   <li>Updating student and branch data</li>
   <li>Visualizing student data</li>
@@ -143,6 +92,7 @@ Here are some key concepts used in Campuse Pulse
 
 <h4>Student:</h4>
 <ul>
+  <li>Improving UI</li>
   <li>Getting student syllabus</li>
   <li>Viewing all notices</li>
 </ul>
