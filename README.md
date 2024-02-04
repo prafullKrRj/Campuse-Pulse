@@ -1,6 +1,13 @@
 <h1 align="center" id="title">Campus Pulse</h1>
 
-<p id="description">Welcome to the Campuse Pulse repository! This application provides a comprehensive platform for managing college-related activities for administrators, teachers, and students.</p>
+<p id="description">College Time Table and Attendance App.</p>
+<h2>Problem Statement</h2>
+College struggles with old-fashioned ways of checking who's in class and planning schedules(Time Tables), leading to mistakes and making it hard for students and teachers to find the info they need. We need a new system that makes attendance and schedules easier for everyone, with all the info readily available online.
+<h2>Solution Proposed</h2>
+Our solution is an intuitive mobile application designed to address the challenges faced by educational institutions in tracking attendance and managing timetables. 
+  -  Teachers can easily record attendance for their classes, while students can view their attendance status and class schedules in real-time. 
+  -  Administrators have the ability to manage timetables, add students and branches, and ensure that all information is up-to-date and easily accessible. 
+  -  By leveraging technology and providing a user-friendly interface, our app streamlines administrative tasks, improves communication, and enhances overall           efficiency within educational institutions.
 <section>
   <h2>User flows</h2>
   <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/User%20Flow.jpg?raw=true" alt="user flows" width="730.8" height="426.4"
