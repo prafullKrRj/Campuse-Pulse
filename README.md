@@ -128,9 +128,6 @@ Here are some key concepts used in Campuse Pulse
 <h3>Teacher</h3>
 <p>ID: dummyteacher</p>
 <p>Password: password</p>
-<h2>💻 Built with</h2>
-
-Technologies used in the project:
 
 
 <h2>🛫 Future Scopes </h2>
