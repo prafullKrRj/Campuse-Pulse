@@ -24,7 +24,7 @@ Our solution is an intuitive mobile application designed to address the challeng
 
 <h2>🧐 Functionality and Concepts Used</h2>
 
-Here are some of the key functionalities of Campus Pulse:
+Here are some of the key functionalities of Campuse Pulse:
 
 *   Admin Section:
     - Add and manage branches
