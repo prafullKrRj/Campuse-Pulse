@@ -1,4 +1,4 @@
-<h1 align="center" id="title">Campus Pulse</h1>
+<h1 align="center" id="title">Campuse Pulse</h1>
 
 <p id="description">College Time Table and Attendance App.</p>
 <h2>Problem Statement</h2>
