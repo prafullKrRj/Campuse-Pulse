@@ -8,6 +8,8 @@ Our solution is an intuitive mobile application designed to address the challeng
   -  Teachers can easily record attendance for their classes, while students can view their attendance status and class schedules in real-time. 
   -  Administrators have the ability to manage timetables, add students and branches, and ensure that all information is up-to-date and easily accessible. 
   -  By leveraging technology and providing a user-friendly interface, our app streamlines administrative tasks, improves communication, and enhances overall           efficiency within educational institutions.
+  <h2>Project Video</h2>
+[Watch the demo video](https://www.youtube.com/watch?v=fDAvQ4Jwvw8)
 <section>
   <h2>User Flow:</h2>
   <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/User%20Flow.jpg?raw=true" alt="user flows" width="730.8" height="426.4"
