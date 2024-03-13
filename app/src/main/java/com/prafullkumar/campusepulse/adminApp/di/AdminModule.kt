@@ -12,6 +12,7 @@ interface AdminModule {
     val adminRepository: AdminRepository
     val branchDetailsRepository: BranchDetailsRepository
 }
+
 class AdminModuleImpl(
     private val context: Context
 ) : AdminModule {

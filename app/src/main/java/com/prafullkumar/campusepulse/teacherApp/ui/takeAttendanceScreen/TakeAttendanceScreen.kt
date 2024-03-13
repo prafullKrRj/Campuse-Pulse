@@ -68,7 +68,9 @@ fun TakeAttendance(viewModel: AttendanceViewModel, navController: NavController)
                         LoadingScreen()
                     }
                     is TakeAttendanceState.Success -> {
-                        TakeAttendanceSuccess(students = (state as TakeAttendanceState.Success).data, viewModel = viewModel)
+                        TakeAttendanceSuccess(students = ((state as TakeAttendanceState.Success).data).sortedBy {
+                                                                                                                it.rollNo
+                        }, viewModel = viewModel)
                     }
                     is TakeAttendanceState.Error -> {
                         ErrorScreen {

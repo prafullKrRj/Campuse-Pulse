@@ -37,7 +37,9 @@ fun ShowClassAttendance(viewModel: ShowAttendanceViewModel, navController: NavHo
                         LoadingScreen()
                     }
                     is AttendanceState.Success -> {
-                        (attendanceState as AttendanceState.Success).attendance.forEach { attendance ->
+                        (attendanceState as AttendanceState.Success).attendance.sortedBy {
+                            it.rollNo
+                        }.forEach { attendance ->
                             StudentCard(studentDisplayAttendance = attendance)
                         }
                     }

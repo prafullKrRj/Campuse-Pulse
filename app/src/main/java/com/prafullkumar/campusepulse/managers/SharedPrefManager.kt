@@ -11,7 +11,6 @@ class SharedPrefManager(context: Context) {
         editor.putBoolean("isLoggedIn", isLoggedIn)
         editor.apply()
     }
-
     fun isLoggedIn(): Boolean {
         return sharedPreferences.getBoolean("isLoggedIn", false)
     }
