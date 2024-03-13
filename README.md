@@ -1,4 +1,4 @@
-<h1 align="center" id="title">Campus Pulse</h1>
+<h1 align="center" id="title">Campuse Pulse</h1>
 
 <p id="description">College Time Table and Attendance App.</p>
 <h2>Problem Statement</h2>
@@ -8,6 +8,8 @@ Our solution is an intuitive mobile application designed to address the challeng
   -  Teachers can easily record attendance for their classes, while students can view their attendance status and class schedules in real-time. 
   -  Administrators have the ability to manage timetables, add students and branches, and ensure that all information is up-to-date and easily accessible. 
   -  By leveraging technology and providing a user-friendly interface, our app streamlines administrative tasks, improves communication, and enhances overall           efficiency within educational institutions.
+  <h2>Project Video</h2>
+[Watch the demo video](https://www.youtube.com/watch?v=fDAvQ4Jwvw8)
 <section>
   <h2>User Flow:</h2>
   <img src="https://github.com/prafullKrRj/Campuse-Pulse/blob/master/ScreenShots/User%20Flow.jpg?raw=true" alt="user flows" width="730.8" height="426.4"
@@ -24,7 +26,7 @@ Our solution is an intuitive mobile application designed to address the challeng
 
 <h2>🧐 Functionality and Concepts Used</h2>
 
-Here are some of the key functionalities of Campus Pulse:
+Here are some of the key functionalities of Campuse Pulse:
 
 *   Admin Section:
     - Add and manage branches
@@ -59,7 +61,7 @@ Here are some key concepts used in Campuse Pulse
 * Kotlin Coroutines: Doing non UI related tasks on different threads.
 <h2>🛠️ Installation and usage:</h2>
 
-<p>1. Download the APK file: <a href="https://github.com/prafullKrRj/TranquilJot-Notes-App-/raw/master/TranquilJot%20Notes.apk">Click here</a>.</p>
+<p>1. Download the APK file: <a href="https://github.com/prafullKrRj/Campuse-Pulse/raw/master/Campuse%20Pulse.apk">Click here</a>.</p>
 
 <p>2. Install the application on your Android device.</p>
 
